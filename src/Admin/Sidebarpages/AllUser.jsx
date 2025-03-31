@@ -239,10 +239,23 @@ export default function AllUser() {
             <AdminSideBar />
           </div>
           <div className="dash-profile-container">
+            <div className="row">
+              <div className="col mb-2">
+                <button
+                  className="btn btn-primary float-end gap-2"
+                  onClick={() => {
+                    navigate("/admin/adduser");
+                  }}
+                >
+                  <i className="fa fa-plus-circle"></i> Add User
+                </button>
+              </div>
+            </div>
+
             {error ? (
               <div className="alert alert-danger">{error}</div>
             ) : (
-              <div className="m-2">
+              <div className="">
                 {/* Status Dropdown */}
                 {selectedRowKeys.length > 0 && (
                   <div className=" d-flex justify-content-end float-center">
@@ -281,14 +294,6 @@ export default function AllUser() {
               <i className="bi bi-plus"></i> View User
             </button> */}
 
-                <button
-                  className="btn btn-primary float-end gap-2"
-                  onClick={() => {
-                    navigate("/admin/adduser");
-                  }}
-                >
-                  <i className="bi bi-plus"></i> Add User
-                </button>
 
                 {/* Custom Table Component */}
                 {loading ? (
@@ -317,16 +322,10 @@ export default function AllUser() {
                       total: pagination.total,
 
                     }}
-                    //onTableChange={handleTableChange}
-                    //search={search}
-                    // onSearchChange={handleSearch}
-                    // onSearchChange={(value) => {
-                    //   setSearch(value);
-                    //   setPagination((prev) => ({
-                    //     ...prev,
-                    //     current: 1, // Reset to first page on search
-                    //   }));
-                    // }}
+                    onTableChange={handleTableChange}
+                    search={search}
+                    onSearchChange={handleSearch}
+
                   />
                 )}
               </div>
