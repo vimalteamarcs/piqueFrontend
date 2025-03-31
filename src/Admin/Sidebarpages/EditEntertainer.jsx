@@ -267,6 +267,11 @@ export default function EditEntertainer() {
       [name]: value,
     }));
 
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: "", // Clear the error for this field
+    }));
+
     if (name === "country") {
       setStates([]); // Clear states list
       setCities([]); // Clear cities list
@@ -392,7 +397,7 @@ export default function EditEntertainer() {
     const newErrors = {};
     if (!formData.name) newErrors.name = "Entertainer Name is required";
 
-    if (!formData.type) newErrors.type = "Entertainer Type is required";
+    // if (!formData.type) newErrors.type = "Entertainer Type is required";
 
     if (!formData.phone1) newErrors.phone1 = "Phone Number 1 is required";
     else if (!/^\d+$/.test(formData.phone1))
