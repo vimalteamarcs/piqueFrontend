@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+  font-family: "Poppins", sans-serif !important;
+  background-color: #fff;
+  width: 100%;
+}
 /********** Template CSS **********/
 :root {
   --primary: #009cff;
@@ -14,23 +21,36 @@
 .btn.mybtn {background-color: #333333;border-color: #333333;color: #fff;font-size: 12px;font-weight: 500;}
 .form-control {font-size: .8rem !important;padding: .4rem .5rem !important;}
 
-.table {width: 100%;border-collapse: collapse;font-size: .8rem;}
-.table thead {}
-.table thead th {color: #525252;font-weight: 600 !important;}
-.table tbody {}
-.table tbody tr {}
-.table tbody tr td {vertical-align: middle;padding: .3rem .5rem;}
-.table tbody tr td .badge {font-weight: 500;}
-.table tbody tr td .btn-group {}
-.table tbody tr td .btn-group .btn-outline-primary {background-color: #F8F8F8;color: #333;border-color: #D1D1D1; padding: .3rem .5rem;font-size: .7rem;}
+.table, table {width: 100%;border-collapse: collapse;font-size: .8rem;}
+.table thead, table thead {}
+.table thead th, table thead th {color: #525252;font-weight: 600 !important;}
+.table tbody, table tbody {}
+.table tbody tr, table tbody tr {}
+.table tbody tr td, table tbody tr td {vertical-align: middle;padding: .3rem .5rem;}
+.table tbody tr td .badge, table tbody tr td .badge {font-weight: 500;padding: 0.35rem .5rem;border-radius: 20px;letter-spacing: 0.5px;}
+.table tbody tr td .btn-group, table tbody tr td .btn-group  {}
+.table tbody tr td .btn-group .btn-outline-primary, table tbody tr td .btn-group .btn-outline-primary  {background-color: #F8F8F8;color: #333;border-color: #D1D1D1; padding: .3rem .5rem;font-size: .7rem;}
 
-.table.dataTableUI {font-size: .8rem;}
+/* .table.dataTableUI {font-size: .8rem;}
 .table.dataTableUI thead th, .table.dataTableUI td, table.dataTable.no-footer, table.dataTable.footer {border-color: #dee2e6;} 
 .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {font-size: .8rem;}
 .dataTables_filter input  {border-radius: 15px !important;padding-block: 0;padding-inline: 0;border: 1px solid #ccc;outline: 0;padding: 4px 8px !important;}
 .dataTables_length select {border-radius: 15px !important;padding-block: 0;padding-inline: 0;border: 1px solid #ccc;outline: 0;padding: 3px 5px !important;}
-table.dataTable thead th, table.dataTable tfoot th {font-weight: 600;}
+table.dataTable thead th, table.dataTable tfoot th {font-weight: 600;} */
+ 
+.dataTableUI table {font-size: .8rem;}
+.dataTableUI .ant-table-cell {vertical-align: middle;padding: .5rem .5rem !important;color: #525252 !important;  font-family: "Poppins", sans-serif !important;}
+.dataTableUI .ant-table-thead .ant-table-cell {font-weight: 700 !important;background: #fff !important;}
 
+.dataTableUI .ant-pagination {margin-bottom: 5px !important;}
+.dataTableUI .ant-pagination .ant-pagination-item {background-color: #fff;border-color: #c2c2c2;font-size: 12px;    min-width: 25px;height: 25px;line-height: 22px;}
+.dataTableUI .ant-pagination .ant-pagination-item-active {background-color: #525252;border-color: #c2c2c2;color: #fff !important;}
+.dataTableUI .ant-pagination .ant-pagination-prev, .dataTableUI .ant-pagination .ant-pagination-next {min-width: 25px;height: 25px;line-height: 22px;}
+.dataTableUI .ant-pagination .ant-pagination-item-link {background-color: #fff;border-color: #e8e8e8;}
+.dataTableUI .ant-pagination-options .ant-select {height: 25px;line-height: 22px;}
+.dataTableUI .ant-pagination-options .ant-select .ant-select-selection-search {font-size: 12px;}
+.dataTableUI {}
+.dataTableSearch .ant-input-affix-wrapper {border-radius: 25px;}
 
 
 
@@ -315,42 +335,6 @@ table.dataTable thead th, table.dataTable tfoot th {font-weight: 600;}
   border-color: var(--primary);
 }
 
-body {
-  font-family: "Poppins", sans-serif !important;
-}
-
-html {
-  /* font-size: 12px; */
-  font-family: "Poppins", sans-serif !important;
-}
-
-.ant-table-wrapper
-  .ant-table.ant-table-bordered
-  > .ant-table-container
-  > .ant-table-content
-  > table
-  > thead
-  > tr
-  > th {
-  padding: 5px 10px;
-}
-
-.ant-table-content > table > tbody > tr > td {
-  padding: 5px 10px;
-}
-
-.ant-table-wrapper
-  .ant-table.ant-table-bordered
-  > .ant-table-container
-  > .ant-table-content
-  > table
-  > tbody
-  > tr
-  > td {
-  padding: 5px 10px;
-  color: var(--bs-text-primary);
-  font-size: var(--bs-body-fontsize);
-}
 
 .bg-unpublished {
   background-color: #eaeaea;

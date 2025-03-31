@@ -1797,18 +1797,18 @@ body {
 .search-bar {
   /* border-radius: 20px; */
   width: 100;
-  font-size: 14px;
+  font-size: .8rem;
 }
 
 .navbar .profile-font {
-  font-size: 13px !important;
+  font-size: .8rem !important;
   margin-bottom: 0 ;
 }
 
 /* Default label styles */
 .custom-label {
   position: absolute;
-  left: 13px;
+  left: .8rem;
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
