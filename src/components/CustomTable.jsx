@@ -101,6 +101,7 @@ export default function CustomTable({
             dataSource={data}
             pagination={pagination}
             loading={loading}
+            
             onChange={onTableChange}
             rowKey="id"
           />

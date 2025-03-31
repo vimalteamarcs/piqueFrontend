@@ -55,7 +55,7 @@ const ReportPage = () => {
       }
     };
     fetchData();
-  }, [to, from ,search]);
+  }, [to, from, search]);
 
   useEffect(() => {
     if (from > to) {
@@ -225,7 +225,7 @@ const ReportPage = () => {
     },
   ];
 
- 
+
 
   const downloadExcel = async () => {
     try {
@@ -254,7 +254,7 @@ const ReportPage = () => {
   };
 
   <button onClick={downloadExcel}>Download Report</button>;
- 
+
   return (
     <>
       <DashLayout />
@@ -292,19 +292,27 @@ const ReportPage = () => {
                     />
                     <button
                       className="btn btn-success btn-sm h-50 mt-4 ms-3"
-                      onClick={exportToExcel}
+                      onClick={downloadExcel}
                     >
                       Download Excel
                     </button>
                   </div>
                 </div>
                 <CustomTable
-                  columns={column}
+                  columns={columns}
                   data={reportData}
                   pagination={{
                     current: 1,
                     pageSize: 10,
                     total: 20,
+                  }}
+                  search={search}
+                  onSearchChange={(value) => {
+                    setSearch(value);
+                    setPagination((prev) => ({
+                      ...prev,
+                      current: 1, // Reset to first page on search
+                    }));
                   }}
                 />
               </>
