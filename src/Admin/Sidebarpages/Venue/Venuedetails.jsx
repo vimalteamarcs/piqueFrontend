@@ -114,11 +114,11 @@ const Venuedetails = () => {
     <>
       <DashLayout />
       <div className="container-fluid w-100 p-0">
-        <div className="d-flex flex-column flex-lg-row mt-0">
+        <div className="pageLayout">
           <div className="dash-sidebar-container">
             <AdminSideBar />
           </div>
-          <div className="dash-profile-container w-100">
+          <div className="dash-profile-container">
             <div className="card">
               <div className="card-body">
                 <div className="d-flex justify-content-between align-items-center mb-3">

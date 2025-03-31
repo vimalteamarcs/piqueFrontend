@@ -15,7 +15,8 @@ body {
   --bs-body-fontsize: .8rem;
 }
 /* Common CSS */
-.pageLayout {display: flex;flex-direction: row;justify-content: space-between;height: 100vh;}
+/* .pageLayout {display: flex;flex-direction: row;justify-content: space-between;height: 100vh;margin-top: 70px;} */
+.pageLayout {min-height: 100vh;height: 100vh;margin-top: 70px;}
 .headingPG {font-size: 1rem;font-weight: 600;color: #191c24;margin-bottom: .8rem;}
 .card {border-color: #f1f2f3 !important;border-radius: 0.5rem;background-color: #fff;}
 .btn.mybtn {background-color: #333333;border-color: #333333;color: #fff;font-size: 12px;font-weight: 500;}
@@ -52,6 +53,22 @@ table.dataTable thead th, table.dataTable tfoot th {font-weight: 600;} */
 .dataTableUI {}
 .dataTableSearch .ant-input-affix-wrapper {border-radius: 25px;}
 
+.topNavbar {background: #fff !important;position: fixed;height: 70px; z-index: 9;}
+.dash-sidebar-container {
+  position: fixed;
+  width: 240px !important;
+  min-height: 100vh;
+  padding: 15px;
+  background: #ffffff; 
+  border-right: 1px solid #ffffff; 
+}
+
+.dash-profile-container {
+  flex: 1;
+  padding: 1rem;
+  background-color: #f8f8f8; 
+  margin-left: 240px;
+}
 
 
 .back-to-top {
@@ -438,20 +455,6 @@ table.dataTable thead th, table.dataTable tfoot th {font-weight: 600;} */
   border-radius: 9px !important;
 }
 
-.dash-profile-container {
-  flex: 1;
-  padding: 1rem;
-  background-color: #f8f8f8;
-}
-
-.dash-sidebar-container {
-  width: 260px !important; /* Adjust width as needed */
-  min-height: 100vh; /* Full height */
-  padding: 19px;
-  background: #ffffff; /* Optional background */
-  border-right: 1px solid #ffffff; /* Light border for separation */
-}
-
 /* For Webkit browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
   /* display: none; */
@@ -730,9 +733,11 @@ body {
  }
  /* ##Device = Most of the Smartphones Mobiles (Portrait), ##Screen = B/w 320px to 479px */
  @media (min-width:320px) and (max-width:480px){
-  nav .logoMain {height: 30px;}
-  .mobileMenuToggler {display: inline;color: #000;margin-right: 10px;}
-  .dash-sidebar-container {display: none;}
+  nav .logoMain {height: 35px;width: 140px;}
+  .pageLayout {margin-top: 55px;}
+  .mobileMenuToggler {display: inline;color: #e65f29;margin-right: 5px;font-size: 20px;border: 1px solid;padding: 4px 10px;border-radius: 40px;}
+  .dash-sidebar-container {display: none;z-index: 8;}
   .dash-sidebar-container.show {display: inline;}
   .dash-sidebar-container.hide {display: none;}
+  .dash-profile-container {margin-left: 0;}
  }

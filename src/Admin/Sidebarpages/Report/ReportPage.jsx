@@ -257,26 +257,16 @@ const ReportPage = () => {
  
   return (
     <>
+      <DashLayout />
       <div className="container-fluid w-100 p-0">
-        <div
-          className="position-fixed w-100 top-0 z-1030"
-          style={{ backgroundColor: "white" }}
-        >
-          <DashLayout />
-        </div>
-        <div className="d-flex mt-5">
-          {/*  Sidebar */}
+        <div className="pageLayout">
           <div
-            className="dash-sidebar-container position-fixed vh-100 mt-4"
-            style={{ width: "250px", zIndex: 1040 }}
+            className="dash-sidebar-container"
           >
             <AdminSideBar />
           </div>
-
-          {/*  Main Content */}
           <div
-            className="dash-profile-container flex-grow-1"
-            style={{ marginLeft: "250px" }}
+            className="dash-profile-container"
           >
             {loading ? (
               <div className="d-flex justify-content-center my-5">
@@ -286,59 +276,42 @@ const ReportPage = () => {
               </div>
             ) : (
               <>
-                <div className="profile-font">
-                  <div className="d-flex justify-content-between my-3">
-                    <div className="d-flex gap-2">
-                      <div>
-                        <label className="me-2 fw-bold">From:</label>
-                        <br />
-                        <input
-                          type="month"
-                          className="form-control w-auto"
-                          value={from}
-                          onChange={(e) => setFrom(e.target.value)}
-                        />
-                      </div>
-                      <div>
-                        <label className="me-2 fw-bold">To:</label>
-                        <br />
-                        <input
-                          type="month"
-                          className="form-control w-auto"
-                          value={to}
-                          onChange={(e) => setTo(e.target.value)}
-                        />
-                      </div>
-                      <button
-                        className="btn btn-success btn-sm h-50 mt-4 ms-3"
-                        onClick={downloadExcel}
-                      >
-                        Download Excel
-                      </button>
-                    </div>
+                <div className="d-flex justify-content-between my-3">
+                  <div className="d-flex gap-2">
+                    <input
+                      type="month"
+                      className="form-control w-auto"
+                      value={from}
+                      onChange={(e) => setFrom(e.target.value)}
+                    />
+                    <input
+                      type="month"
+                      className="form-control w-auto"
+                      value={to}
+                      onChange={(e) => setTo(e.target.value)}
+                    />
+                    <button
+                      className="btn btn-success btn-sm h-50 mt-4 ms-3"
+                      onClick={exportToExcel}
+                    >
+                      Download Excel
+                    </button>
                   </div>
-                  {/*  Custom Table  */}
-                  <CustomTable
-                    columns={columns}
-                    pagination={pagination}
-                    showActions={false}
-                    data={reportData}
-                    search={search}
-                    onSearchChange={(value) => {
-                      setSearch(value);
-                      setPagination((prev) => ({
-                        ...prev,
-                        current: 1, // Reset to first page on search
-                      }));
-                    }}
-                  />
                 </div>
+                <CustomTable
+                  columns={column}
+                  data={reportData}
+                  pagination={{
+                    current: 1,
+                    pageSize: 10,
+                    total: 20,
+                  }}
+                />
               </>
             )}
           </div>
         </div>
       </div>
-      ;
     </>
   );
 };
