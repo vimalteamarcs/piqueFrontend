@@ -9,6 +9,7 @@ import {
   SEARCH_COUNTRIES,
 } from "../../../constants";
 import AdminSideBar from "../../components/Venue/AdminSideBar";
+import DeleteConfirmationModal from "./DeleteConfirmationModal";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -17,6 +18,8 @@ export default function ManageAllowedCountries() {
   const [filteredCountries, setFilteredCountries] = useState([]);
   const [selectedCountryId, setSelectedCountryId] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
   // Fetch allowed countries
   const fetchAllowedCountries = async () => {
@@ -79,6 +82,17 @@ export default function ManageAllowedCountries() {
     }
   };
 
+  const handleShowDeleteModal = (country) => {
+    setSelectedCountry(country);
+    setShowDeleteModal(true);
+  };
+
+  // Close delete modal
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+    setSelectedCountry(null);
+  };
+
   // Remove allowed country
   const handleDeleteCountry = async (id) => {
     try {
@@ -90,6 +104,7 @@ export default function ManageAllowedCountries() {
     } catch (err) {
       toast.error("Failed to remove country");
     }
+    handleCloseDeleteModal();
   };
 
   return (
@@ -194,15 +209,16 @@ export default function ManageAllowedCountries() {
                                   transform: "translateY(-50%)",
                                   fontSize: "10px", // Makes the button smaller
                                 }}
-                                onClick={() => {
-                                  if (
-                                    window.confirm(
-                                      `Are you sure you want to delete this ${country.name}?`
-                                    )
-                                  ) {
-                                    handleDeleteCountry(country.id);
-                                  }
-                                }}
+                                // onClick={() => {
+                                //   if (
+                                //     window.confirm(
+                                //       `Are you sure you want to delete this ${country.name}?`
+                                //     )
+                                //   ) {
+                                //     handleDeleteCountry(country.id);
+                                //   }
+                                // }}
+                                onClick={() => handleShowDeleteModal(country)}
                               />
                             </div>
                           </div>
@@ -216,6 +232,13 @@ export default function ManageAllowedCountries() {
           </div>
         </div>
       </div>
+      <DeleteConfirmationModal
+        show={showDeleteModal}
+        handleClose={handleCloseDeleteModal}
+        handleDelete={() => handleDeleteCountry(selectedCountry?.id)}
+        item={selectedCountry}
+        itemType="country"
+      />
     </>
   );
 }

@@ -118,12 +118,13 @@ const CategoryForm = () => {
   }, [mainCategoryId, success, error]);
 
   const handlemainSubmit = async (e) => {
+    console.log("main category")
     e.preventDefault();
     setError("");
     setSuccess("");
 
     try {
-      await axios.post(
+     const response = await axios.post(
         `${import.meta.env.VITE_API_URL}${CREATE_CATEGORY}`,
         {
           name: name,
@@ -135,7 +136,7 @@ const CategoryForm = () => {
           },
         }
       );
-
+      console.log("main category",response.data)
       setSuccess("Main category created successfully");
 
       setName("");
@@ -488,10 +489,11 @@ const CategoryForm = () => {
           <Modal.Header closeButton>
             <Modal.Title className="fs-5">Create Main Category</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <form
+          <form
               onSubmit={handlemainSubmit}
             >
+          <Modal.Body>
+           
               <label htmlFor="name" className="form-label fw-semibold">
                 Main Category Name
               </label>
@@ -506,7 +508,6 @@ const CategoryForm = () => {
                   required
                 />
               </div>
-            </form>
           </Modal.Body>
           <Modal.Footer>
             <button type="submit" className="btn btn-dark btn-sm rounded-3">
@@ -516,6 +517,8 @@ const CategoryForm = () => {
               Close
             </Button>
           </Modal.Footer>
+        </form>
+
         </Modal>
 
         <DeleteConfirmationModal
