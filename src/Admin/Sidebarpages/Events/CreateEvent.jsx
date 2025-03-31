@@ -246,7 +246,7 @@ const CreateEvent = () => {
                         <div className="col-md-6">
                           <label
                             htmlFor="title"
-                            className="form-label fw-medium label-font mb-0"
+                            className="form-label fw-medium label-font "
                           >
                             Event Name
                             <span style={{ color: "red", display: "inline" }}>
@@ -255,7 +255,7 @@ const CreateEvent = () => {
                           </label>
                           <input
                             type="text"
-                            className={`custom-form-event label-font ps-3 ${errors.title ? "is-invalid" : ""
+                            className={`form-control ${errors.title ? "is-invalid" : ""
                               }`}
                             placeholder="Enter Event Name"
                             id="title"
@@ -274,16 +274,16 @@ const CreateEvent = () => {
                           <div className="col-md-6">
                             <label
                               htmlFor="title"
-                              className="form-label label-font fw-medium mb-0"
+                              className="form-label label-font fw-medium "
                             >
                               Event Name
                               <span style={{ color: "red", display: "inline" }}>
                                 *
                               </span>
                             </label>
-                            <input
+                            <Input
                               type="text"
-                              className={`custom-form-event label-font ps-3 ${errors.title ? "is-invalid" : ""
+                              className={`form-control ${errors.title ? "is-invalid" : ""
                                 }`}
                               placeholder="Enter Event name"
                               id="title"
@@ -299,7 +299,7 @@ const CreateEvent = () => {
                           <div className="col-md-6">
                             <label
                               htmlFor="recurring"
-                              className="form-label label-font fw-medium mb-0"
+                              className="form-label label-font fw-medium "
                             >
                               Recurring
                               <span style={{ color: "red", display: "inline" }}>
@@ -307,14 +307,14 @@ const CreateEvent = () => {
                               </span>
                             </label>
                             <select
-                              className={`custom-form-event custom-select label-font ps-3 ${errors.recurring ? " is-invalid" : ""}`}
+                              className={`form-select ${errors.recurring ? " is-invalid" : ""}`}
 
                               id="recurring"
                               name="recurring"
                               value={formData.recurring}
                               onChange={handleInputChange}
                             >
-                              <option value="default" className="select-recurring">Select Recurring</option>
+                              <option value="default" className="">Select Recurring</option>
                               <option value="none" className="label-font">
                                 None
                               </option>
@@ -345,14 +345,14 @@ const CreateEvent = () => {
                       <div className="col-md-6">
                         <label
                           htmlFor="location"
-                          className="form-label label-font fw-medium mb-0"
+                          className="form-label label-font fw-medium "
                         >
                           Event Location
                           <span style={{ color: "red", display: "inline" }}>*</span>
                         </label>
                         <input
                           type="text"
-                          className={`custom-form-event label-font ps-3 ${errors.location ? "is-invalid" : ""
+                          className={`form-control ${errors.location ? "is-invalid" : ""
                             }`}
                           id="location"
                           placeholder="Enter Event location..."
@@ -369,7 +369,7 @@ const CreateEvent = () => {
                       <div className="col-md-6">
                         <label
                           htmlFor="description"
-                          className="form-label label-font fw-medium mb-0"
+                          className="form-label label-font fw-medium "
                         >
                           Description
                           <span style={{ color: "red", display: "inline" }}>*</span>
@@ -377,7 +377,7 @@ const CreateEvent = () => {
                         <div className="col-12 col-md-12">
                           <textarea
                             type="text"
-                            className={`custom-form-event label-font ps-3 pt-2 ${errors.description ? "is-invalid" : ""
+                            className={`form-control pt-2 ${errors.description ? "is-invalid" : ""
                               }`}
                             id="description"
                             name="description"
@@ -397,14 +397,14 @@ const CreateEvent = () => {
                       <div className="col-12 col-md-6">
                         <label
                           htmlFor="startTime"
-                          className="form-label label-font fw-medium mb-0"
+                          className="form-label label-font fw-medium "
                         >
                           Start Date and Time
                           <span style={{ color: "red", display: "inline" }}>*</span>
                         </label>
                         <input
                           type="datetime-local"
-                          className={`custom-form-event custom-date label-font ps-3 ${errors.startTime ? "is-invalid" : ""
+                          className={`form-control ${errors.startTime ? "is-invalid" : ""
                             }`}
                           id="startTime"
                           name="startTime"
@@ -419,14 +419,14 @@ const CreateEvent = () => {
                       <div className="col-12 col-md-6">
                         <label
                           htmlFor="endTime"
-                          className="form-label label-font fw-medium mb-0"
+                          className="form-label label-font fw-medium "
                         >
                           End Date and Time
                           <span style={{ color: "red", display: "inline" }}>*</span>
                         </label>
                         <input
                           type="datetime-local"
-                          className={`custom-form-event custom-date label-font ps-3 ${errors.endTime ? "is-invalid" : ""
+                          className={` form-control ${errors.endTime ? "is-invalid" : ""
                             }`}
                           id="endTime"
                           name="endTime"
@@ -451,14 +451,14 @@ const CreateEvent = () => {
                   <div className="col-md-6">
                     <label
                       htmlFor="venueId"
-                      className="form-label label-font fw-medium mb-0"
+                      className="form-label label-font fw-medium "
                     >
                       Venue Name
                       <span style={{ color: "red", display: "inline" }}>*</span>
                     </label>
 
                     <select
-                      className={`form-select custom-form-event label-font ps-3 ${
+                      className={`form-select form-control ${
                         errors.venueId ? "is-invalid" : ""
                       }`}
                       id="venueId"
@@ -483,14 +483,14 @@ const CreateEvent = () => {
                   <div className="col-md-6">
                     <label
                       htmlFor="location"
-                      className="form-label label-font fw-medium mb-0"
+                      className="form-label label-font fw-medium "
                     >
                       Location
                       <span style={{ color: "red", display: "inline" }}>*</span>
                     </label>
                     <input
                       type="text"
-                      className={`custom-form-event label-font ps-3 ${
+                      className={`form-control ${
                         errors.location ? "is-invalid" : ""
                       }`}
                       id="location"
@@ -511,13 +511,13 @@ const CreateEvent = () => {
                       <div className="col-md-6">
                         <label
                           htmlFor="venueId"
-                          className="form-label label-font fw-medium mb-0"
+                          className="form-label label-font fw-medium "
                         >
                           Venue Name <span style={{ color: "red" }}>*</span>
                         </label>
 
                         <select
-                          className={`custom-form-event custom-select label-font ps-3 ${errors.venueId ? "is-invalid" : ""
+                          className={`form-select ${errors.venueId ? "is-invalid" : ""
                             }`}
                           id="venueId"
                           name="venueId"
@@ -540,13 +540,13 @@ const CreateEvent = () => {
                       <div className="col-md-6">
                         <label
                           htmlFor="location"
-                          className="form-label label-font fw-medium mb-0"
+                          className="form-label label-font fw-medium "
                         >
                           Location <span style={{ color: "red" }}>*</span>
                         </label>
                         <input
                           type="text"
-                          className={`custom-form-event label-font ps-3 ${errors.location ? "is-invalid" : ""
+                          className={`form-control ${errors.location ? "is-invalid" : ""
                             }`}
                           id="location"
                           placeholder="Select Venue Location"
@@ -565,14 +565,14 @@ const CreateEvent = () => {
                       <div className="col-md-6">
                         <label
                           htmlFor="title"
-                          className="form-label label-font fw-medium mb-0"
+                          className="form-label label-font fw-medium "
                         >
                           Venue Contact
                           <span style={{ color: "red", display: "inline" }}>*</span>
                         </label>
                         <input
                           type="text"
-                          className={`custom-form-event label-font ps-3 ${errors.phone ? "is-invalid" : ""
+                          className={`form-control ${errors.phone ? "is-invalid" : ""
                             }`}
                           placeholder="Enter Venue Contact Number"
                           id="phone"

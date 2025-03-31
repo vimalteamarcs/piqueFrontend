@@ -16,7 +16,7 @@ const Select = ({ name, options, value, onChange, defaultOption, icon, className
           style={{ left: "12px", top: "50%", transform: "translateY(-50%)" }}
         ></i>
       )}
-        <select name={name} className={`form-control ${icon ? "ps-5 text-muted" : ""} ${className || ""}`} onChange={handleChange} value={value}>
+        <select name={name} className={`form-select ${icon ? "ps-5 text-muted" : ""} ${className || ""}`} onChange={handleChange} value={value}>
           <option value="">{defaultOption || "--Choose Option--"}</option>
           {options &&
             options.map((option, index) => (  
