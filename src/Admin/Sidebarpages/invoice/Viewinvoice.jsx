@@ -200,7 +200,7 @@ export default function Viewinvoice() {
     <>
       <DashLayout />
       <div className="container-fluid w-100 p-0">
-        <div className="d-flex mt-0">
+        <div className="pageLayout">
           <div className="dash-sidebar-container">
             <AdminSideBar />
           </div>
@@ -208,7 +208,7 @@ export default function Viewinvoice() {
             <div className="d-flex justify-content-between">
               <p className="fw-semibold profile-font mt-2">INVOICE: {invoicedata.invoice_number}</p>
               <button className="btn btn-outline-dark btn-sm" onClick={handleDownloadPDF}>
-                Download <i className="bi bi-download"></i>
+                Download <i className="fa fa-download"></i>
               </button>
             </div><hr />
 
@@ -289,21 +289,21 @@ export default function Viewinvoice() {
                       Invoice date:{" "}
                       {/* {new Date(invoicedata.issue_date).toLocaleDateString()} */}
                       {new Date(invoicedata.issue_date)
-                                  .toLocaleString("en-GB", {
-                                    day: "numeric",
-                                    month: "short", // "Mar" instead of "03"
-                                    year: "numeric",
-                                  })}
+                        .toLocaleString("en-GB", {
+                          day: "numeric",
+                          month: "short", // "Mar" instead of "03"
+                          year: "numeric",
+                        })}
                     </p>
                     <p>
-                      Due date:{" "} 
+                      Due date:{" "}
                       {/* {new Date(invoicedata.due_date).toLocaleDateString()} */}
                       {new Date(invoicedata.due_date)
-                                  .toLocaleString("en-GB", {
-                                    day: "numeric",
-                                    month: "short", // "Mar" instead of "03"
-                                    year: "numeric",
-                                  })}
+                        .toLocaleString("en-GB", {
+                          day: "numeric",
+                          month: "short", // "Mar" instead of "03"
+                          year: "numeric",
+                        })}
                     </p>
                   </div>
 
@@ -325,11 +325,11 @@ export default function Viewinvoice() {
                         <td>
                           {/* {new Date(invoicedata.issue_date).toLocaleDateString()} */}
                           {new Date(invoicedata.issue_date)
-                                  .toLocaleString("en-GB", {
-                                    day: "numeric",
-                                    month: "short", // "Mar" instead of "03"
-                                    year: "numeric",
-                                  })}
+                            .toLocaleString("en-GB", {
+                              day: "numeric",
+                              month: "short", // "Mar" instead of "03"
+                              year: "numeric",
+                            })}
                         </td>
                         <td>
                           <strong className="text-warp">

@@ -42,7 +42,7 @@ export default function CustomTable({
   ];
 
   return (
-     <div className="">
+    <div className="">
       {/* Search Input */}
       <div className="col-md-3 col-12 mb-3">
         <input
@@ -55,7 +55,7 @@ export default function CustomTable({
       </div>
 
       {/* Data Table */}
-       <div className="event-form">
+      <div className="event-form">
         <div className="table-responsive">
           <table className="table table-bordered1 table-hover dataTableUI">
             <thead className="table-light1">
@@ -93,10 +93,10 @@ export default function CustomTable({
             </tbody>
           </table>
         </div>
-      </div> 
+      </div>
 
       {/* Delete Confirmation Modal */}
-       {isModalVisible && (
+      {isModalVisible && (
         <div
           className="modal fade show d-flex align-items-center justify-content-center"
           style={{
@@ -137,8 +137,20 @@ export default function CustomTable({
             </div>
           </div>
         </div>
-      )} 
+      )}
 
+      {/* Data Table */}
+      <div className="table-responsive dataTableUI">
+        <Table
+          columns={columnsWithActions}
+          dataSource={data}
+          pagination={pagination}
+          loading={loading}
+          onChange={onTableChange} // Triggered on pagination or sorting
+          rowKey="id"
+          scroll={{ x: "max-content" }}
+        />
+      </div>
 
     </div>
   );

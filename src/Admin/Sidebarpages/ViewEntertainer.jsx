@@ -135,7 +135,7 @@ export default function ViewEntertainer() {
     <>
       <DashLayout />
       <div className="container-fluid w-100 p-0">
-        <div className="d-flex mt-0">
+        <div className="pageLayout">
           <div className="dash-sidebar-container">
             <AdminSideBar />
           </div>

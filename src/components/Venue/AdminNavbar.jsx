@@ -49,7 +49,7 @@ export default function AdminNavbar() {
       </nav> */}
       <div className="container-fluid w-100">
         <div className="row">
-          <nav id="navbar1" className="navbar navbar-expand-lg p-2">
+          <nav id="navbar1" className="topNavbar navbar navbar-expand-lg p-2">
             <div className="container-fluid">
               <span className="mobileMenuToggler"> <i className="fa-solid fa-bars"></i> </span>
               {/* <!-- Logo Section --> */}
