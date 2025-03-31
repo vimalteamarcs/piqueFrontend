@@ -50,6 +50,7 @@ export default function AllUser() {
       }
     } catch (err) {
       setError("Failed to load users");
+      console.log(err)
     } finally {
       setLoading(false);
     }

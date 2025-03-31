@@ -24,7 +24,7 @@ const UPDATE_MEDIA = "admin/media/update/"
 
 
 const ALL_USER = "admin/users/all";
-const UPDATE_USER_STATUS = "admin/users/updateuserstatus";
+const UPDATE_USER_STATUS = "admin/users";
 const DELETE_USER = "admin/users/";
 
 const UPDATE_USER = "admin/users/updateuser";
