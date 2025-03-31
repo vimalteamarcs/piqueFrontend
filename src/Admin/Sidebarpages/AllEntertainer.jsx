@@ -194,6 +194,7 @@ export default function AllEntertainer() {
                         );
                       }}
                       search={search}
+                      showActions={true}
                       onSearchChange={(value) => {
                         setSearch(value);
                         fetchEntertainers(1, pagination.pageSize, value);

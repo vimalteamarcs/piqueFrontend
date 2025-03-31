@@ -247,6 +247,7 @@ const EventsList = () => {
                     onView={handleView}
                     onEdit={handleEdit}
                     onDelete={handleDelete}
+                    showActions={true}
                     loading={loading}
                     // pagination={pagination}
                     pagination={{

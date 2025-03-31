@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+
+
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -7,6 +9,7 @@ import DashLayout from "../../DashLayout";
 import CustomTable from "../../../components/CustomTable";
 import { DELETE_INVOICE, GENERATE_INVOICE, GET_ALL_INVOICES } from "../../../../constants";
 import AdminSideBar from "../../../components/Venue/AdminSideBar";
+import debounce from "lodash.debounce";
 
 const AllInvoices = () => {
   const navigate = useNavigate();
@@ -23,9 +26,11 @@ const AllInvoices = () => {
 
   useEffect(() => {
     fetchInvoices(pagination.current, pagination.pageSize, search);
-  }, [pagination.current, pagination.pageSize, search, flag]);
+  }, [pagination.current, pagination.pageSize, flag]);
 
   const fetchInvoices = async (page, pageSize, search) => {
+    if (search.length > 0 && search.length < 2) return; // Prevent API calls for 1 character
+
     setLoading(true);
     setError(null);
 
@@ -42,17 +47,10 @@ const AllInvoices = () => {
         {
           params: { page, pageSize, search },
           headers: { Authorization: `Bearer ${token}` },
-        },
-        {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
         }
       );
 
       if (response.data && response.data.records) {
-        console.log(response.data.records);
-
         setInvoices(response.data.records);
         setPagination((prev) => ({ ...prev, total: response.data.total }));
       }
@@ -94,8 +92,7 @@ const AllInvoices = () => {
             'Authorization': `Bearer ${token}`
           }
         }
-      )
-      console.log(response.data)
+      );
       if (response.status === 200) {
         toast.success("Invoice generated successfully", { autoClose: 1000 });
         setFlag(!flag);
@@ -105,32 +102,31 @@ const AllInvoices = () => {
         "Failed to generate invoice:",
         error.response?.data || error.message
       );
-      toast.error("Failed to generate invoice:", error.response?.data || error.message)
+      toast.error("Failed to generate invoice:", error.response?.data || error.message);
     }
-  }
+  };
 
+  // Debounced search function
+  const debouncedSearch = useCallback(
+    debounce((value) => {
+      fetchInvoices(1, pagination.pageSize, value);
+    }, 500),
+    [pagination.pageSize]
+  );
+
+  const handleSearchChange = (value) => {
+    setSearch(value);
+    if (value.length === 0 || value.length >= 2) {
+      debouncedSearch(value);
+    }
+  };
 
   const columns = [
-    // {
-    //   title: "S.No",
-    //   dataIndex: "serialNumber",
-    //   key: "serialNumber",
-    //   render: (text, record, index) =>
-    //     (pagination.current - 1) * pagination.pageSize + index + 1,
-    // },
-    {
-      title: "Invoice Number",
-      dataIndex: "invoice_number",
-      key: "invoice_number",
-    },
+    { title: "Invoice Number", dataIndex: "invoice_number", key: "invoice_number" },
     { title: "User Type", dataIndex: "user_type", key: "user_type" },
     { title: "Total Amount", dataIndex: "total_amount", key: "total_amount" },
     { title: "Tax Amount", dataIndex: "tax_amount", key: "tax_amount" },
-    {
-      title: "Total With Tax",
-      dataIndex: "total_with_tax",
-      key: "total_with_tax",
-    },
+    { title: "Total With Tax", dataIndex: "total_with_tax", key: "total_with_tax" },
     {
       title: "Status",
       dataIndex: "status",
@@ -150,7 +146,6 @@ const AllInvoices = () => {
         return <span className={statusClass}>{status}</span>;
       },
     },
-    // { title: "Actions", key: "actions", actions: true },
   ];
 
   return (
@@ -178,6 +173,7 @@ const AllInvoices = () => {
                 data={invoices}
                 columns={columns}
                 onView={handleView}
+                showActions={true}
                 onDelete={handleDelete}
                 loading={loading}
                 pagination={pagination}
@@ -185,10 +181,7 @@ const AllInvoices = () => {
                   fetchInvoices(pagination.current, pagination.pageSize, search);
                 }}
                 search={search}
-                onSearchChange={(value) => {
-                  setSearch(value);
-                  fetchInvoices(1, pagination.pageSize, value);
-                }}
+                onSearchChange={handleSearchChange}
               />
             )}
           </div>

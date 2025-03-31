@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import DashLayout from "../DashLayout";
 import { ALL_USER, DELETE_USER, UPDATE_USER_STATUS } from "../../../constants";
@@ -6,7 +6,9 @@ import CustomTable from "../../components/CustomTable";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import debounce from "lodash.debounce";
 import AdminSideBar from "../../components/Venue/AdminSideBar";
+
 export default function AllUser() {
   const navigate = useNavigate();
   const [userdata, setuserdata] = useState([]);
@@ -61,17 +63,14 @@ export default function AllUser() {
     fetchusers(pagination.current, pagination.pageSize, search);
   }, [pagination.current, pagination.pageSize, search]);
 
-  // useEffect(() => {
-  //   fetchusers(1, pagination.pageSize, search); // Always start from page 1 on search change
-  // }, [search]);
-
-
-
-
-  // Handle table pagination change
-  // const handleTableChange = (pagination) => {
-  //   fetchusers(pagination.current, pagination.pageSize, search);
-  // };
+  const debouncedSearch = useCallback(
+    debounce((value) => {
+      if (value.length >= 3) {
+        fetchusers(1, pagination.pageSize, value);
+      }
+    }, 500),
+    [pagination.pageSize]
+  );
 
   const handleTableChange = (page, pageSize) => {
     setPagination((prev) => ({
@@ -88,7 +87,8 @@ export default function AllUser() {
   // Handle search input
   const handleSearch = (value) => {
     setSearch(value);
-    fetchusers(1, pagination.pageSize, value);
+    // fetchusers(1, pagination.pageSize, value);
+    debouncedSearch(value);
   };
 
   // Handle individual row selection
@@ -191,11 +191,7 @@ export default function AllUser() {
         </span>
       ),
     },
-    // {
-    //   title: "Actions",
-    //   key: "actions",
-    //   actions: true,
-    // },
+
   ];
 
   const handleView = async (record) => {
@@ -239,23 +235,10 @@ export default function AllUser() {
             <AdminSideBar />
           </div>
           <div className="dash-profile-container">
-            <div className="row">
-              <div className="col mb-2">
-                <button
-                  className="btn btn-primary float-end gap-2"
-                  onClick={() => {
-                    navigate("/admin/adduser");
-                  }}
-                >
-                  <i className="fa fa-plus-circle"></i> Add User
-                </button>
-              </div>
-            </div>
-
             {error ? (
               <div className="alert alert-danger">{error}</div>
             ) : (
-              <div className="">
+              <div className="m-2">
                 {/* Status Dropdown */}
                 {selectedRowKeys.length > 0 && (
                   <div className=" d-flex justify-content-end float-center">
@@ -285,15 +268,15 @@ export default function AllUser() {
                   </div>
                 )}
 
-                {/* <button
-              className="btn btn-primary float-end gap-2"
-              onClick={() => {
-                navigate("/viewuser");
-              }}
-            >
-              <i className="bi bi-plus"></i> View User
-            </button> */}
 
+                <button
+                  className="btn btn-primary float-end gap-2"
+                  onClick={() => {
+                    navigate("/admin/adduser");
+                  }}
+                >
+                  <i className="bi bi-plus"></i> Add User
+                </button>
 
                 {/* Custom Table Component */}
                 {loading ? (
@@ -303,29 +286,24 @@ export default function AllUser() {
                     </div>
                   </div>
                 ) : (
+
                   <CustomTable
                     data={userdata}
                     columns={columns}
                     loading={loading}
                     onView={handleView}
                     onEdit={handleEdit}
+                    showActions={true}
                     onDelete={handleDelete}
-                    // pagination={{
-                    //   current: pagination.current,
-                    //   pageSize: pagination.pageSize,
-                    //   total: pagination.total,
-                    //   showSizeChanger: true,
-                    // }}
                     pagination={{
                       current: pagination.current,
                       pageSize: pagination.pageSize,
                       total: pagination.total,
-
+                      showSizeChanger: true,
                     }}
-                    onTableChange={handleTableChange}
+                    onTableChange={(pagination) => handleTableChange(pagination.current, pagination.pageSize)}
                     search={search}
                     onSearchChange={handleSearch}
-
                   />
                 )}
               </div>

@@ -311,6 +311,7 @@ export default function AllUserCopy() {
                         loading={loading}
                         onView={handleView}
                         onEdit={handleEdit}
+                        showActions={true}
                         onDelete={handleDelete}
                         pagination={{
                           current: pagination.current,

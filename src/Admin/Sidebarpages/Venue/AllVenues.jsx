@@ -177,6 +177,7 @@ export default function AllVenues() {
                       data={venuedata}
                       columns={columns}
                       onEdit={handleEdit}
+                      showActions={true}
                       onDelete={handleDelete}
                       onView={handleView}
                       loading={loading}

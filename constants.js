@@ -68,11 +68,13 @@ const DELETE_INVOICE = "admin/invoice/deleteinvoice"
 
 
 const GET_REPORT = "admin/report/all"
+const DOWNLOAD_REPORT = "admin/report/download";
 const CURRENCY_SIGN = "$"
 
 const GENERATE_INVOICE = "admin/invoice/generateinvoices"
 export {
   GENERATE_INVOICE,
+  DOWNLOAD_REPORT,
   CURRENCY_SIGN,
   GET_REPORT,
   DELETE_INVOICE,

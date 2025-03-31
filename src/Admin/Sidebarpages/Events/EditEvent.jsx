@@ -86,6 +86,9 @@ const EditEvent = () => {
         }
       );
       toast.success("Event updated successfully!", { autoClose: 1000 });
+      setTimeout(() => {
+        navigate(-1);
+      }, 1000);
     } catch (err) {
       toast.error("Failed to update event. Please try again.");
       console.log(err);
@@ -128,7 +131,7 @@ const EditEvent = () => {
                         </label>
                         <input
                           type="text"
-                          className={`custom-mid-form ps-3 label-font ${errors.title ? "is-invalid" : ""
+                          className={`form-control ${errors.title ? "is-invalid" : ""
                             }`}
                           name="title"
                           value={formData.title}
@@ -148,7 +151,7 @@ const EditEvent = () => {
                           <span style={{ color: "red", display: "inline" }}>*</span>
                         </label>
                         <select
-                          className={`custom-mid-form custom-select label-font ps-3 ${errors.recurring ? "is-invalid" : ""
+                          className={`form-select ${errors.recurring ? "is-invalid" : ""
                             }`}
                           id="recurring"
                           name="recurring"
@@ -206,7 +209,7 @@ const EditEvent = () => {
                         </label>
                         <br />
                         <select
-                          className={`custom-mid-form custom-select label-font ps-3 ${errors.status ? "is-invalid" : ""}`}
+                          className={`form-select ${errors.status ? "is-invalid" : ""}`}
                           id="status"
                           name="status"
                           value={formData.status}
@@ -227,7 +230,7 @@ const EditEvent = () => {
                           <span style={{ color: "red", display: "inline" }}>*</span>
                         </label>
                         <textarea
-                          className={`custom-mid-form ps-3 label-font pe-2 pt-2 form-control ${errors.description ? "is-invalid" : ""
+                          className={` form-control ${errors.description ? "is-invalid" : ""
                             }`}
                           name="description"
                           value={formData.description}
@@ -248,7 +251,7 @@ const EditEvent = () => {
                         </label>
                         <input
                           type="datetime-local"
-                          className={`custom-mid-form ps-3 label-font pe-2${errors.startTime ? "is-invalid" : ""
+                          className={`form-control ${errors.startTime ? "is-invalid" : ""
                             }`}
                           name="startTime"
                           value={formData.startTime}
@@ -265,7 +268,7 @@ const EditEvent = () => {
                         </label>
                         <input
                           type="datetime-local"
-                          className={`custom-mid-form ps-3 label-font pe-2 ${errors.endTime ? "is-invalid" : ""
+                          className={`form-control ${errors.endTime ? "is-invalid" : ""
                             }`}
                           name="endTime"
                           value={formData.endTime}
@@ -296,7 +299,7 @@ const EditEvent = () => {
                         </label>
                         <input
                           type="text"
-                          className={`custom-mid-form label-font ps-3${errors.venueName ? "is-invalid" : ""
+                          className={`form-control ${errors.venueName ? "is-invalid" : ""
                             }`}
                           placeholder="Enter venue name"
                           id="venueName"
@@ -320,7 +323,7 @@ const EditEvent = () => {
                         </label>
                         <input
                           type="text"
-                          className={`custom-mid-form label-font ps-3 ${errors.location ? "is-invalid" : ""
+                          className={`form-control ${errors.location ? "is-invalid" : ""
                             }`}
                           id="location"
                           placeholder="Enter Your location..."
@@ -343,7 +346,7 @@ const EditEvent = () => {
                         </label>
                         <input
                           type="text"
-                          className={`custom-mid-form label-font ps-3 form-control ${errors.phone ? "is-invalid" : ""
+                          className={`form-control  ${errors.phone ? "is-invalid" : ""
                             }`}
                           placeholder="Enter Venue Contact Number"
                           id="phone"
