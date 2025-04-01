@@ -45,7 +45,8 @@ const EditEvent = () => {
         recurring: event.recurring || "none",
         status: event.status || "unpublished",
         venueName: event.vname || "",
-        phone: event.phoneNumber || "",
+        phone: event.phone || "",
+        addressLine1: event.addressLine1 || "",
         isAdmin: Boolean(event.isAdmin),
       });
     }
@@ -214,6 +215,7 @@ const EditEvent = () => {
                           name="description"
                           value={formData.description}
                           onChange={handleInputChange}
+                          rows="1"
                         />
                         {errors.description && (
                           <div className="invalid-feedback">{errors.description}</div>
@@ -224,6 +226,29 @@ const EditEvent = () => {
 
                     <div className="row mb-3">
                       <div className="col-12 col-md-6">
+                      <label
+                          htmlFor="location"
+                          className="form-label label-font fw-medium mb-0"
+                        >
+                          Location
+                          <span style={{ color: "red", display: "inline" }}>*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className={`form-control ${errors.location ? "is-invalid" : ""
+                            }`}
+                          id="location"
+                          placeholder="Enter Your location..."
+                          name="location"
+                          value={formData.location}
+                          // rows="1"
+                          onChange={handleInputChange}
+                        />
+                        {errors.location && (
+                          <div className="invalid-feedback">{errors.location}</div>
+                        )}
+                      </div>
+                    <div className="col-12 col-md-6">
                         <label className="form-label label-font fw-medium mb-0">
                           Start Date and Time
                           <span style={{ color: "red", display: "inline" }}>*</span>
@@ -240,6 +265,9 @@ const EditEvent = () => {
                           <div className="invalid-feedback">{errors.startTime}</div>
                         )}
                       </div>
+                      </div>
+                    <div className="row mb-3">
+
                       <div className="col-12 col-md-6">
                         <label className="form-label label-font fw-medium mb-0">
                           End Date and Time
@@ -305,7 +333,7 @@ const EditEvent = () => {
                           id="location"
                           placeholder="Enter Your location..."
                           name="location"
-                          value={formData.location}
+                          value={formData.addressLine1}
                           // rows="1"
                           onChange={handleInputChange}
                         />

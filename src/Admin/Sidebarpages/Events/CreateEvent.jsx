@@ -16,6 +16,7 @@ const CreateEvent = () => {
   const [formData, setFormData] = useState({
     title: "",
     location: "",
+    venuelocation:"",
     venueId: Number(0),
     userId: Number(localStorage.getItem("userId")),
     description: "",
@@ -165,7 +166,7 @@ const CreateEvent = () => {
     setFormData({
       ...formData,
       venueId: Number(venueId),
-      location: selectedVenue ? `${selectedVenue.addressLine1}, ${selectedVenue.addressLine2}` : "",
+      venuelocation: selectedVenue ? `${selectedVenue.addressLine1}, ${selectedVenue.addressLine2}` : "",
       phone: selectedVenue ? selectedVenue.phone : "",
     });
   };
@@ -362,7 +363,7 @@ const CreateEvent = () => {
                           id="location"
                           placeholder="Enter Event location..."
                           name="location"
-                          // value={formData.location}
+                          value={formData.location}
                           // rows="1"
                           onChange={handleInputChange}
                         />
@@ -555,8 +556,8 @@ const CreateEvent = () => {
                             }`}
                           id="location"
                           placeholder="Select Venue Location"
-                          name="location"
-                          value={formData.location || ""}
+                          name="venuelocation"
+                          value={formData.venuelocation || ""}
                           onChange={handleInputChange}
                           readOnly
                         />
