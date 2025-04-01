@@ -72,7 +72,11 @@ const DOWNLOAD_REPORT = "admin/report/download";
 const CURRENCY_SIGN = "$"
 
 const GENERATE_INVOICE = "admin/invoice/generateinvoices"
+
+const SEARCH_STATS="admin/dashboard/stats"
+const UPCOMINGEVENTS="/path/to/images/"
 export {
+  SEARCH_STATS,
   GENERATE_INVOICE,
   DOWNLOAD_REPORT,
   CURRENCY_SIGN,

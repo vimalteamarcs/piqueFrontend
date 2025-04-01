@@ -3,6 +3,7 @@ import DashLayout from "./DashLayout";
 import AdminSideBar from "../components/Venue/AdminSideBar";
 import Input from "../components/Input";
 import axios from "axios";
+import { SEARCH_STATS } from "../../constants";
 
 export default function Dashboard() {
   const imagePath = import.meta.env.VITE_LOGGEDIN_IMAGE_PATH;
@@ -20,7 +21,7 @@ export default function Dashboard() {
     const fetchStats = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}admin/dashboard/stats`,
+          `${import.meta.env.VITE_API_URL}${SEARCH_STATS}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
