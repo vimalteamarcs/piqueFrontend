@@ -9,6 +9,7 @@ import {
 } from "../../../constants";
 import { useNavigate } from "react-router-dom";
 import AdminSideBar from "../../components/Venue/AdminSideBar";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function AllEntertainer() {
   const navigate = useNavigate();
@@ -72,28 +73,31 @@ export default function AllEntertainer() {
   };
 
   const handleDelete = async (record) => {
-    console.log(`Delete entertainer with id: ${record.user.id}`);
-    const value = {
-      id: Number(record.user.id),
-      status: "inactive",
-    };
-    console.log("value to send", value);
-    // Implement the delete logic here
+    console.log("Record I get:", record);
+
+    // if (!record?.id) {
+    //   console.error("Invalid record, no ID found");
+    //   return;
+    // }
+
     try {
       const response = await axios.delete(
-        `${import.meta.env.VITE_API_URL}${DELETE_ENT_PROFILE}${record.id}`,
+        `${import.meta.env.VITE_API_URL}${DELETE_ENT_PROFILE}/${record}`, // Use record.id properly
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         }
       );
 
-      console.log(response.data); // Log the API response
-
-      setEntertainers((prevEntertainers) =>
-        prevEntertainers.filter((ent) => ent.id !== record.id)
-      );
+      console.log("Delete Response:", response.data);
+      toast.success("Entertainer deleted successfully!", { autoClose: 1000 });
+      // Remove the deleted entertainer from the state
+      setEntertainers((prev) => prev.filter((ent) => ent.id !== record));
+      setPagination((prev) => ({
+        ...prev,
+        total: prev.total - 1, // Reduce total count
+      }));
     } catch (error) {
-      console.error("Failed to update status:", error);
+      console.error("Failed to delete entertainer:", error);
     }
   };
 
@@ -213,6 +217,7 @@ export default function AllEntertainer() {
             <AdminSideBar />
           </div>
           <div className="dash-profile-container">
+            <ToastContainer />
             <p className="headingPG">ENTERTAINERS</p>
             <div className="card">
               <div className="card-body">

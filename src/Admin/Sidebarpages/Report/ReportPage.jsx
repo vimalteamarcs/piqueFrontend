@@ -326,45 +326,55 @@ const ReportPage = () => {
           </div>
           <div className="dash-profile-container">
             <p className="headingPG">Event Report</p>
-            <div className="d-flex justify-content-between my-3">
-              <div className="d-flex gap-2">
-                <input
-                  type="month"
-                  className="form-control w-auto"
-                  value={from}
-                  onChange={(e) => setFrom(e.target.value)}
-                />
-                <input
-                  type="month"
-                  className="form-control w-auto"
-                  value={to}
-                  onChange={(e) => setTo(e.target.value)}
-                />
-                <button
-                  className="btn btn-success btn-sm h-50 mt-4 ms-3"
-                  onClick={downloadExcel}
-                >
-                  Download Excel
-                </button>
-              </div>
-            </div>
+            <div className="card">
+              <div className="card-body">
+                <div className="col-md-6">
+                  <div className="row">
+                    <div className="col-md-4 col-12 pe-1">
+                      <input
+                        type="month"
+                        className="form-control w-auto"
+                        value={from}
+                        onChange={(e) => setFrom(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-md-4 col-12 pe-1">
+                      <input
+                        type="month"
+                        className="form-control w-auto"
+                        value={to}
+                        onChange={(e) => setTo(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-md-4 col-12">
+                      <button
+                        className="btn mybtn"
+                        onClick={downloadExcel}
+                      >
+                        Download Excel
+                      </button>
+                    </div>
+                  </div>
+                </div>
 
-            {/* CustomTable with Loader */}
-            <div className="profile-font">
-              <CustomTable
-                columns={columns}
-                data={reportData}
-                pagination={pagination}
-                search={search}
-                onSearchChange={(value) => {
-                  setSearch(value);
-                  setPagination((prev) => ({
-                    ...prev,
-                    current: 1, // Reset to first page on search
-                  }));
-                }}
-                loading={loading} // Loader for the table only
-              />
+                {/* CustomTable with Loader */}
+                <div className="">
+                  <CustomTable
+                    columns={columns}
+                    data={reportData}
+                    pagination={pagination}
+                    search={search}
+                    onSearchChange={(value) => {
+                      setSearch(value);
+                      setPagination((prev) => ({
+                        ...prev,
+                        current: 1, // Reset to first page on search
+                      }));
+                    }}
+                    loading={loading} // Loader for the table only
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

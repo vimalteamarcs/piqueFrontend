@@ -25,11 +25,11 @@ body {
 .formLightHeading {font-size: .7rem;font-weight: 400;color: #9C9C9C;margin-bottom: .8rem;letter-spacing: .5px;    text-transform: uppercase;}
 
 /* Default date - time input icon */
-input[type="datetime-local"]::-webkit-calendar-picker-indicator {font-size: 20px; /* Resize icon */width: 20px;height: 20px;cursor: pointer;}
+input[type="datetime-local"]::-webkit-calendar-picker-indicator, input[type="month"]::-webkit-calendar-picker-indicator {font-size: 20px; /* Resize icon */width: 20px;height: 20px;cursor: pointer;}
 /* Firefox */
-input[type="datetime-local"]::-moz-calendar-picker-indicator {font-size: 20px; width: 20px;height: 20px;}
+input[type="datetime-local"]::-moz-calendar-picker-indicator, input[type="month"]::-moz-calendar-picker-indicator  {font-size: 20px; width: 20px;height: 20px;}
 /* Edge */
-input[type="datetime-local"]::-ms-clear,input[type="datetime-local"]::-ms-reveal {display: none; }
+input[type="datetime-local"]::-ms-clear,input[type="datetime-local"]::-ms-reveal, input[type="month"]::-ms-clear,input[type="month"]::-ms-reveal {display: none; }
 
 .table, table {width: 100%;border-collapse: collapse;font-size: .8rem;}
 .table thead, table thead {}
@@ -474,16 +474,6 @@ table.dataTable thead th, table.dataTable tfoot th {font-weight: 600;} */
 /* For Webkit browsers (Chrome, Safari) */
 ::-webkit-scrollbar {
   /* display: none; */
-}
-
-/* For Firefox */
-html {
-  /* scrollbar-width: none; */
-}
-
-/* For IE, Edge */
-body {
-  /* -ms-overflow-style: none; */
 }
 
 .dash-sidebar-link {
