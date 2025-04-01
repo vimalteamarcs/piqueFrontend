@@ -343,25 +343,61 @@ export default function EditEntertainer() {
     }));
   };
 
-  const deletemedia = async (index) => {
+  // const deletemedia = async (index) => {
+  //   setLoading(true);
+  //   try {
+  //     const response = await axios.delete(
+  //       `${import.meta.env.VITE_API_URL}${DELETE_MEDIA}${index}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     console.log(response.data)
+  //     setFlag(!flag);
+  //     toast.success("Media deleted successfully!", { autoClose: 1000 });
+  //   } catch (error) {
+  //     console.error("Error deleting Media:", error);
+  //     toast.error("Failed to delete Media. Please try again.");
+  //   }
+  //   setLoading(false);
+  // };
+
+  const deletemedia = async (id, type) => {
     setLoading(true);
     try {
-      await axios.delete(
-        `${import.meta.env.VITE_API_URL}${DELETE_MEDIA}${index}`,
+      const response = await axios.delete(
+        `${import.meta.env.VITE_API_URL}${DELETE_MEDIA}${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      setFlag(!flag);
-      toast.success("Media deleted successfully!", { autoClose: 1000 });
+
+      if (response.status === 200) {
+        toast.success("Media deleted successfully!", { autoClose: 1000 });
+
+        // Update media state to remove the deleted item
+        setMedia((prevMedia) => {
+          console.log("Previous Media State:", prevMedia); // Log previous state for debugging
+          const updatedMedia = {
+            ...prevMedia,
+            [type]: prevMedia[type].filter((item) => item.id !== id),
+          };
+          console.log("Updated Media State:", updatedMedia); // Log updated state for debugging
+          return updatedMedia;
+        });
+      }
     } catch (error) {
       console.error("Error deleting Media:", error);
       toast.error("Failed to delete Media. Please try again.");
     }
     setLoading(false);
   };
+
+
 
   const handleFileChange = (e, fileType) => {
     const files = e.target.files;
@@ -770,16 +806,32 @@ export default function EditEntertainer() {
                                   </div>
                                 )}
                               </div>
-                              <div className="col-md-4">
+                              {/* <div className="col-md-4">
                                 <label className="fw-semibold mb-2">Price Per Event</label>
                                 <Input
                                   type="number"
                                   name="pricePerEvent"
                                   value={formData.pricePerEvent}
-                                  placeholder="Rs."
+                                  placeholder="$"
                                   onChange={handleInputChange}
                                 />
+                              </div> */}
+                              <div className="col-md-4">
+                                <label className="fw-semibold mb-2">Price Per Event</label>
+                                <div className="input-group">
+                                  <span className="input-group-text">$</span>
+                                  <input
+                                    type="number"
+                                    className="form-control"
+                                    name="pricePerEvent"
+                                    value={formData.pricePerEvent}
+                                    placeholder="Enter price"
+                                    onChange={handleInputChange}
+                                    min="0"
+                                  />
+                                </div>
                               </div>
+
                             </div>
                             <div className="row mb-3 label-font">
                               <div className="col-md-4">
@@ -931,7 +983,7 @@ export default function EditEntertainer() {
                                       style={{ height: "90px", width: "90px" }}
                                     />
 
-                                    <button
+                                    {/* <button
                                       type="button"
                                       className="btn btn-link position-absolute"
                                       onClick={() => {
@@ -944,7 +996,20 @@ export default function EditEntertainer() {
                                       }}
                                     >
                                       <i className="fa-solid fa-trash-can text-danger"></i>
+                                    </button> */}
+                                    <button
+                                      type="button"
+                                      className="btn btn-link position-absolute"
+                                      onClick={() => {
+                                        const confirmDelete = window.confirm("Are you sure you want to delete this headshot?");
+                                        if (confirmDelete) {
+                                          deletemedia(media.headshot[0].id, "headshot");
+                                        }
+                                      }}
+                                    >
+                                      <i className="fa-solid fa-trash-can text-danger"></i>
                                     </button>
+
                                   </div>
                                 )}
                               </div>
@@ -978,7 +1043,7 @@ export default function EditEntertainer() {
                                           className="media-image rounded"
                                           style={{ height: "90px", width: "90px" }}
                                         />
-                                        <button
+                                        {/* <button
                                           type="button"
                                           className="btn btn-link position-absolute"
                                           onClick={() => {
@@ -991,7 +1056,21 @@ export default function EditEntertainer() {
                                           }}
                                         >
                                           <i className="fa-solid fa-trash-can text-danger"></i>
+                                        </button> */}
+
+                                        <button
+                                          type="button"
+                                          className="btn btn-link position-absolute"
+                                          onClick={() => {
+                                            const confirmDelete = window.confirm("Are you sure you want to delete this image?");
+                                            if (confirmDelete) {
+                                              deletemedia(file.id, "image");
+                                            }
+                                          }}
+                                        >
+                                          <i className="fa-solid fa-trash-can text-danger"></i>
                                         </button>
+
                                       </div>
                                     ))}
                                   </div>
@@ -1039,7 +1118,7 @@ export default function EditEntertainer() {
                                           />
                                         )}
 
-                                        <button
+                                        {/* <button
                                           type="button"
                                           className="btn btn-link btn-sm position-absolute"
                                           onClick={() => {
@@ -1052,7 +1131,21 @@ export default function EditEntertainer() {
                                           }}
                                         >
                                           <i className="fa-solid fa-trash-can text-danger"></i>
+                                        </button> */}
+
+                                        <button
+                                          type="button"
+                                          className="btn btn-link btn-sm position-absolute"
+                                          onClick={() => {
+                                            const confirmDelete = window.confirm("Are you sure you want to delete this video?");
+                                            if (confirmDelete) {
+                                              deletemedia(file.id, "video");
+                                            }
+                                          }}
+                                        >
+                                          <i className="fa-solid fa-trash-can text-danger"></i>
                                         </button>
+
                                       </div>
                                     ))}
                                   </div>
@@ -1073,6 +1166,8 @@ export default function EditEntertainer() {
                                         value={url}
                                         onChange={(e) => setUrl(e.target.value)}
                                         required
+                                        pattern="https?://.*" // Ensures the URL starts with http or https
+                                        title="Please enter a valid URL starting with http:// or https://"
                                       />
                                     </div>
                                     {/* Media Type Dropdown */}

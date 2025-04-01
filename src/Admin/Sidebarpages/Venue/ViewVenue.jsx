@@ -176,19 +176,9 @@ export default function ViewVenue() {
                   <p className="label-font fw-semibold pt-2">USER DETAILS</p>
                   <hr />
                   <div className="container">
-                    {/* <button
-                    className=" btn btn-dark rounded-3 btn-sm float-end gap-2"
-                    style={{ fontSize: "12px" }}
-                    onClick={() => {
-                      navigate("/admin/addvenue", { state: user });
-                    }}
-                  >
-                    Add Venue
-                  </button> */}
                     {hasVenues ? (
                       <button
-                        className="btn btn-dark rounded-3 btn-sm float-end gap-2"
-                        style={{ fontSize: "12px" }}
+                        className="btn btn-dark myBtn"
                         onClick={() => {
                           navigate("/admin/addvenuelocation", { state: user }); // ✅ Navigate to Add Location page
                         }}
@@ -197,8 +187,7 @@ export default function ViewVenue() {
                       </button>
                     ) : (
                       <button
-                        className="btn btn-dark rounded-3 btn-sm float-end gap-2"
-                        style={{ fontSize: "12px" }}
+                        className="btn btn-dark myBtn"
                         onClick={() => {
                           navigate("/admin/addvenue", { state: user }); // ✅ Navigate to Add Venue page
                         }}
@@ -294,7 +283,7 @@ export default function ViewVenue() {
                                       <th>Zip Code</th>
                                       {/* <th>City,State,Country</th> */}
                                       {/* <th>Website</th> */}
-                                      <th>Actions</th>
+                                      <th>Action</th>
                                     </tr>
                                   </thead>
                                   <tbody>

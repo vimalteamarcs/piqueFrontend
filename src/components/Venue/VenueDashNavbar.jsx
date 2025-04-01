@@ -73,13 +73,13 @@ export default function VenueDashNavbar() {
                 </ul>
 
                 <div className="d-flex align-items-center">
-                  <NavLink className="nav-btn" to="/">
+                  <NavLink className="nav-btn" to="/venue">
                     <img src={`${imagePath}plusIcon.svg`} />
                   </NavLink>
-                  <NavLink className="nav-btn ms-2" to="/">
+                  <NavLink className="nav-btn ms-2" to="/venue">
                     <img src={`${imagePath}messageIcon.svg`} />
                   </NavLink>
-                  <NavLink className="nav-btn ms-2" to="/">
+                  <NavLink className="nav-btn ms-2" to="/venue">
                     <img src={`${imagePath}userIcon.svg`} />
                   </NavLink>
 

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Table, Button, Modal, Input } from "antd";
+import { Table, Button, Input } from "antd";
 import {
   SearchOutlined,
   EyeOutlined,
   EditOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
+import DeleteConfirmationModal from "../Admin/settingsPages/DeleteConfirmationModal";
 
 export default function CustomTable({
   data,
@@ -19,23 +20,26 @@ export default function CustomTable({
   search,
   onSearchChange,
 }) {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedRecord, setSelectedRecord] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false); // Track modal visibility
+  const [selectedRecord, setSelectedRecord] = useState(null); // Track the selected record
+  const [deleteType, setDeleteType] = useState(""); // Track item type (e.g., "category")
 
   const handleEdit = (record) => onEdit && onEdit(record);
   const handleView = (record) => onView && onView(record);
+
   const handleDeleteClick = (record) => {
+    console.log(record);
     setSelectedRecord(record);
-    setIsModalVisible(true);
+    setDeleteType(); 
+    setShowDeleteModal(true);
   };
-  const handleConfirmDelete = () => {
-    if (onDelete && selectedRecord) onDelete(selectedRecord);
-    setIsModalVisible(false);
-    setSelectedRecord(null);
-  };
-  const handleCancel = () => {
-    setIsModalVisible(false);
-    setSelectedRecord(null);
+
+  const handleDeleteCategory = (id) => {
+    if (onDelete) {
+      onDelete(id); // Perform delete action
+    }
+    setShowDeleteModal(false); // Close modal after delete
+    setSelectedRecord(null); // Clear selected record
   };
 
   const columnsWithActions = [
@@ -105,37 +109,14 @@ export default function CustomTable({
           />
         </div>
 
-        <Modal
-          className="w-25"
-          title={<div style={{ textAlign: "center" }}>Confirm Delete</div>}
-          open={isModalVisible}
-          onOk={handleConfirmDelete}
-          onCancel={handleCancel}
-          okText="Yes, Delete"
-          cancelText="Cancel"
-          okType="danger"
-          centered
-          footer={[
-            <button
-              key="delete"
-              onClick={handleConfirmDelete}
-              className="btn btn-sm btn-danger"
-            >
-              Yes, Delete
-            </button>,
-            <button
-              key="cancel"
-              onClick={handleCancel}
-              className="btn btn-sm btn-secondary ms-2"
-            >
-              Cancel
-            </button>,
-          ]}
-        >
-          <p className="text-center">
-            Are you sure you want to delete this item?
-          </p>
-        </Modal>
+        {/* Use the DeleteConfirmationModal */}
+        <DeleteConfirmationModal
+          show={showDeleteModal}
+          handleClose={() => setShowDeleteModal(false)}
+          handleDelete={handleDeleteCategory}
+          item={selectedRecord}
+          itemType={deleteType}
+        />
       </div>
     </div>
   );

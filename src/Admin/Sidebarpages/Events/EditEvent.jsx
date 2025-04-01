@@ -17,7 +17,7 @@ const EditEvent = () => {
     title: "",
     location: "",
     venueId: 0,
-    userId: localStorage.getItem("userId"),
+    userId: Number(localStorage.getItem("userId")),
     description: "",
     startTime: "",
     endTime: "",
@@ -33,16 +33,21 @@ const EditEvent = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (event?.id) {
+    if (event?.eid) {
       setFormData({
-        ...event,
+        title: event.ename || "",
+        location: event.location || "",
+        venueId: event.vid || 0,
+        userId: Number(localStorage.getItem("userId")),
+        description: event.description || "",
+        startTime: event.startTime ? new Date(event.startTime).toISOString().slice(0, 16) : "",
+        endTime: event.endTime ? new Date(event.endTime).toISOString().slice(0, 16) : "",
+        recurring: event.recurring || "none",
+        status: event.status || "unpublished",
+        venueName: event.vname || "",
+        phone: event.phone || "",
+        addressLine1: event.addressLine1 || "",
         isAdmin: Boolean(event.isAdmin),
-        startTime: event.startTime
-          ? new Date(event.startTime).toISOString().slice(0, 16)
-          : "",
-        endTime: event.endTime
-          ? new Date(event.endTime).toISOString().slice(0, 16)
-          : "",
       });
     }
   }, [event]);
@@ -175,31 +180,6 @@ const EditEvent = () => {
                           <div className="text-danger">{errors.recurring}</div>
                         )}
                       </div>
-                      {/* <div className="col-md-6">
-                    <label className="form-label label-font fw-semibold mb-0">Location<span style={{color:"red", display:"inline"}}>*</span></label>
-                    <input
-                      type="text"
-                      className={`custom-mid-form ps-3 label-font${errors.location ? "is-invalid" : ""
-                        }`}
-                      name="location"
-                      value={formData.location}
-                      onChange={handleInputChange}
-                    />
-                    {errors.location && (
-                      <div className="invalid-feedback">{errors.location}</div>
-                    )}
-                  </div> */}
-                      {/* <div className="col-md-6">
-                    <label className="form-label label-font fw-medium mb-0">Client<span style={{color:"red", display:"inline"}}>*</span></label><br/>
-                    <input
-                      type="text"
-                      className={`custom-mid-form ps-3 label-font ${errors.title ? "is-invalid" : ""}`}
-                      name="title"
-                      placeholder="Enter Venue Owner Name"
-                      onChange={handleInputChange}
-                    />
-                   
-                  </div> */}
                     </div>
 
                     <div className="row mb-3">
@@ -235,6 +215,7 @@ const EditEvent = () => {
                           name="description"
                           value={formData.description}
                           onChange={handleInputChange}
+                          rows="1"
                         />
                         {errors.description && (
                           <div className="invalid-feedback">{errors.description}</div>
@@ -245,6 +226,29 @@ const EditEvent = () => {
 
                     <div className="row mb-3">
                       <div className="col-12 col-md-6">
+                      <label
+                          htmlFor="location"
+                          className="form-label label-font fw-medium mb-0"
+                        >
+                          Location
+                          <span style={{ color: "red", display: "inline" }}>*</span>
+                        </label>
+                        <input
+                          type="text"
+                          className={`form-control ${errors.location ? "is-invalid" : ""
+                            }`}
+                          id="location"
+                          placeholder="Enter Your location..."
+                          name="location"
+                          value={formData.location}
+                          // rows="1"
+                          onChange={handleInputChange}
+                        />
+                        {errors.location && (
+                          <div className="invalid-feedback">{errors.location}</div>
+                        )}
+                      </div>
+                    <div className="col-12 col-md-6">
                         <label className="form-label label-font fw-medium mb-0">
                           Start Date and Time
                           <span style={{ color: "red", display: "inline" }}>*</span>
@@ -261,6 +265,9 @@ const EditEvent = () => {
                           <div className="invalid-feedback">{errors.startTime}</div>
                         )}
                       </div>
+                      </div>
+                    <div className="row mb-3">
+
                       <div className="col-12 col-md-6">
                         <label className="form-label label-font fw-medium mb-0">
                           End Date and Time
@@ -306,8 +313,6 @@ const EditEvent = () => {
                           value={formData.venueName}
                           onChange={handleInputChange}
                           name="venueName"
-                        // value={venueQuery}
-                        // onChange={handleVenueChange}
                         />
                         {errors.venueName && (
                           <div className="invalid-feedback">{errors.venueName}</div>
@@ -328,7 +333,7 @@ const EditEvent = () => {
                           id="location"
                           placeholder="Enter Your location..."
                           name="location"
-                          value={formData.location}
+                          value={formData.addressLine1}
                           // rows="1"
                           onChange={handleInputChange}
                         />

@@ -208,7 +208,7 @@ export default function SearchBar({ updateFilters }) {
 
             <div className="col">
               <Button
-                className="btn btn-dark rounded-3 custom-search-font" style={{width:"150px", fontSize:"12px", height:"38px"}}
+                className="btn btn-dark rounded-3 custom-search-font" style={{width:"150px", fontSize:"12px", height:"38px", color:"white"}}
                 onClick={handleSearchClick}
               >
                 <i className="fa fa-search me-3 fs-6"></i>

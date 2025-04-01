@@ -91,7 +91,7 @@ export default function EditUser() {
       });
       //navigate(-1);
     } catch (error) {
-      toast.error("Failed to update user.");
+      toast.error(error.message);
     }
   };
 

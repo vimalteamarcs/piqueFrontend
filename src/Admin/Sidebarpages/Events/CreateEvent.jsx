@@ -16,10 +16,12 @@ const CreateEvent = () => {
   const [formData, setFormData] = useState({
     title: "",
     location: "",
+    venuelocation:"",
     venueId: Number(0),
     userId: Number(localStorage.getItem("userId")),
     description: "",
     startTime: "",
+    phone:"",
     endTime: "",
     recurring: "none",
     status: "unpublished",
@@ -82,7 +84,11 @@ const CreateEvent = () => {
     const newErrors = {};
 
     // Check required fields
-    if (!formData.title) newErrors.title = "Event Name is required";
+    if (!formData.title) {
+      newErrors.title = "Event Name is required";
+    } else if (formData.title.length < 3 || formData.title.length > 50) {
+      newErrors.title = "Event Name must be between 3 and 50 characters";
+    }
     if (!formData.location) newErrors.location = "Location is required";
     if (!formData.startTime) newErrors.startTime = "Start Time is required";
     if (!formData.endTime) newErrors.endTime = "End Time is required";
@@ -160,7 +166,7 @@ const CreateEvent = () => {
     setFormData({
       ...formData,
       venueId: Number(venueId),
-      location: selectedVenue ? `${selectedVenue.addressLine1}, ${selectedVenue.addressLine2}` : "",
+      venuelocation: selectedVenue ? `${selectedVenue.addressLine1}, ${selectedVenue.addressLine2}` : "",
       phone: selectedVenue ? selectedVenue.phone : "",
     });
   };
@@ -291,9 +297,9 @@ const CreateEvent = () => {
                               value={formData.title}
                               onChange={handleInputChange}
                             />
-                            {errors.title && (
-                              <div className="invalid-feedback">{errors.title}</div>
-                            )}
+                            {errors.title && 
+                              <div className="invalid-feedback d-block">{errors.title}</div>
+                            }
                           </div>
 
                           <div className="col-md-6">
@@ -357,7 +363,7 @@ const CreateEvent = () => {
                           id="location"
                           placeholder="Enter Event location..."
                           name="location"
-                          // value={formData.location}
+                          value={formData.location}
                           // rows="1"
                           onChange={handleInputChange}
                         />
@@ -550,8 +556,8 @@ const CreateEvent = () => {
                             }`}
                           id="location"
                           placeholder="Select Venue Location"
-                          name="location"
-                          value={formData.location || ""}
+                          name="venuelocation"
+                          value={formData.venuelocation || ""}
                           onChange={handleInputChange}
                           readOnly
                         />
