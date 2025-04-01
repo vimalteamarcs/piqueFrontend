@@ -301,11 +301,7 @@ const ReportPage = () => {
                 <CustomTable
                   columns={columns}
                   data={reportData}
-                  pagination={{
-                    current: 1,
-                    pageSize: 10,
-                    total: 20,
-                  }}
+                  pagination={pagination}
                   search={search}
                   onSearchChange={(value) => {
                     setSearch(value);
