@@ -211,7 +211,7 @@ const AllInvoices = () => {
           columns={columns}
           onView={handleView}
           showActions={true}
-          onDelete={handleDelete}
+          // onDelete={handleDelete}
           loading={loading} // Loader for the table only
           pagination={pagination}
           onTableChange={(pagination) => {
