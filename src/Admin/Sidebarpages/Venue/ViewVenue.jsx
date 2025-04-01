@@ -283,7 +283,7 @@ export default function ViewVenue() {
                                       <th>Zip Code</th>
                                       {/* <th>City,State,Country</th> */}
                                       {/* <th>Website</th> */}
-                                      <th>Actions</th>
+                                      <th>Action</th>
                                     </tr>
                                   </thead>
                                   <tbody>

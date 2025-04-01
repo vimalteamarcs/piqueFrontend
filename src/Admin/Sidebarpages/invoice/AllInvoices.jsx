@@ -66,22 +66,22 @@ const AllInvoices = () => {
     navigate("/admin/viewinvoice", { state: record });
   };
 
-  const handleDelete = async (record) => {
-    try {
-      const response = await axios.delete(
-        `${import.meta.env.VITE_API_URL}${DELETE_INVOICE}${record.id}`
-      );
-      if (response.status === 200) {
-        toast.success("Invoice deleted successfully", { autoClose: 1000 });
-        setFlag(!flag);
-      }
-    } catch (error) {
-      console.error(
-        "Failed to delete invoice:",
-        error.response?.data || error.message
-      );
-    }
-  };
+  // const handleDelete = async (record) => {
+  //   try {
+  //     const response = await axios.delete(
+  //       `${import.meta.env.VITE_API_URL}${DELETE_INVOICE}${record.id}`
+  //     );
+  //     if (response.status === 200) {
+  //       toast.success("Invoice deleted successfully", { autoClose: 1000 });
+  //       setFlag(!flag);
+  //     }
+  //   } catch (error) {
+  //     console.error(
+  //       "Failed to delete invoice:",
+  //       error.response?.data || error.message
+  //     );
+  //   }
+  // };
 
   const handleGenerateInvoice = async () => {
     const token = localStorage.getItem("token");
@@ -174,7 +174,7 @@ const AllInvoices = () => {
                 columns={columns}
                 onView={handleView}
                 showActions={true}
-                onDelete={handleDelete}
+                // onDelete={handleDelete}
                 loading={loading}
                 pagination={pagination}
                 onTableChange={(pagination) => {

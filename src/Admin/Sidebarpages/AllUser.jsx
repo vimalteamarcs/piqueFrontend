@@ -23,6 +23,19 @@ export default function AllUser() {
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState(""); // Track selected status for the dropdown
   const token = localStorage.getItem("token");
+   const [debouncedSearch, setDebouncedSearch] = useState(search);
+  
+    // Added  a Debouncing function
+    useEffect(() => {
+      const handler = setTimeout(() => {
+        setDebouncedSearch(search);
+      }, 500); // Adjust delay as needed
+  
+      return () => {
+        clearTimeout(handler);
+      };
+    }, [search]);
+
   // Fetch users from API
   const fetchusers = async (page = 1, pageSize = 5, search = "") => {
     setLoading(true);
@@ -61,16 +74,16 @@ export default function AllUser() {
 
   useEffect(() => {
     fetchusers(pagination.current, pagination.pageSize, search);
-  }, [pagination.current, pagination.pageSize, search]);
+  }, [pagination.current, pagination.pageSize, debouncedSearch]);
 
-  const debouncedSearch = useCallback(
-    debounce((value) => {
-      if (value.length >= 3) {
-        fetchusers(1, pagination.pageSize, value);
-      }
-    }, 500),
-    [pagination.pageSize]
-  );
+  // const debouncedSearch = useCallback(
+  //   debounce((value) => {
+  //     if (value.length >= 3) {
+  //       fetchusers(1, pagination.pageSize, value);
+  //     }
+  //   }, 500),
+  //   [pagination.pageSize]
+  // );
 
   const handleTableChange = (page, pageSize) => {
     setPagination((prev) => ({

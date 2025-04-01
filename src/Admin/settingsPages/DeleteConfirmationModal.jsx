@@ -9,7 +9,7 @@ export default function DeleteConfirmationModal({ show, handleClose, handleDelet
       </Modal.Header>
       <Modal.Body>
         <p>
-          Are you sure you want to delete this <strong>{itemType}</strong>: <strong>{item?.name}</strong>?
+          Are you sure you want to delete <strong>{itemType}</strong>: <strong>{item?.name}</strong>?
         </p>
       </Modal.Body>
       <Modal.Footer>
