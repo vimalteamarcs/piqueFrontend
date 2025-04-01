@@ -116,33 +116,51 @@ export default function EditUser() {
                     style={{ marginRight: "8px" }}
                   ></i>
                 </button>
+                <p className="headingPG">UPDATE USER</p>
 
-                <p className="profile-font fw-semibold">UPDATE USER DETAILS</p>
                 <hr />
-                <form onSubmit={handleSubmit} className="event-form p-3 label-font">
+                <form
+                  onSubmit={handleSubmit}
+                  className="event-form p-3 label-font"
+                >
                   <div className="row profile-font">
                     <div className="mb-3 col-md-6 col-sm-12">
-                      <label className="form-label label-font fw-medium mb-0">Name<span style={{ color: "red", display: "inline" }}>*</span></label><br />
+                      <label className="form-label label-font fw-medium mb-0">
+                        Name
+                        <span style={{ color: "red", display: "inline" }}>
+                          *
+                        </span>
+                      </label>
+                      <br />
                       <input
                         type="text"
-                        className={`custom-form-event ps-3${errors.name ? "is-invalid" : ""
-                          }`}
+                        className={`custom-form-event ps-3${
+                          errors.name ? "is-invalid" : ""
+                        }`}
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
                         required
                       />
                       {errors.name && (
-                        <div className="text-danger label-font">{errors.name}</div>
+                        <div className="text-danger label-font">
+                          {errors.name}
+                        </div>
                       )}
                     </div>
 
                     <div className="mb-3 col-md-6 col-sm-12">
-                      <label className="form-label label-font fw-medium mb-0">Email<span style={{ color: "red", display: "inline" }}>*</span></label>
+                      <label className="form-label label-font fw-medium mb-0">
+                        Email
+                        <span style={{ color: "red", display: "inline" }}>
+                          *
+                        </span>
+                      </label>
                       <input
                         type="email"
-                        className={`custom-form-event ps-3${errors.email ? "is-invalid" : ""
-                          }`}
+                        className={`custom-form-event ps-3${
+                          errors.email ? "is-invalid" : ""
+                        }`}
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
@@ -157,12 +175,16 @@ export default function EditUser() {
                   <div className="row profile-font">
                     <div className="mb-3 col-md-6 col-sm-12">
                       <label className="form-label label-font fw-medium mb-0">
-                        Phone Number<span style={{ color: "red", display: "inline" }}>*</span>
+                        Phone Number
+                        <span style={{ color: "red", display: "inline" }}>
+                          *
+                        </span>
                       </label>
                       <input
                         type="text"
-                        className={`custom-form-event ps-3 ${errors.phoneNumber ? "is-invalid" : ""
-                          }`}
+                        className={`custom-form-event ps-3 ${
+                          errors.phoneNumber ? "is-invalid" : ""
+                        }`}
                         name="phoneNumber"
                         value={formData.phoneNumber}
                         onChange={handleChange}
@@ -174,10 +196,16 @@ export default function EditUser() {
                     </div>
 
                     <div className="mb-3 col-md-6 col-sm-12">
-                      <label className="form-label label-font fw-medium mb-0">Role<span style={{ color: "red", display: "inline" }}>*</span></label>
+                      <label className="form-label label-font fw-medium mb-0">
+                        Role
+                        <span style={{ color: "red", display: "inline" }}>
+                          *
+                        </span>
+                      </label>
                       <select
-                        className={`custom-form-event custom-select ps-3${errors.role ? "is-invalid" : ""
-                          }`}
+                        className={`custom-form-event custom-select ps-3${
+                          errors.role ? "is-invalid" : ""
+                        }`}
                         name="role"
                         value={formData.role}
                         onChange={handleChange}
@@ -193,10 +221,16 @@ export default function EditUser() {
 
                   <div className="row profile-font">
                     <div className="mb-3 col-md-6 col-sm-12">
-                      <label className="form-label label-font fw-medium mb-0">Status<span style={{ color: "red", display: "inline" }}>*</span></label>
+                      <label className="form-label label-font fw-medium mb-0">
+                        Status
+                        <span style={{ color: "red", display: "inline" }}>
+                          *
+                        </span>
+                      </label>
                       <select
-                        className={`custom-form-event custom-select ps-3 ${errors.status ? "is-invalid" : ""
-                          }`}
+                        className={`custom-form-event custom-select ps-3 ${
+                          errors.status ? "is-invalid" : ""
+                        }`}
                         name="status"
                         value={formData.status}
                         onChange={handleChange}
@@ -213,9 +247,10 @@ export default function EditUser() {
 
                   <button
                     type="submit"
-                    className="btn btn-dark rounded-3 flost-start" style={{ fontSize: "12px" }}
+                    className="btn btn-dark rounded-3 flost-start"
+                    style={{ fontSize: "12px" }}
                   >
-                    Update User
+                    Submit
                   </button>
                 </form>
               </div>

@@ -11,7 +11,6 @@ export default function AdminSideBar() {
   const [isAdminDropdownOpen, setIsAdminDropdownOpen] = useState(false);
   const [isSettingDropdownOpen, setIsSettingDropdownOpen] = useState(false);
 
-
   const isSettingActive =
     location.pathname.startsWith("/admin/manageisallowed") ||
     location.pathname.startsWith("/admin/createcategory");
@@ -25,7 +24,7 @@ export default function AdminSideBar() {
   const isVenueActive =
     location.pathname.startsWith("/admin/allVenues") ||
     location.pathname.startsWith("/admin/viewvenue");
-    // location.pathname.startsWith("/admin/edituser");
+  // location.pathname.startsWith("/admin/edituser");
 
   const isEntertainerActive =
     location.pathname.startsWith("/admin/allentertainer") ||
@@ -39,11 +38,7 @@ export default function AdminSideBar() {
     location.pathname.startsWith("/admin/allVenues") ||
     location.pathname.startsWith("/admin/viewdetails") ||
     location.pathname.startsWith("/admin/addvenuelocation") ||
-    location.pathname.startsWith("/admin/editvenue")
-    ;
-
-
-
+    location.pathname.startsWith("/admin/editvenue");
   useEffect(() => {
     if (isEventsActive) {
       setIsEventsDropdownOpen(isEventsActive);
@@ -55,7 +50,6 @@ export default function AdminSideBar() {
       setIsAdminDropdownOpen(isAdminActive);
     }
   }, [isAdminActive]);
-
 
   useEffect(() => {
     setIsSettingDropdownOpen(isSettingActive);
@@ -99,7 +93,8 @@ export default function AdminSideBar() {
             to="/admin"
             end
             className={({ isActive }) =>
-              `nav-link dash-sidebar-link2 ${isActive ? "dash-active-link fw-semibold" : ""
+              `nav-link dash-sidebar-link2 ${
+                isActive ? "dash-active-link fw-semibold" : ""
               }`
             }
           >
@@ -112,7 +107,11 @@ export default function AdminSideBar() {
                   className="menuIconA me-2"
                 /> */}
 
-                <p className="profile-font"> <i className="fa-solid fa-table-cells-large menuIconA"></i> Dashboard</p>
+                <p className="profile-font">
+                  {" "}
+                  <i className="fa-solid fa-table-cells-large menuIconA"></i>{" "}
+                  Dashboard
+                </p>
               </div>
             )}
           </NavLink>
@@ -124,8 +123,9 @@ export default function AdminSideBar() {
           {/* Events Dropdown */}
           <div className="dropdown">
             <div
-              className={`nav-link dash-sidebar-link2 d-flex justify-content-between align-items-center ${isEventsActive ? "dash-active-link fw-semibold" : ""
-                }`}
+              className={`nav-link dash-sidebar-link2 d-flex justify-content-between align-items-center ${
+                isEventsActive ? "dash-active-link fw-semibold" : ""
+              }`}
               onClick={handleEventsClick}
               style={{ cursor: "pointer" }}
             >
@@ -137,26 +137,31 @@ export default function AdminSideBar() {
                   className="menuIconA me-2"
                 /> */}
 
-                <p className="profile-font"> <i className="fa-regular fa-calendar menuIconA"></i> Events</p>
+                <p className="profile-font">
+                  {" "}
+                  <i className="fa-regular fa-calendar menuIconA"></i> Events
+                </p>
               </div>
               <div>
                 <img
                   src={`${imagePath}dropdownIcon.svg`}
                   alt="Dropdown"
                   className="dropdown-arrow"
-
                 />
               </div>
             </div>
 
             <ul
-              className={`dropdown-menu dash-drop-menu ${isEventsDropdownOpen ? "show" : ""}`}
+              className={`dropdown-menu dash-drop-menu ${
+                isEventsDropdownOpen ? "show" : ""
+              }`}
             >
               <li>
                 <NavLink
                   to="/admin/allevents"
                   className={({ isActive }) =>
-                    `dropdown-item dash-drop-item dropdown-item-text ${isActive ? "active-item fw-semibold" : ""
+                    `dropdown-item dash-drop-item dropdown-item-text ${
+                      isActive ? "active-item fw-semibold" : ""
                     }`
                   }
                 >
@@ -167,7 +172,8 @@ export default function AdminSideBar() {
                 <NavLink
                   to="/admin/createevent"
                   className={({ isActive }) =>
-                    `dropdown-item dash-drop-item dropdown-item-text ${isActive ? "active-item fw-semibold" : "inactive-item"
+                    `dropdown-item dash-drop-item dropdown-item-text ${
+                      isActive ? "active-item fw-semibold" : "inactive-item"
                     }`
                   }
                 >
@@ -201,8 +207,9 @@ export default function AdminSideBar() {
           {/* Admin Dropdown */}
           <div className="dropdown">
             <div
-              className={`nav-link dash-sidebar-link2 d-flex justify-content-between align-items-center ${isAdminDropdownOpen ? "dash-active-link fw-semibold" : ""
-                }`}
+              className={`nav-link dash-sidebar-link2 d-flex justify-content-between align-items-center ${
+                isAdminDropdownOpen ? "dash-active-link fw-semibold" : ""
+              }`}
               onClick={handleAdminClick}
               style={{ cursor: "pointer" }}
             >
@@ -214,7 +221,10 @@ export default function AdminSideBar() {
                   className="menuIconA me-2"
                 /> */}
 
-                <p className="profile-font"><i className="fa-regular fa-folder-closed menuIconA"></i> Administration</p>
+                <p className="profile-font">
+                  <i className="fa-regular fa-folder-closed menuIconA"></i>{" "}
+                  Administration
+                </p>
               </div>
               <div>
                 <img
@@ -225,26 +235,30 @@ export default function AdminSideBar() {
               </div>
             </div>
             <ul
-              className={`dropdown-menu dash-drop-menu ${isAdminDropdownOpen ? "show" : ""}`}
+              className={`dropdown-menu dash-drop-menu ${
+                isAdminDropdownOpen ? "show" : ""
+              }`}
             >
               <li>
                 <NavLink
                   to="/admin/allVenues"
-                  className={`dropdown-item dash-drop-item dropdown-item-text ${isVenueActive ? "active-item fw-semibold" : "inactive-item"
-                    }`}
+                  className={`dropdown-item dash-drop-item dropdown-item-text ${
+                    isVenueActive ? "active-item fw-semibold" : "inactive-item"
+                  }`}
                 >
                   <span className="bullet"></span> Venue Management
                 </NavLink>
-
               </li>
               <li>
                 <NavLink
                   to="/admin/allentertainer"
-                  className={`dropdown-item dash-drop-item dropdown-item-text ${isEntertainerActive ? "active-item fw-semibold" : "inactive-item"
-                    }`}
+                  className={`dropdown-item dash-drop-item dropdown-item-text ${
+                    isEntertainerActive
+                      ? "active-item fw-semibold"
+                      : "inactive-item"
+                  }`}
                 >
-                  <span className="bullet"></span> Entertainer
-                  Management
+                  <span className="bullet"></span> Entertainer Management
                 </NavLink>
               </li>
             </ul>
@@ -254,14 +268,18 @@ export default function AdminSideBar() {
           <NavLink
             to="/admin/alluser"
             className={({ isActive }) =>
-              `nav-link dash-sidebar-link2 ${isActive ? "dash-active-link fw-semibold" : ""
+              `nav-link dash-sidebar-link2 ${
+                isActive ? "dash-active-link fw-semibold" : ""
               }`
             }
           >
             <div className="d-flex align-items-center dash-sidebar-link">
               {/* <i className="fa-solid fa-users-rectangle me-2 mt-2 fs-5"></i>
               <p className="mb-0 mt-2 profile-font ms-3">Users</p> */}
-              <p className="profile-font"> <i className="fa-solid fa-users menuIconA"></i> Users</p>
+              <p className="profile-font">
+                {" "}
+                <i className="fa-solid fa-users menuIconA"></i> Users
+              </p>
             </div>
           </NavLink>
 
@@ -297,13 +315,16 @@ export default function AdminSideBar() {
           <NavLink
             to="/admin/allinvoices"
             className={({ isActive }) =>
-              `nav-link dash-sidebar-link2 ${isActive ? "dash-active-link fw-semibold" : ""
+              `nav-link dash-sidebar-link2 ${
+                isActive ? "dash-active-link fw-semibold" : ""
               }`
             }
           >
             <div className="d-flex align-items-center  dash-sidebar-link">
-
-              <p className="profile-font"> <i className="fa-solid fa-file-invoice menuIconA"></i> Invoices</p>
+              <p className="profile-font">
+                {" "}
+                <i className="fa-solid fa-file-invoice menuIconA"></i> Invoices
+              </p>
             </div>
           </NavLink>
 
@@ -311,28 +332,34 @@ export default function AdminSideBar() {
           <NavLink
             to="/admin/report"
             className={({ isActive }) =>
-              `nav-link dash-sidebar-link2 ${isActive ? "dash-active-link fw-semibold" : ""
+              `nav-link dash-sidebar-link2 ${
+                isActive ? "dash-active-link fw-semibold" : ""
               }`
             }
           >
             <div className="d-flex align-items-center  dash-sidebar-link">
-
-              <p className="profile-font"> <i className="fa-solid fa-chart-line menuIconA"></i> Report</p>
+              <p className="profile-font">
+                {" "}
+                <i className="fa-solid fa-chart-line menuIconA"></i> Event
+                Report
+              </p>
             </div>
           </NavLink>
 
           {/* Setting Dropdown */}
           <div className="dropdown">
             <div
-              className={`nav-link dash-sidebar-link2 d-flex justify-content-between align-items-center ${isSettingDropdownOpen ? "dash-active-link fw-semibold" : ""
-                }`}
+              className={`nav-link dash-sidebar-link2 d-flex justify-content-between align-items-center ${
+                isSettingDropdownOpen ? "dash-active-link fw-semibold" : ""
+              }`}
               onClick={handleSettingClick}
               style={{ cursor: "pointer" }}
             >
               <div className="d-flex align-items-center dash-sidebar-link flex-grow-1">
-
-
-                <p className="profile-font"> <i className="fa-solid fa-cog menuIconA"></i> Settings</p>
+                <p className="profile-font">
+                  {" "}
+                  <i className="fa-solid fa-cog menuIconA"></i> Settings
+                </p>
               </div>
               <div>
                 <img
@@ -343,28 +370,32 @@ export default function AdminSideBar() {
               </div>
             </div>
             <ul
-              className={`dropdown-menu dash-drop-menu ${isSettingDropdownOpen ? "show" : ""}`}
-            ><li>
+              className={`dropdown-menu dash-drop-menu ${
+                isSettingDropdownOpen ? "show" : ""
+              }`}
+            >
+              <li>
                 <NavLink
                   to="/admin/manageisallowed"
                   className={({ isActive }) =>
-
-                    `dropdown-item dash-drop-item dropdown-item-text ${isActive ? "active-item fw-semibold" : ""
+                    `dropdown-item dash-drop-item dropdown-item-text ${
+                      isActive ? "active-item fw-semibold" : ""
                     }`
                   }
                 >
-                  <span className="bullet"></span>  Manage Countries
+                  <span className="bullet"></span> Manage Countries
                 </NavLink>
               </li>
               <li>
                 <NavLink
                   to="/admin/createcategory"
                   className={({ isActive }) =>
-                    `dropdown-item dash-drop-item dropdown-item-text ${isActive ? "active-item fw-semibold" : ""
+                    `dropdown-item dash-drop-item dropdown-item-text ${
+                      isActive ? "active-item fw-semibold" : ""
                     }`
                   }
                 >
-                  <span className="bullet"></span>  Create Category
+                  <span className="bullet"></span> Create Category
                 </NavLink>
               </li>
             </ul>
@@ -379,10 +410,11 @@ export default function AdminSideBar() {
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <div
-                className="d-flex align-items-center dash-sidebar-link"
-              >
-                <p className="profile-font"> <i className="fa-solid fa-cog menuIconA"></i> Settings</p>
+              <div className="d-flex align-items-center dash-sidebar-link">
+                <p className="profile-font">
+                  {" "}
+                  <i className="fa-solid fa-cog menuIconA"></i> Settings
+                </p>
               </div>
             </button>
             <ul
@@ -394,7 +426,8 @@ export default function AdminSideBar() {
                 <NavLink
                   to="/admin/manageisallowed"
                   className={({ isActive }) =>
-                    `dropdown-item dropdown-item-text ${isActive ? " fw-bold" : ""
+                    `dropdown-item dropdown-item-text ${
+                      isActive ? " fw-bold" : ""
                     }`
                   }
                 >
@@ -418,7 +451,8 @@ export default function AdminSideBar() {
                 <NavLink
                   to="/admin/createcategory"
                   className={({ isActive }) =>
-                    `dropdown-item dropdown-item-text ${isActive ? " fw-bold" : ""
+                    `dropdown-item dropdown-item-text ${
+                      isActive ? " fw-bold" : ""
                     }`
                   }
                 >
@@ -427,9 +461,8 @@ export default function AdminSideBar() {
               </li>
             </ul>
           </div>
-
         </div>
-      </nav >
-    </div >
+      </nav>
+    </div>
   );
 }

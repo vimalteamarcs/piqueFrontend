@@ -35,23 +35,23 @@ export default function EditVenue() {
     venueData
       ? { ...venueData }
       : {
-        name: "",
-        phone: "",
-        email: "",
-        addressLine1: "",
-        addressLine2: "",
-        description: "",
-        city: "",
-        state: "",
-        zipCode: "",
-        country: "",
-        // lat: "",
-        // long: "",
-        // amenities: [""],
-        // websiteUrl: "",
-        // timings: "",
-        // bookingPolicies: "",
-      }
+          name: "",
+          phone: "",
+          email: "",
+          addressLine1: "",
+          addressLine2: "",
+          description: "",
+          city: "",
+          state: "",
+          zipCode: "",
+          country: "",
+          // lat: "",
+          // long: "",
+          // amenities: [""],
+          // websiteUrl: "",
+          // timings: "",
+          // bookingPolicies: "",
+        }
   );
 
   useEffect(() => {
@@ -139,8 +139,8 @@ export default function EditVenue() {
       [name]: ["city", "state", "country"].includes(name)
         ? Number(value)
         : name === "amenities"
-          ? value.split(",")
-          : value,
+        ? value.split(",")
+        : value,
     }));
 
     if (name === "country") {
@@ -298,18 +298,12 @@ export default function EditVenue() {
               onClick={() => navigate(-1)}
               className="btn btn-outline-dark btn-sm d-flex align-items-center mb-2"
             >
-              <i
-                className="fa fa-arrow-left"
-              ></i>
+              <i className="fa fa-arrow-left"></i>
             </button>
             <div className="card">
               <div className="card-body">
-
-                <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">
-                  Update Venue Details
-                </p>
+                <p className="headingPG">Update Venue</p>
                 <hr className="mt-0" />
-
 
                 {/* {Object.keys(errors).length > 0 && (
                 <div className="alert alert-danger">
@@ -327,7 +321,10 @@ export default function EditVenue() {
                     <p class="formLightHeading mb-2">GENERAL INFORMATION</p>
                     <div className="row mb-3">
                       <div className="col-md-4 ">
-                        <label htmlFor="name" className="form-label label-font fw-medium mb-0">
+                        <label
+                          htmlFor="name"
+                          className="form-label label-font fw-medium mb-0"
+                        >
                           Name
                         </label>
                         <Input
@@ -342,7 +339,10 @@ export default function EditVenue() {
                         )}
                       </div>
                       <div className="col-md-4">
-                        <label htmlFor="phone" className="form-label label-font fw-medium mb-0">
+                        <label
+                          htmlFor="phone"
+                          className="form-label label-font fw-medium mb-0"
+                        >
                           Phone
                         </label>
                         <Input
@@ -357,7 +357,10 @@ export default function EditVenue() {
                         )}
                       </div>
                       <div className="col-md-4">
-                        <label htmlFor="email" className="form-label label-font fw-medium mb-0">
+                        <label
+                          htmlFor="email"
+                          className="form-label label-font fw-medium mb-0"
+                        >
                           Email
                         </label>
                         <Input
@@ -377,7 +380,10 @@ export default function EditVenue() {
                     <p class="formLightHeading mb-2">Address Details</p>
                     <div className="row mb-2">
                       <div className="col-md-4 text-start">
-                        <label htmlFor="country" className="form-label label-font fw-medium mb-0">
+                        <label
+                          htmlFor="country"
+                          className="form-label label-font fw-medium mb-0"
+                        >
                           Country
                         </label>
                         <Select
@@ -390,11 +396,16 @@ export default function EditVenue() {
                           }
                         />
                         {errors.country && (
-                          <small className="text-danger">{errors.country}</small>
+                          <small className="text-danger">
+                            {errors.country}
+                          </small>
                         )}
                       </div>
                       <div className="col-md-4 text-start">
-                        <label htmlFor="state" className="form-label label-font fw-medium mb-0">
+                        <label
+                          htmlFor="state"
+                          className="form-label label-font fw-medium mb-0"
+                        >
                           State
                         </label>
                         <Select
@@ -411,7 +422,10 @@ export default function EditVenue() {
                         )}
                       </div>
                       <div className="col-md-4 text-start">
-                        <label htmlFor="city" className="form-label label-font fw-medium mb-0">
+                        <label
+                          htmlFor="city"
+                          className="form-label label-font fw-medium mb-0"
+                        >
                           City
                         </label>
                         <Select
@@ -419,7 +433,9 @@ export default function EditVenue() {
                           options={cities}
                           value={formData.city}
                           onChange={handleChange}
-                          defaultOption={venueData ? venueData.city : "Select City"}
+                          defaultOption={
+                            venueData ? venueData.city : "Select City"
+                          }
                         />
                         {errors.city && (
                           <small className="text-danger">{errors.city}</small>
@@ -428,7 +444,10 @@ export default function EditVenue() {
                     </div>
                     <div className=" row mb-2">
                       <div className="col-md-4 text-start">
-                        <label htmlFor="addressLine1" className="form-label label-font fw-medium mb-0">
+                        <label
+                          htmlFor="addressLine1"
+                          className="form-label label-font fw-medium mb-0"
+                        >
                           Address Line 1
                         </label>
                         <Input
@@ -445,7 +464,10 @@ export default function EditVenue() {
                         )}
                       </div>
                       <div className="col-md-4 text-start">
-                        <label htmlFor="addressLine2" className="form-label label-font fw-medium mb-0">
+                        <label
+                          htmlFor="addressLine2"
+                          className="form-label label-font fw-medium mb-0"
+                        >
                           Address Line 2
                         </label>
                         <Input
@@ -462,7 +484,10 @@ export default function EditVenue() {
                         )}
                       </div>
                       <div className="col-md-4 text-start">
-                        <label htmlFor="zipCode" className="form-label label-font fw-medium mb-0">
+                        <label
+                          htmlFor="zipCode"
+                          className="form-label label-font fw-medium mb-0"
+                        >
                           Zip Code
                         </label>
                         <Input
@@ -473,13 +498,18 @@ export default function EditVenue() {
                           onChange={handleChange}
                         />
                         {errors.zipCode && (
-                          <small className="text-danger">{errors.zipCode}</small>
+                          <small className="text-danger">
+                            {errors.zipCode}
+                          </small>
                         )}
                       </div>
                     </div>
                     <div className=" row mb-2">
                       <div className="col-md-12 text-start">
-                        <label htmlFor="location" className="form-label label-font fw-medium mb-0">
+                        <label
+                          htmlFor="location"
+                          className="form-label label-font fw-medium mb-0"
+                        >
                           Description
                         </label>
                         <Input
@@ -585,7 +615,6 @@ export default function EditVenue() {
                     className="btn mybtn mt-2"
                     label="Submit"
                   />
-
                 </form>
                 <div className="d-flex justify-content-center mb-5">
                   <div className=" col-12 border-0">
@@ -597,7 +626,10 @@ export default function EditVenue() {
 
                       <div className="row mt-1">
                         <div className="col-md-12 col-sm-12">
-                          <label className="form-label label-font fw-medium mb-0">Image Upload</label><br />
+                          <label className="form-label label-font fw-medium mb-0">
+                            Image Upload
+                          </label>
+                          <br />
                           <input
                             type="file"
                             accept="image/*"
@@ -639,6 +671,5 @@ export default function EditVenue() {
       </div>
       <ToastContainer />
     </>
-
   );
 }

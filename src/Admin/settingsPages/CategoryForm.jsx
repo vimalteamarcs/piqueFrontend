@@ -51,7 +51,6 @@ const CategoryForm = () => {
     setShowDeleteModal(true);
   };
 
-
   useEffect(() => {
     if (error) {
       const timer = setTimeout(() => {
@@ -118,13 +117,13 @@ const CategoryForm = () => {
   }, [mainCategoryId, success, error]);
 
   const handlemainSubmit = async (e) => {
-    console.log("main category")
+    console.log("main category");
     e.preventDefault();
     setError("");
     setSuccess("");
 
     try {
-     const response = await axios.post(
+      const response = await axios.post(
         `${import.meta.env.VITE_API_URL}${CREATE_CATEGORY}`,
         {
           name: name,
@@ -136,7 +135,7 @@ const CategoryForm = () => {
           },
         }
       );
-      console.log("main category",response.data)
+      console.log("main category", response.data);
       setSuccess("Main category created successfully");
 
       setName("");
@@ -245,7 +244,6 @@ const CategoryForm = () => {
     }
   };
 
-
   return (
     <>
       <DashLayout />
@@ -292,7 +290,7 @@ const CategoryForm = () => {
                         )}
 
                         {/* Main Category Creation Form */}
-                        <p className="fw-semibold">CREATE CATEGORY</p>
+                        <p className="fw-semibold">ALL CATEGORY</p>
                         <hr className="mt-3 mb-0 w-100" />
                         {/* <!-- Modal --> */}
                         {/* <CategoryModal
@@ -305,8 +303,15 @@ const CategoryForm = () => {
                         <div className="row">
                           <div className="col-md-4">
                             <div className="d-flex mt-5">
-                              <p className=" profile-font fw-semibold">Main Categories</p>
-                              <button className="btn btn-outline-primary btn-sm mb-3 ms-2" onClick={() => setIsModalOpen(true)}><i className="fa-solid fa-plus"></i></button>
+                              <p className=" profile-font fw-semibold">
+                                Main Categories
+                              </p>
+                              <button
+                                className="btn btn-outline-primary btn-sm mb-3 ms-2"
+                                onClick={() => setIsModalOpen(true)}
+                              >
+                                <i className="fa-solid fa-plus"></i>
+                              </button>
                             </div>
                             <div
                               className="list-group  overflow-auto"
@@ -319,8 +324,11 @@ const CategoryForm = () => {
                               {mainCategories.map((category) => (
                                 <div key={category.id} className="d-flex">
                                   <button
-                                    className={`list-group-item list-group-item-action ${mainCategoryId === category.id ? " text-info" : ""
-                                      }`}
+                                    className={`list-group-item list-group-item-action ${
+                                      mainCategoryId === category.id
+                                        ? " text-info"
+                                        : ""
+                                    }`}
                                     onClick={() => {
                                       setMainCategoryId(category.id);
                                     }}
@@ -339,7 +347,9 @@ const CategoryForm = () => {
                                   <button
                                     type="button"
                                     className="btn btn-outline"
-                                    onClick={() => openDeleteModal(category, "Main Category")}
+                                    onClick={() =>
+                                      openDeleteModal(category, "Main Category")
+                                    }
                                   >
                                     <i className="fas fa-trash text-danger"></i>
                                   </button>
@@ -353,7 +363,6 @@ const CategoryForm = () => {
                                 done={(msg) => alert(msg)}
                                 err={(msg) => alert(msg)}
                               />
-
                             </div>
                           </div>
 
@@ -361,7 +370,9 @@ const CategoryForm = () => {
                             {/* Subcategory Creation Form */}
                             <div className="row">
                               <div className="d-flex mt-4">
-                                <p className=" profile-font mt-4 fw-semibold">SubCategories</p>
+                                <p className=" profile-font mt-4 fw-semibold">
+                                  SubCategories
+                                </p>
                                 {/* <button className="btn btn-outline-primary btn-sm mb-3 mt-4 ms-2" onClick={() => setIsSubModalOpen(true)}><i className="fa-solid fa-plus"></i></button>
                           </div>
                               {mainCategoryId && (
@@ -390,13 +401,19 @@ const CategoryForm = () => {
                                   </button>
                                 </form>
                           )} */}
-                                <button className="btn btn-outline-primary btn-sm mb-3 mt-4 ms-2" onClick={() => setSubCategoryModalShow(true)}>
+                                <button
+                                  className="btn btn-outline-primary btn-sm mb-3 mt-4 ms-2"
+                                  onClick={() => setSubCategoryModalShow(true)}
+                                >
                                   <i className="fa-solid fa-plus"></i>
-                                </button></div>
+                                </button>
+                              </div>
 
                               <SubCategoryModal
                                 show={subCategoryModalShow}
-                                handleClose={() => setSubCategoryModalShow(false)}
+                                handleClose={() =>
+                                  setSubCategoryModalShow(false)
+                                }
                                 mainCategoryId={mainCategoryId}
                                 fetchSubCategories={fetchSubCategories}
                               />
@@ -430,7 +447,9 @@ const CategoryForm = () => {
                                               style={{ paddingRight: "30px" }}
                                               data-bs-toggle="custom-modal"
                                               data-bs-target="#emodal"
-                                              onClick={() => setCategoryData(sub)}
+                                              onClick={() =>
+                                                setCategoryData(sub)
+                                              }
                                             >
                                               {sub.name}
                                             </button>
@@ -463,9 +482,13 @@ const CategoryForm = () => {
                                                 transform: "translateY(-50%)",
                                                 fontSize: "10px", // Makes the button smaller
                                               }}
-                                              onClick={() => openDeleteModal(sub, "Subcategory")}
+                                              onClick={() =>
+                                                openDeleteModal(
+                                                  sub,
+                                                  "Subcategory"
+                                                )
+                                              }
                                             />
-
                                           </div>
                                         </div>
                                       </div>
@@ -489,11 +512,8 @@ const CategoryForm = () => {
           <Modal.Header closeButton>
             <Modal.Title className="fs-5">Create Main Category</Modal.Title>
           </Modal.Header>
-          <form
-              onSubmit={handlemainSubmit}
-            >
-          <Modal.Body>
-           
+          <form onSubmit={handlemainSubmit}>
+            <Modal.Body>
               <label htmlFor="name" className="form-label fw-semibold">
                 Main Category Name
               </label>
@@ -508,17 +528,20 @@ const CategoryForm = () => {
                   required
                 />
               </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <button type="submit" className="btn btn-dark btn-sm rounded-3">
-              Add Category
-            </button>
-            <Button variant="danger" className="btn-sm rounded-3" onClick={() => setIsModalOpen(false)}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </form>
-
+            </Modal.Body>
+            <Modal.Footer>
+              <button type="submit" className="btn btn-dark btn-sm rounded-3">
+                Add Category
+              </button>
+              <Button
+                variant="danger"
+                className="btn-sm rounded-3"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Close
+              </Button>
+            </Modal.Footer>
+          </form>
         </Modal>
 
         <DeleteConfirmationModal

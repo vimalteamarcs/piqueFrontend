@@ -41,7 +41,7 @@ export default function AllVenues() {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response)
+      console.log(response);
       if (response.data && response.data.records) {
         setVenuedata(response.data.records); // Update table data
         setPagination((prev) => ({
@@ -93,7 +93,6 @@ export default function AllVenues() {
       console.error("Error deleting venue:", error);
     }
     fetchVenues(pagination.current, pagination.pageSize, search);
-
   };
 
   const handleTableChange = (pagination) => {
@@ -161,12 +160,14 @@ export default function AllVenues() {
             <AdminSideBar />
           </div>
           <div className="dash-profile-container">
-            <p className="headingPG">VENUES DETAILS</p>
+            <p className="headingPG">VENUES</p>
             <div className="card">
               <div className="card-body">
                 {successMessage && (
                   <div className="alert alert-danger d-flex align-items-center mt-2">
-                    <span className="badge bg-danger me-2">{successMessage}</span>
+                    <span className="badge bg-danger me-2">
+                      {successMessage}
+                    </span>
                   </div>
                 )}
                 {error ? (
@@ -189,7 +190,11 @@ export default function AllVenues() {
                       }}
                       onTableChange={(pagination) => {
                         // Trigger API call with new page and pageSize
-                        fetchVenues(pagination.current, pagination.pageSize, search);
+                        fetchVenues(
+                          pagination.current,
+                          pagination.pageSize,
+                          search
+                        );
                       }}
                       search={search}
                       onSearchChange={(value) => {

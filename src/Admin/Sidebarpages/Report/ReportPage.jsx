@@ -250,7 +250,7 @@ const ReportPage = () => {
       console.log("url", url);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "Annual_Report.xlsx";
+      a.download = "Event_Report.xlsx";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -325,6 +325,7 @@ const ReportPage = () => {
             <AdminSideBar />
           </div>
           <div className="dash-profile-container">
+            <p className="headingPG">Event Report</p>
             <div className="d-flex justify-content-between my-3">
               <div className="d-flex gap-2">
                 <input

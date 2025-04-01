@@ -213,7 +213,7 @@ export default function AllEntertainer() {
             <AdminSideBar />
           </div>
           <div className="dash-profile-container">
-            <p className="headingPG">ENTERTAINERS DETAILS</p>
+            <p className="headingPG">ENTERTAINERS</p>
             <div className="card">
               <div className="card-body">
                 {/* Loader for the table */}

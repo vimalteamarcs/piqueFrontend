@@ -85,20 +85,21 @@ export default function AddUser() {
                 >
                   BACK
                 </button>
-                <p className="label-font fw-semibold">CREATE USER</p>
+
+                <p className="headingPG">ADD USER</p>
                 <hr />
                 <form onSubmit={handleSubmit}>
                   <div className="row">
                     <div className="mb-3 col-md-6 col-sm-12">
                       <label className="form-label label-font fw-semibold mb-0">
                         Name
-                      </label><span style={{ color: "red", display: "inline" }}>
-                              *
-                            </span>
+                      </label>
+                      <span style={{ color: "red", display: "inline" }}>*</span>
                       <input
                         type="text"
-                        className={`form-control ${errors.name ? "is-invalid" : ""
-                          }`}
+                        className={`form-control ${
+                          errors.name ? "is-invalid" : ""
+                        }`}
                         name="name"
                         value={formData.name}
                         placeholder="Enter User Name"
@@ -113,13 +114,13 @@ export default function AddUser() {
                     <div className="mb-3 col-md-6 col-sm-12">
                       <label className="form-label label-font fw-semibold mb-0">
                         Email
-                      </label><span style={{ color: "red", display: "inline" }}>
-                              *
-                            </span>
+                      </label>
+                      <span style={{ color: "red", display: "inline" }}>*</span>
                       <input
                         type="email"
-                        className={`form-control ${errors.email ? "is-invalid" : ""
-                          }`}
+                        className={`form-control ${
+                          errors.email ? "is-invalid" : ""
+                        }`}
                         name="email"
                         value={formData.email}
                         placeholder="Enter email address"
@@ -136,13 +137,13 @@ export default function AddUser() {
                     <div className="mb-3 col-md-6 col-sm-12">
                       <label className="form-label fw-semibold label-font mb-0">
                         Phone Number
-                      </label><span style={{ color: "red", display: "inline" }}>
-                              *
-                            </span>
+                      </label>
+                      <span style={{ color: "red", display: "inline" }}>*</span>
                       <input
                         type="text"
-                        className={`form-control ${errors.phoneNumber ? "is-invalid" : ""
-                          }`}
+                        className={`form-control ${
+                          errors.phoneNumber ? "is-invalid" : ""
+                        }`}
                         name="phoneNumber"
                         value={formData.phoneNumber}
                         placeholder="Enter phone Number"
@@ -168,9 +169,8 @@ export default function AddUser() {
                     <div className="mb-3 col-md-6 col-sm-12">
                       <label className="form-label label-font fw-semibold mb-0">
                         Password
-                      </label><span style={{ color: "red", display: "inline" }}>
-                              *
-                            </span>
+                      </label>
+                      <span style={{ color: "red", display: "inline" }}>*</span>
                       <div className=" position-relative d-flex justify-content-between">
                         <input
                           type={showPassword ? "text" : "password"}
@@ -197,30 +197,29 @@ export default function AddUser() {
                     </div>
                   </div>
                   <div className="row">
-                  <div className="mb-3 col-md-6 col-sm-12">
-                    <label className="form-label fw-semibold label-font mb-0">
-                      Role
-                    </label><span style={{ color: "red", display: "inline" }}>
-                              *
-                            </span>
-                    <select
-                      className="form-control"
-                      name="role"
-                      value={formData.role}
-                      onChange={handleChange}
-                    >
-                      <option value="">Select Role</option>
-                      <option value="venue">Venue</option>
-                      <option value="entertainer">Entertainer</option>
-                    </select>
-                  </div>
+                    <div className="mb-3 col-md-6 col-sm-12">
+                      <label className="form-label fw-semibold label-font mb-0">
+                        Role
+                      </label>
+                      <span style={{ color: "red", display: "inline" }}>*</span>
+                      <select
+                        className="form-control"
+                        name="role"
+                        value={formData.role}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select Role</option>
+                        <option value="venue">Venue</option>
+                        <option value="entertainer">Entertainer</option>
+                      </select>
+                    </div>
                   </div>
 
                   <button
                     type="submit"
                     className="btn btn-outline-dark btn-sm float-start"
                   >
-                    Create User
+                    Submit
                   </button>
                 </form>
               </div>

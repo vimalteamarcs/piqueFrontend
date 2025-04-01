@@ -32,7 +32,7 @@ export default function AllVenues() {
   //         }
   //       );
   //       console.log(response.data);
-  //       const data = response.data.data || []; 
+  //       const data = response.data.data || [];
   //       setVenues(Array.isArray(data) ? data : []);
   //     } catch (err) {
   //       setError("Failed to fetch venues");
@@ -42,7 +42,6 @@ export default function AllVenues() {
   //   };
   //   fetchVenues();
   // }, []);
-  
 
   const handleEdit = (id) => {
     setVenueId(id);
@@ -69,7 +68,9 @@ export default function AllVenues() {
       );
 
       if (response.status === 200) {
-        setVenues((prevVenues) => prevVenues.filter((venue) => venue.id !== deleteVenueId));
+        setVenues((prevVenues) =>
+          prevVenues.filter((venue) => venue.id !== deleteVenueId)
+        );
       }
     } catch (error) {
       console.error("Error deleting venue:", error);
@@ -80,21 +81,21 @@ export default function AllVenues() {
   };
 
   return (
-    <DashLayoutVenue title="Venue List" description="Update and delete your venue.">
+    <DashLayoutVenue
+      title="Venue List"
+      description="Update and delete your venue."
+    >
       <div className="container-fluid d-flex flex-column min-vh-100">
-                  <SearchBar />
-                  <div className="d-flex">
-                    <div className="sidebar-container">
-                      <ProfileSidebar />
-                    </div>
-                    <div className="profile-container">
-     
-              {/* <VenueCard venues={venues} loading={loading} /> */}
-<VenueList />
-
-         
-                    </div>
-                  </div>
+        <SearchBar />
+        <div className="d-flex">
+          <div className="sidebar-container">
+            <ProfileSidebar />
+          </div>
+          <div className="profile-container">
+            {/* <VenueCard venues={venues} loading={loading} /> */}
+            <VenueList />
+          </div>
+        </div>
       </div>
       <PiqueFooter />
     </DashLayoutVenue>

@@ -9,7 +9,6 @@
 // import AdminSideBar from "../../../components/Venue/AdminSideBar";
 // import { Tooltip } from "antd";
 
-
 // const EventsList = () => {
 //   const navigate = useNavigate();
 //   const [events, setEvents] = useState([]);
@@ -294,8 +293,6 @@
 
 // export default EventsList;
 
-
-
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -303,7 +300,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DashLayout from "../../DashLayout";
 import CustomTable from "../../../components/CustomTable";
-import { DELETE_EVENT, GET_ALL_EVENTS, GET_EVENTBY_ID } from "../../../../constants";
+import {
+  DELETE_EVENT,
+  GET_ALL_EVENTS,
+  GET_EVENTBY_ID,
+} from "../../../../constants";
 import AdminSideBar from "../../../components/Venue/AdminSideBar";
 import { Tooltip } from "antd";
 
@@ -379,13 +380,13 @@ const EventsList = () => {
 
   const handleEdit = async (record) => {
     console.log("Fetching event details for edit:", record.id);
-  
+
     const token = localStorage.getItem("token");
     if (!token) {
       toast.error("Authentication required. Please log in.");
       return;
     }
-  
+
     try {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}${GET_EVENTBY_ID}${record.id}`,
@@ -393,14 +394,17 @@ const EventsList = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-  
+
       if (response.status === 200 && response.data) {
         navigate("/admin/editevent", { state: response.data });
       } else {
         toast.error("Failed to fetch event details.");
       }
     } catch (error) {
-      console.error("Error fetching event details:", error.response?.data || error.message);
+      console.error(
+        "Error fetching event details:",
+        error.response?.data || error.message
+      );
       toast.error("Error fetching event details.");
     }
   };
@@ -538,53 +542,51 @@ const EventsList = () => {
       <DashLayout />
       <ToastContainer />
       <div className="container-fluid w-100 p-0">
-  <div className="pageLayout">
-    <div className="dash-sidebar-container">
-      <AdminSideBar />
-    </div>
-    <div className="dash-profile-container">
-      <p className="headingPG">EVENTS</p>
-      <div className="card">
-        <div className="card-body">
-          <div className="d-flex justify-content-between">
-            {/* Optional buttons */}
+        <div className="pageLayout">
+          <div className="dash-sidebar-container">
+            <AdminSideBar />
           </div>
+          <div className="dash-profile-container">
+            <p className="headingPG">ALL EVENTS</p>
+            <div className="card">
+              <div className="card-body">
+                <div className="d-flex justify-content-between">
+                  {/* Optional buttons */}
+                </div>
 
-          {/* CustomTable with Loader */}
-          <CustomTable
-            data={events}
-            columns={columns}
-            onView={handleView}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-            showActions={true}
-            loading={loading} // Table's loader
-            pagination={pagination}
-            onTableChange={(newPagination) => {
-              setPagination((prev) => ({
-                ...prev,
-                current: newPagination.current, // Update current page
-                pageSize: newPagination.pageSize,
-              }));
-            }}
-            search={search}
-            onSearchChange={(value) => {
-              setSearch(value); // Update search term
-              setPagination((prev) => ({
-                ...prev,
-                current: 1, // Reset to first page on search
-              }));
-            }}
-          />
+                {/* CustomTable with Loader */}
+                <CustomTable
+                  data={events}
+                  columns={columns}
+                  onView={handleView}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                  showActions={true}
+                  loading={loading} // Table's loader
+                  pagination={pagination}
+                  onTableChange={(newPagination) => {
+                    setPagination((prev) => ({
+                      ...prev,
+                      current: newPagination.current, // Update current page
+                      pageSize: newPagination.pageSize,
+                    }));
+                  }}
+                  search={search}
+                  onSearchChange={(value) => {
+                    setSearch(value); // Update search term
+                    setPagination((prev) => ({
+                      ...prev,
+                      current: 1, // Reset to first page on search
+                    }));
+                  }}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
     </>
   );
 };
 
 export default EventsList;
-  

@@ -221,7 +221,7 @@ const CreateEvent = () => {
             <AdminSideBar />
           </div>
           <div className="dash-profile-container">
-            <p className="headingPG">EVENTS</p>
+            <p className="headingPG">ADD EVENT</p>
             <div className="card">
               <div className="card-body">
                 <div className="d-flex justify-content-between">

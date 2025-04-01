@@ -16,8 +16,8 @@ export default function ViewVenue() {
   const location = useLocation();
   const navigate = useNavigate();
   let user = location.state;
-  console.log(user)
-  localStorage.setItem('venueUserId', user.id)
+  console.log(user);
+  localStorage.setItem("venueUserId", user.id);
   const [venues, setVenues] = useState([]);
   const [hasVenues, setHasVenues] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -109,7 +109,6 @@ export default function ViewVenue() {
                   state: stateName,
                   city: cityName,
                 };
-
               })
             );
           } else {
@@ -136,8 +135,6 @@ export default function ViewVenue() {
       fetchVenues();
     }
   }, [user?.id]);
-
-
 
   // Filter venues based on search term
   const filteredVenues = venues.filter((venue) => {
@@ -173,7 +170,8 @@ export default function ViewVenue() {
               // User details section
               <div className="card">
                 <div className="card-body">
-                  <p className="label-font fw-semibold pt-2">USER DETAILS</p>
+                  <p className="headingPG">USER DETAILS</p>
+
                   <hr />
                   <div className="container">
                     {hasVenues ? (
@@ -294,8 +292,9 @@ export default function ViewVenue() {
                                         </td>
                                         <td>{venue.phone || ""}</td>
                                         <td>{venue.email || ""}</td>
-                                        <td>{`${venue.addressLine1}, ${venue.addressLine2 || ""
-                                          }`}</td>
+                                        <td>{`${venue.addressLine1}, ${
+                                          venue.addressLine2 || ""
+                                        }`}</td>
                                         <td>{venue.zipCode || ""}</td>
                                         {/* <td>
                                         {venue?.city &&

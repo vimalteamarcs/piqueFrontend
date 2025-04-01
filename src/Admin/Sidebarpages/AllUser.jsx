@@ -542,12 +542,18 @@ export default function AllUser() {
             <AdminSideBar />
           </div>
           <div className="dash-profile-container">
+          <div className="col-md-12">
+                    <p className="headingPG">USERS</p>
+
+                    <hr className="mt-0" />
+                  </div>
             {error ? (
               <div className="alert alert-danger">{error}</div>
             ) : (
               <div className="m-2">
                 {selectedRowKeys.length > 0 && (
                   <div className=" d-flex justify-content-end float-center">
+
                     <div className="col-md-3 ">
                       <select
                         id="status"

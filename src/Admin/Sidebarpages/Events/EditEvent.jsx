@@ -40,8 +40,12 @@ const EditEvent = () => {
         venueId: event.vid || 0,
         userId: Number(localStorage.getItem("userId")),
         description: event.description || "",
-        startTime: event.startTime ? new Date(event.startTime).toISOString().slice(0, 16) : "",
-        endTime: event.endTime ? new Date(event.endTime).toISOString().slice(0, 16) : "",
+        startTime: event.startTime
+          ? new Date(event.startTime).toISOString().slice(0, 16)
+          : "",
+        endTime: event.endTime
+          ? new Date(event.endTime).toISOString().slice(0, 16)
+          : "",
         recurring: event.recurring || "none",
         status: event.status || "unpublished",
         venueName: event.vname || "",
@@ -112,34 +116,30 @@ const EditEvent = () => {
           <div className="dash-profile-container">
             <div className="card">
               <div className="card-body">
-
                 <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">
-                  Edit Event
-                  <span
-                    onClick={() => navigate(-1)}
-                    className=""
-                  >
+                  <p className="headingPG">UPDATE EVENT</p>
+
+                  <span onClick={() => navigate(-1)} className="">
                     <i className="fa-regular fa-circle-xmark"></i>
                   </span>
                 </p>
                 <hr className="mt-0" />
                 <div className="">
-                  <p
-                    className="formLightHeading"
-                  >
-                    GENERAL INFORMATION
-                  </p>
+                  <p className="formLightHeading">GENERAL INFORMATION</p>
                   <form onSubmit={handleSubmit}>
                     <div className="row mb-3">
                       <div className="col-md-6">
                         <label className="form-label label-font fw-medium mb-0">
                           Event Name
-                          <span style={{ color: "red", display: "inline" }}>*</span>
+                          <span style={{ color: "red", display: "inline" }}>
+                            *
+                          </span>
                         </label>
                         <input
                           type="text"
-                          className={`form-control ${errors.title ? "is-invalid" : ""
-                            }`}
+                          className={`form-control ${
+                            errors.title ? "is-invalid" : ""
+                          }`}
                           name="title"
                           value={formData.title}
                           onChange={handleInputChange}
@@ -155,11 +155,14 @@ const EditEvent = () => {
                           className="form-label label-font fw-medium mb-0"
                         >
                           Recurring
-                          <span style={{ color: "red", display: "inline" }}>*</span>
+                          <span style={{ color: "red", display: "inline" }}>
+                            *
+                          </span>
                         </label>
                         <select
-                          className={`form-select ${errors.recurring ? "is-invalid" : ""
-                            }`}
+                          className={`form-select ${
+                            errors.recurring ? "is-invalid" : ""
+                          }`}
                           id="recurring"
                           name="recurring"
                           value={formData.recurring}
@@ -186,59 +189,85 @@ const EditEvent = () => {
 
                     <div className="row mb-3">
                       <div className="col-md-6">
-                        <label htmlFor="status" className="form-label label-font fw-medium mb-0">
-                          Status<span style={{ color: "red", display: "inline" }}>*</span>
+                        <label
+                          htmlFor="status"
+                          className="form-label label-font fw-medium mb-0"
+                        >
+                          Status
+                          <span style={{ color: "red", display: "inline" }}>
+                            *
+                          </span>
                         </label>
                         <br />
                         <select
-                          className={`form-select ${errors.status ? "is-invalid" : ""}`}
+                          className={`form-select ${
+                            errors.status ? "is-invalid" : ""
+                          }`}
                           id="status"
                           name="status"
                           value={formData.status}
                           onChange={handleInputChange}
                         >
-                          <option value="unpublished" className="label-font">Unpublished</option>
-                          <option value="scheduled" className="label-font">Scheduled</option>
-                          <option value="confirmed" className="label-font">Confirmed</option>
-                          <option value="cancelled" className="label-font">Cancelled</option>
+                          <option value="unpublished" className="label-font">
+                            Unpublished
+                          </option>
+                          <option value="scheduled" className="label-font">
+                            Scheduled
+                          </option>
+                          <option value="confirmed" className="label-font">
+                            Confirmed
+                          </option>
+                          <option value="cancelled" className="label-font">
+                            Cancelled
+                          </option>
                         </select>
-                        {errors.status && <div className="invalid-feedback">{errors.status}</div>}
+                        {errors.status && (
+                          <div className="invalid-feedback">
+                            {errors.status}
+                          </div>
+                        )}
                       </div>
-
 
                       <div className="col-md-6">
                         <label className="form-label label-font fw-medium mb-0">
                           Description
-                          <span style={{ color: "red", display: "inline" }}>*</span>
+                          <span style={{ color: "red", display: "inline" }}>
+                            *
+                          </span>
                         </label>
                         <textarea
-                          className={` form-control ${errors.description ? "is-invalid" : ""
-                            }`}
+                          className={` form-control ${
+                            errors.description ? "is-invalid" : ""
+                          }`}
                           name="description"
                           value={formData.description}
                           onChange={handleInputChange}
                           rows="1"
                         />
                         {errors.description && (
-                          <div className="invalid-feedback">{errors.description}</div>
+                          <div className="invalid-feedback">
+                            {errors.description}
+                          </div>
                         )}
                       </div>
-
                     </div>
 
                     <div className="row mb-3">
                       <div className="col-12 col-md-6">
-                      <label
+                        <label
                           htmlFor="location"
                           className="form-label label-font fw-medium mb-0"
                         >
                           Location
-                          <span style={{ color: "red", display: "inline" }}>*</span>
+                          <span style={{ color: "red", display: "inline" }}>
+                            *
+                          </span>
                         </label>
                         <input
                           type="text"
-                          className={`form-control ${errors.location ? "is-invalid" : ""
-                            }`}
+                          className={`form-control ${
+                            errors.location ? "is-invalid" : ""
+                          }`}
                           id="location"
                           placeholder="Enter Your location..."
                           name="location"
@@ -247,54 +276,61 @@ const EditEvent = () => {
                           onChange={handleInputChange}
                         />
                         {errors.location && (
-                          <div className="invalid-feedback">{errors.location}</div>
+                          <div className="invalid-feedback">
+                            {errors.location}
+                          </div>
                         )}
                       </div>
-                    <div className="col-12 col-md-6">
+                      <div className="col-12 col-md-6">
                         <label className="form-label label-font fw-medium mb-0">
                           Start Date and Time
-                          <span style={{ color: "red", display: "inline" }}>*</span>
+                          <span style={{ color: "red", display: "inline" }}>
+                            *
+                          </span>
                         </label>
                         <input
                           type="datetime-local"
-                          className={`form-control ${errors.startTime ? "is-invalid" : ""
-                            }`}
+                          className={`form-control ${
+                            errors.startTime ? "is-invalid" : ""
+                          }`}
                           name="startTime"
                           value={formData.startTime}
                           onChange={handleInputChange}
                         />
                         {errors.startTime && (
-                          <div className="invalid-feedback">{errors.startTime}</div>
+                          <div className="invalid-feedback">
+                            {errors.startTime}
+                          </div>
                         )}
                       </div>
-                      </div>
+                    </div>
                     <div className="row mb-3">
-
                       <div className="col-12 col-md-6">
                         <label className="form-label label-font fw-medium mb-0">
                           End Date and Time
-                          <span style={{ color: "red", display: "inline" }}>*</span>
+                          <span style={{ color: "red", display: "inline" }}>
+                            *
+                          </span>
                         </label>
                         <input
                           type="datetime-local"
-                          className={`form-control ${errors.endTime ? "is-invalid" : ""
-                            }`}
+                          className={`form-control ${
+                            errors.endTime ? "is-invalid" : ""
+                          }`}
                           name="endTime"
                           value={formData.endTime}
                           onChange={handleInputChange}
                         />
                         {errors.endTime && (
-                          <div className="invalid-feedback">{errors.endTime}</div>
+                          <div className="invalid-feedback">
+                            {errors.endTime}
+                          </div>
                         )}
                       </div>
                     </div>
                     <div className="row mb-3"></div>
 
-                    <p
-                      className="formLightHeading"
-                    >
-                      VENUE INFORMATION
-                    </p>
+                    <p className="formLightHeading">VENUE INFORMATION</p>
 
                     <div className="row mb-3">
                       <div className="col-md-6">
@@ -303,12 +339,15 @@ const EditEvent = () => {
                           className="form-label label-font fw-medium mb-0"
                         >
                           Venue Name
-                          <span style={{ color: "red", display: "inline" }}>*</span>
+                          <span style={{ color: "red", display: "inline" }}>
+                            *
+                          </span>
                         </label>
                         <input
                           type="text"
-                          className={`form-control ${errors.venueName ? "is-invalid" : ""
-                            }`}
+                          className={`form-control ${
+                            errors.venueName ? "is-invalid" : ""
+                          }`}
                           placeholder="Enter venue name"
                           id="venueName"
                           value={formData.venueName}
@@ -316,7 +355,9 @@ const EditEvent = () => {
                           name="venueName"
                         />
                         {errors.venueName && (
-                          <div className="invalid-feedback">{errors.venueName}</div>
+                          <div className="invalid-feedback">
+                            {errors.venueName}
+                          </div>
                         )}
                       </div>
                       <div className="col-md-6">
@@ -325,12 +366,15 @@ const EditEvent = () => {
                           className="form-label label-font fw-medium mb-0"
                         >
                           Location
-                          <span style={{ color: "red", display: "inline" }}>*</span>
+                          <span style={{ color: "red", display: "inline" }}>
+                            *
+                          </span>
                         </label>
                         <input
                           type="text"
-                          className={`form-control ${errors.location ? "is-invalid" : ""
-                            }`}
+                          className={`form-control ${
+                            errors.location ? "is-invalid" : ""
+                          }`}
                           id="location"
                           placeholder="Enter Your location..."
                           name="location"
@@ -339,39 +383,45 @@ const EditEvent = () => {
                           onChange={handleInputChange}
                         />
                         {errors.location && (
-                          <div className="invalid-feedback">{errors.location}</div>
+                          <div className="invalid-feedback">
+                            {errors.location}
+                          </div>
                         )}
                       </div>
                     </div>
 
                     <div className="row mb-3">
                       <div className="col-md-6">
-                        <label htmlFor="phone" className="form-label label-font fw-medium mb-0">
+                        <label
+                          htmlFor="phone"
+                          className="form-label label-font fw-medium mb-0"
+                        >
                           Venue Contact
-                          <span style={{ color: "red", display: "inline" }}>*</span>
+                          <span style={{ color: "red", display: "inline" }}>
+                            *
+                          </span>
                         </label>
                         <input
                           type="text"
-                          className={`form-control  ${errors.phone ? "is-invalid" : ""
-                            }`}
+                          className={`form-control  ${
+                            errors.phone ? "is-invalid" : ""
+                          }`}
                           placeholder="Enter Venue Contact Number"
                           id="phone"
                           name="phone"
                           value={formData.phone}
                           onChange={handleInputChange}
                         />
-                        {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
+                        {errors.phone && (
+                          <div className="invalid-feedback">{errors.phone}</div>
+                        )}
                       </div>
-
                     </div>
 
                     <div className="row">
                       <div className="col">
-                        <button
-                          type="submit"
-                          className="btn mybtn"
-                        >
-                          Update Event
+                        <button type="submit" className="btn mybtn">
+                          SUBMIT
                         </button>
                       </div>
                     </div>
@@ -380,8 +430,8 @@ const EditEvent = () => {
               </div>
             </div>
           </div>
-        </div >
-      </div >
+        </div>
+      </div>
     </>
   );
 };

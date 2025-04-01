@@ -193,8 +193,8 @@ const AllInvoices = () => {
       <AdminSideBar />
     </div>
     <div className="dash-profile-container">
-      <div className="d-flex justify-content-between">
-        <h5 className="text-secondary text-start mb-3">All Invoices</h5>
+      <div className="d-flex justify-content-between mb-2">
+      <p className="headingPG">Invoices</p>
         <button
           type="button"
           className="btn btn-dark btn-sm rounded-3"
