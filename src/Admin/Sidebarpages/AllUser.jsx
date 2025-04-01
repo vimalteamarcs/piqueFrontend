@@ -518,11 +518,13 @@ export default function AllUser() {
   };
 
   const handleDelete = async (record) => {
+    console.log(record.id)
     try {
       const response = await axios.delete(
-        `${import.meta.env.VITE_API_URL}${DELETE_USER}${record.id}`,
+        `${import.meta.env.VITE_API_URL}${DELETE_USER}${record}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      console.log(response.data)
       if (response.status === 200) {
         fetchusers(pagination.current, pagination.pageSize, debouncedSearch);
         toast.success("User deleted successfully!", { autoClose: 1000 });

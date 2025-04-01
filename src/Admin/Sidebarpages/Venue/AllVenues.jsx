@@ -5,6 +5,7 @@ import { ALL_VENUE, DELETE_VENUE } from "../../../../constants";
 import CustomTable from "../../../components/CustomTable";
 import { useNavigate } from "react-router-dom";
 import AdminSideBar from "../../../components/Venue/AdminSideBar";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function AllVenues() {
   const [venuedata, setVenuedata] = useState([]);
@@ -77,7 +78,7 @@ export default function AllVenues() {
 
     try {
       const response = await axios.delete(
-        `${import.meta.env.VITE_API_URL}${DELETE_VENUE}${record.id}`,
+        `${import.meta.env.VITE_API_URL}${DELETE_VENUE}${record}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -85,7 +86,7 @@ export default function AllVenues() {
         }
       );
       console.log("Venue deleted successfully:", response.data);
-      setSuccessMessage("Venue deleted successfully!");
+      toast.success("Venue deleted successfully!");
       setTimeout(() => {
         setSuccessMessage("");
       }, 2000);
@@ -163,13 +164,7 @@ export default function AllVenues() {
             <p className="headingPG">VENUES</p>
             <div className="card">
               <div className="card-body">
-                {successMessage && (
-                  <div className="alert alert-danger d-flex align-items-center mt-2">
-                    <span className="badge bg-danger me-2">
-                      {successMessage}
-                    </span>
-                  </div>
-                )}
+                <ToastContainer />
                 {error ? (
                   <div className="alert alert-danger">{error}</div>
                 ) : (

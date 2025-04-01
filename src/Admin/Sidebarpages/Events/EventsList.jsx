@@ -409,11 +409,12 @@ const EventsList = () => {
     }
   };
 
-  const deleteEvent = async (id) => {
+  const deleteEvent = async (record) => {
+    console.log(record)
     const token = localStorage.getItem("token");
     try {
       const response = await axios.delete(
-        `${import.meta.env.VITE_API_URL}${DELETE_EVENT}${id}`,
+        `${import.meta.env.VITE_API_URL}${DELETE_EVENT}${record}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -425,7 +426,7 @@ const EventsList = () => {
         setFlag(!flag);
       }
     } catch (error) {
-      console.error(`Failed to delete event with ID ${id}:`, error.message);
+      // console.error(`Failed to delete event with ID ${id}:`, error.message);
       toast.error(error.response?.message || "Failed to delete event");
     }
   };
@@ -560,7 +561,7 @@ const EventsList = () => {
                   columns={columns}
                   onView={handleView}
                   onEdit={handleEdit}
-                  onDelete={handleDelete}
+                  onDelete={deleteEvent}
                   showActions={true}
                   loading={loading} // Table's loader
                   pagination={pagination}
