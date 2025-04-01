@@ -140,24 +140,23 @@ export default function ViewEntertainer() {
             <AdminSideBar />
           </div>
           <div className="dash-profile-container">
+            <button
+              onClick={() => navigate(-1)}
+              className="btn btn-outline-dark btn-sm d-flex align-items-center mb-2"
+            >
+              <i
+                className="fa fa-arrow-left"
+              ></i>
+            </button>
             <div className="card">
               <div className="card-body">
-                <button
-                  onClick={() => navigate(-1)}
-                  className="btn btn-outline-dark btn-sm d-flex align-items-center"
-                >
-                  <i
-                    className="fa fa-arrow-left"
-                    style={{ marginRight: "8px" }}
-                  ></i>
-                </button>
 
                 {loading && <p>Loading data...</p>}
                 {error && <p className="text-danger profile-font">{error}</p>}
-                <div className="event-form mt-2">
+                <div className="">
                   {/* Conditional rendering for entertainers */}
                   {user?.role ? (
-                    <div className="event-form mt-2 mb-2">
+                    <div className="">
                       <div className="row align-items-center">
                         <div className="col text-start mt-3">
                           <p className="profile-font fw-semibold ">
@@ -184,28 +183,28 @@ export default function ViewEntertainer() {
                       </div>
 
                       <div className="row profile-font event-form pt-3 mb-2">
-                        <div className="mb-3 col-md-6 col-sm-12">
+                        <div className="col-md-6 col-sm-12">
                           <p>
                             <span className="fw-semibold"> clasName:</span>{" "}
                             {user?.name || " "}
                           </p>
                         </div>
 
-                        <div className="mb-3 col-md-6 col-sm-12">
+                        <div className="col-md-6 col-sm-12">
                           <p>
                             <span className="fw-semibold">Email:</span>{" "}
                             {user?.email || " "}
                           </p>
                         </div>
 
-                        <div className="mb-3 col-md-6 col-sm-12">
+                        <div className="col-md-6 col-sm-12">
                           <p>
                             <span className="fw-semibold">Phone Number:</span>{" "}
                             {user?.phoneNumber || " "}
                           </p>
                         </div>
 
-                        <div className="mb-3 col-md-6 col-sm-12">
+                        <div className="col-md-6 col-sm-12">
                           <p>
                             <span className="fw-semibold">Role:</span>{" "}
                             <span className="text-capitalize">
@@ -214,7 +213,7 @@ export default function ViewEntertainer() {
                           </p>
                         </div>
 
-                        <div className="mb-3 col-md-6 col-sm-12">
+                        <div className="col-md-6 col-sm-12">
                           <p>
                             <span className="fw-semibold">Status:</span>{" "}
                             <span className="text-capitalize">
@@ -244,7 +243,7 @@ export default function ViewEntertainer() {
                           {entertainers.map((entertainer) => (
                             <div key={entertainer.id} className="col-12">
                               <div className="row">
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Entertainer Name:
@@ -253,7 +252,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Phone 1:
@@ -262,7 +261,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Phone 2:
@@ -271,14 +270,14 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">Bio:</span>{" "}
                                     {entertainer.bio || " "}
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Performance Role:
@@ -286,7 +285,7 @@ export default function ViewEntertainer() {
                                     {entertainer.performanceRole || " "}
                                   </p>
                                 </div>
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Category:
@@ -295,7 +294,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Specific Category:
@@ -304,7 +303,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Availability:
@@ -313,7 +312,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Price Per Event:
@@ -322,7 +321,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Vaccinated:
@@ -331,7 +330,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Social Links:
@@ -346,7 +345,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Created At:
@@ -364,7 +363,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Updated At:
@@ -429,8 +428,8 @@ export default function ViewEntertainer() {
                               key={entertainer.id}
                               className="col-12 profile-font"
                             >
-                              <div className="row mt-3 ">
-                                <div className="mb-3 col-md-6 col-sm-12">
+                              <div className="row mt-3">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Entertainer Name:
@@ -439,7 +438,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Phone 1:
@@ -448,7 +447,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Phone 2:
@@ -457,14 +456,14 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">Bio:</span>{" "}
                                     {entertainer.bio || " "}
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Performance Role:
@@ -473,7 +472,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Category:
@@ -482,7 +481,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Specific Category:
@@ -491,7 +490,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Availability:
@@ -500,7 +499,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Price Per Event:
@@ -509,7 +508,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Vaccinated:
@@ -518,7 +517,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Social Links:
@@ -533,7 +532,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Created At:
@@ -551,7 +550,7 @@ export default function ViewEntertainer() {
                                   </p>
                                 </div>
 
-                                <div className="mb-3 col-md-6 col-sm-12">
+                                <div className="col-md-6 col-sm-12">
                                   <p>
                                     <span className="fw-semibold">
                                       Updated At:

@@ -3,7 +3,7 @@
 body {
   font-family: "Poppins", sans-serif !important;
   background-color: #fff;
-  width: 100%;
+  width: 100%; font-size: .8rem;
 }
 /********** Template CSS **********/
 :root {
@@ -17,7 +17,7 @@ body {
 /* Common CSS */
 /* .pageLayout {display: flex;flex-direction: row;justify-content: space-between;height: 100vh;margin-top: 70px;} */
 .pageLayout {min-height: 100vh;height: 100vh;margin-top: 70px;}
-.headingPG {font-size: 1rem;font-weight: 600;color: #191c24;margin-bottom: .8rem; letter-spacing: 0.4px;}
+.headingPG {font-size: 1rem;font-weight: 600;color: #191c24;margin-bottom: .8rem; letter-spacing: 0.4px;text-transform: uppercase;}
 .subheadingPG {font-size: .9rem;font-weight: 500;color: #191c24;margin-bottom: .7rem; letter-spacing: 0.4px;}
 .card {border-color: #f1f2f3 !important;border-radius: 0.5rem;background-color: #fff;}
 .btn.mybtn {background-color: #333333;border-color: #333333;color: #fff;font-size: 12px;font-weight: 500;    line-height: 20px;padding: 8px 15px;border-radius: 10px;}

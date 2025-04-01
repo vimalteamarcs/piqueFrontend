@@ -119,60 +119,60 @@ const Venuedetails = () => {
             <AdminSideBar />
           </div>
           <div className="dash-profile-container">
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <button
+                onClick={() => navigate(-1)}
+                className="btn btn-outline-dark btn-sm d-flex align-items-center"
+              >
+                <i className="fa fa-arrow-left"></i>
+              </button>
+              {venueData && (
+                <button
+                  onClick={() =>
+                    navigate("/admin/addvenuelocation", { state: venueData })
+                  }
+                  className="btn mybtn d-flex align-items-center"
+                >
+                  Add Location
+                </button>
+              )}
+            </div>
             <div className="card">
               <div className="card-body">
-                <div className="d-flex justify-content-between align-items-center mb-3">
-                  <button
-                    onClick={() => navigate(-1)}
-                    className="btn btn-outline-dark btn-sm d-flex align-items-center"
-                  >
-                    <i className="fa fa-arrow-left me-2"></i> Back
-                  </button>
-                  {venueData && (
-                    <button
-                      onClick={() =>
-                        navigate("/admin/addvenuelocation", { state: venueData })
-                      }
-                      className="btn btn-outline-dark btn-sm d-flex align-items-center"
-                    >
-                      <i className="fa fa-add me-2"></i> Add Location
-                    </button>
-                  )}
-                </div>
 
-                <div className="border rounded p-3 bg-white">
-                  <h6 className="fw-bold">VENUE DETAILS</h6>
-                  <hr />
+                <div className="">
+                  <h6 className="subheadingPG">VENUE DETAILS</h6>
+                  <hr className="mt-0" />
                   <div className="row">
                     <div className="col-md-6">
-                      <p>
+                      <p className="mb-2">
                         <strong>Name:</strong> {venueData?.name || "N/A"}
                       </p>
-                      <p>
+                      <p className="mb-2">
                         <strong>Phone:</strong> {venueData?.phone || "N/A"}
                       </p>
-                      <p>
+                      <p className="mb-2">
                         <strong>Email:</strong> {venueData?.email || "N/A"}
                       </p>
-                      <p>
+                      <p className="mb-2">
                         <strong>Address:</strong> {venueData?.addressLine1 || ""},{" "}
                         {venueData?.addressLine2 || ""}
                       </p>
-                      <p>
+                      <p className="mb-2">
                         <strong>City:</strong> {venueData?.city || "N/A"}
                       </p>
-                      <p>
+                      <p className="mb-2">
                         <strong>State:</strong> {venueData?.state || "N/A"}
                       </p>
-                      <p>
+                      <p className="mb-2">
                         <strong>Country:</strong> {venueData?.country || "N/A"}
                       </p>
-                      <p>
+                      <p className="mb-2">
                         <strong>Zip Code:</strong> {venueData?.zipCode || "N/A"}
                       </p>
                     </div>
                     <div className="col-md-6">
-                      <p>
+                      <p className="mb-2">
                         <strong>Description:</strong>{" "}
                         {venueData?.description || "N/A"}
                       </p>

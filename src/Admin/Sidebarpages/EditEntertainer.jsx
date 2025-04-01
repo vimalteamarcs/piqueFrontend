@@ -999,8 +999,8 @@ export default function EditEntertainer() {
                                       src={
                                         media.headshot instanceof File
                                           ? URL.createObjectURL(
-                                              media.headshot[0]
-                                            ) // If the headshot is a File object, create an object URL
+                                            media.headshot[0]
+                                          ) // If the headshot is a File object, create an object URL
                                           : media.headshot[0].url // Otherwise, use the URL stored in the media.headshot object
                                       }
                                       alt="Headshot preview"
@@ -1022,9 +1022,9 @@ export default function EditEntertainer() {
                                     >
                                       <i className="fa-solid fa-trash-can text-danger"></i>
                                     </button> */}
-                                    <button
+                                    <span
                                       type="button"
-                                      className="btn btn-link position-absolute"
+                                      className="upldIconremove"
                                       onClick={() => {
                                         const confirmDelete = window.confirm(
                                           "Are you sure you want to delete this headshot?"
@@ -1037,8 +1037,9 @@ export default function EditEntertainer() {
                                         }
                                       }}
                                     >
-                                      <i className="fa-solid fa-trash-can text-danger"></i>
-                                    </button>
+                                      <i className="fa-regular fa-circle-xmark text-danger"></i>
+                                    </span>
+
                                   </div>
                                 )}
                               </div>
@@ -1099,9 +1100,9 @@ export default function EditEntertainer() {
                                           <i className="fa-solid fa-trash-can text-danger"></i>
                                         </button> */}
 
-                                        <button
+                                        <span
                                           type="button"
-                                          className="btn btn-link position-absolute"
+                                          className="upldIconremove"
                                           onClick={() => {
                                             const confirmDelete =
                                               window.confirm(
@@ -1112,8 +1113,9 @@ export default function EditEntertainer() {
                                             }
                                           }}
                                         >
-                                          <i className="fa-solid fa-trash-can text-danger"></i>
-                                        </button>
+                                          <i className="fa-regular fa-circle-xmark text-danger"></i>
+                                        </span>
+
                                       </div>
                                     ))}
                                   </div>
@@ -1152,9 +1154,8 @@ export default function EditEntertainer() {
                                           <iframe
                                             width="190"
                                             height="90"
-                                            src={`https://www.youtube.com/embed/${
-                                              file.url.split("youtu.be/")[1]
-                                            }?feature=shared`}
+                                            src={`https://www.youtube.com/embed/${file.url.split("youtu.be/")[1]
+                                              }?feature=shared`}
                                             title="YouTube video player"
                                             frameBorder="0"
                                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -1188,9 +1189,9 @@ export default function EditEntertainer() {
                                           <i className="fa-solid fa-trash-can text-danger"></i>
                                         </button> */}
 
-                                        <button
+                                        <span
                                           type="button"
-                                          className="btn btn-link btn-sm position-absolute"
+                                          className="upldIconremove"
                                           onClick={() => {
                                             const confirmDelete =
                                               window.confirm(
@@ -1201,8 +1202,9 @@ export default function EditEntertainer() {
                                             }
                                           }}
                                         >
-                                          <i className="fa-solid fa-trash-can text-danger"></i>
-                                        </button>
+                                          <i className="fa-regular fa-circle-xmark text-danger"></i>
+                                        </span>
+
                                       </div>
                                     ))}
                                   </div>

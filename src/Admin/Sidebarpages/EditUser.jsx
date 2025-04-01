@@ -105,24 +105,20 @@ export default function EditUser() {
             <AdminSideBar />
           </div>
           <div className="dash-profile-container">
+            <button
+              onClick={() => navigate(-1)}
+              className="btn btn-outline-dark btn-sm d-flex align-items-center mb-2"
+            >
+              <i
+                className="fa fa-arrow-left"
+              ></i>
+            </button>
             <div className="card">
               <div className="card-body">
-                <button
-                  onClick={() => navigate(-1)}
-                  className="btn btn-outline-dark btn-sm d-flex align-items-center mb-4"
-                >
-                  <i
-                    className="fa fa-arrow-left"
-                    style={{ marginRight: "8px" }}
-                  ></i>
-                </button>
-                <p className="headingPG">UPDATE USER</p>
 
-                <hr />
-                <form
-                  onSubmit={handleSubmit}
-                  className="event-form p-3 label-font"
-                >
+                <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">UPDATE USER DETAILS </p>
+                <hr className="mt-0" />
+                <form onSubmit={handleSubmit} className="">
                   <div className="row profile-font">
                     <div className="mb-3 col-md-6 col-sm-12">
                       <label className="form-label label-font fw-medium mb-0">
@@ -134,9 +130,8 @@ export default function EditUser() {
                       <br />
                       <input
                         type="text"
-                        className={`custom-form-event ps-3${
-                          errors.name ? "is-invalid" : ""
-                        }`}
+                        className={`form-control${errors.name ? "is-invalid" : ""
+                          }`}
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
@@ -158,9 +153,8 @@ export default function EditUser() {
                       </label>
                       <input
                         type="email"
-                        className={`custom-form-event ps-3${
-                          errors.email ? "is-invalid" : ""
-                        }`}
+                        className={`form-control${errors.email ? "is-invalid" : ""
+                          }`}
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
@@ -182,9 +176,8 @@ export default function EditUser() {
                       </label>
                       <input
                         type="text"
-                        className={`custom-form-event ps-3 ${
-                          errors.phoneNumber ? "is-invalid" : ""
-                        }`}
+                        className={`form-control ${errors.phoneNumber ? "is-invalid" : ""
+                          }`}
                         name="phoneNumber"
                         value={formData.phoneNumber}
                         onChange={handleChange}
@@ -203,9 +196,8 @@ export default function EditUser() {
                         </span>
                       </label>
                       <select
-                        className={`custom-form-event custom-select ps-3${
-                          errors.role ? "is-invalid" : ""
-                        }`}
+                        className={`form-control${errors.role ? "is-invalid" : ""
+                          }`}
                         name="role"
                         value={formData.role}
                         onChange={handleChange}
@@ -228,9 +220,8 @@ export default function EditUser() {
                         </span>
                       </label>
                       <select
-                        className={`custom-form-event custom-select ps-3 ${
-                          errors.status ? "is-invalid" : ""
-                        }`}
+                        className={`form-control ${errors.status ? "is-invalid" : ""
+                          }`}
                         name="status"
                         value={formData.status}
                         onChange={handleChange}
@@ -247,8 +238,7 @@ export default function EditUser() {
 
                   <button
                     type="submit"
-                    className="btn btn-dark rounded-3 flost-start"
-                    style={{ fontSize: "12px" }}
+                    className="btn mybtn"
                   >
                     Submit
                   </button>

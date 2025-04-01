@@ -339,7 +339,7 @@ export default function AllUser() {
     total: 0,
   });
   const [search, setSearch] = useState("");
-  const [status, setStatus] = useState(""); 
+  const [status, setStatus] = useState("");
   const [tableLoading, setTableLoading] = useState(true); // Add table loading state
   const token = localStorage.getItem("token");
 
@@ -416,7 +416,7 @@ export default function AllUser() {
   // Handle "Select All"
   const handleSelectAll = (e) => {
     if (e.target.checked) {
-      setSelectedRowKeys(userdata.map((user) => user.id)); 
+      setSelectedRowKeys(userdata.map((user) => user.id));
     } else {
       setSelectedRowKeys([]);
     }
@@ -432,8 +432,8 @@ export default function AllUser() {
       const response = await axios.patch(
         `${import.meta.env.VITE_API_URL}${UPDATE_USER_STATUS}`,
         {
-          ids: selectedRowKeys, 
-          status, 
+          ids: selectedRowKeys,
+          status,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -542,66 +542,69 @@ export default function AllUser() {
             <AdminSideBar />
           </div>
           <div className="dash-profile-container">
-          <div className="col-md-12">
-                    <p className="headingPG">USERS</p>
-
-                    <hr className="mt-0" />
-                  </div>
+            <p className="headingPG"> Users </p>
             {error ? (
               <div className="alert alert-danger">{error}</div>
             ) : (
-              <div className="m-2">
-                {selectedRowKeys.length > 0 && (
-                  <div className=" d-flex justify-content-end float-center">
-
-                    <div className="col-md-3 ">
-                      <select
-                        id="status"
-                        className="form-control"
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value)}
-                      >
-                        <option value="">--Select--</option>
-                        <option value="active">Active</option>
-                        <option value="pending">Pending</option>
-                      </select>
+              <div className="card">
+                <div className="card-body">
+                  <div className="row mb-2">
+                    <div className="col-md-6">
+                      {selectedRowKeys.length > 0 && (
+                        <div className="d-flex justify-content-start align-items-center">
+                          <div className="col-md-7">
+                            <select
+                              id="status"
+                              className="form-control"
+                              value={status}
+                              onChange={(e) => setStatus(e.target.value)}
+                            >
+                              <option value="">--Select--</option>
+                              <option value="active">Active</option>
+                              <option value="pending">Pending</option>
+                            </select>
+                          </div>
+                          <div className="col-md-5">
+                            <button
+                              className="btn mybtn ms-1"
+                              onClick={handleStatusChange}
+                            >
+                              Update Status
+                            </button>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-6 text-end">
                       <button
-                        className="btn btn-primary"
-                        onClick={handleStatusChange}
+                        className="btn mybtn gap-2"
+                        onClick={() => navigate("/admin/adduser")}
                       >
-                        Update Status
+                        <i className="bi bi-plus"></i> Add User
                       </button>
                     </div>
+
                   </div>
-                )}
 
-                <button
-                  className="btn btn-primary float-end gap-2"
-                  onClick={() => navigate("/admin/adduser")}
-                >
-                  <i className="bi bi-plus"></i> Add User
-                </button>
-
-                <CustomTable
-                  data={userdata}
-                  columns={columns}
-                  onView={handleView}
-                  onEdit={handleEdit}
-                  showActions={true}
-                  onDelete={handleDelete}
-                  pagination={{
-                    current: pagination.current,
-                    pageSize: pagination.pageSize,
-                    total: pagination.total,
-                    showSizeChanger: true,
-                  }}
-                  onTableChange={(pagination) => handleTableChange(pagination.current, pagination.pageSize)}
-                  search={search}
-                  onSearchChange={handleSearch}
-                  loading={tableLoading} // Pass table loading state to CustomTable
-                />
+                  <CustomTable
+                    data={userdata}
+                    columns={columns}
+                    onView={handleView}
+                    onEdit={handleEdit}
+                    showActions={true}
+                    onDelete={handleDelete}
+                    pagination={{
+                      current: pagination.current,
+                      pageSize: pagination.pageSize,
+                      total: pagination.total,
+                      showSizeChanger: true,
+                    }}
+                    onTableChange={(pagination) => handleTableChange(pagination.current, pagination.pageSize)}
+                    search={search}
+                    onSearchChange={handleSearch}
+                    loading={tableLoading} // Pass table loading state to CustomTable
+                  />
+                </div>
               </div>
             )}
           </div>
