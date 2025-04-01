@@ -151,7 +151,7 @@ const AllInvoices = () => {
   return (
     <>
       <DashLayout />
-      <div className="container-fluid w-100 p-0">
+      {/* <div className="container-fluid w-100 p-0">
         <div className="pageLayout">
           <div className="dash-sidebar-container">
             <AdminSideBar />
@@ -186,7 +186,46 @@ const AllInvoices = () => {
             )}
           </div>
         </div>
+      </div> */}
+      <div className="container-fluid w-100 p-0">
+  <div className="pageLayout">
+    <div className="dash-sidebar-container">
+      <AdminSideBar />
+    </div>
+    <div className="dash-profile-container">
+      <div className="d-flex justify-content-between">
+        <h5 className="text-secondary text-start mb-3">All Invoices</h5>
+        <button
+          type="button"
+          className="btn btn-dark btn-sm rounded-3"
+          onClick={handleGenerateInvoice}
+        >
+          Generate Invoice
+        </button>
       </div>
+      <ToastContainer />
+      <div className="profile-font">
+        {/* Table loader */}
+        <CustomTable
+          data={invoices}
+          columns={columns}
+          onView={handleView}
+          showActions={true}
+          onDelete={handleDelete}
+          loading={loading} // Loader for the table only
+          pagination={pagination}
+          onTableChange={(pagination) => {
+            fetchInvoices(pagination.current, pagination.pageSize, search);
+          }}
+          search={search}
+          onSearchChange={handleSearchChange}
+        />
+        {/* End of Table Loader */}
+      </div>
+    </div>
+  </div>
+</div>
+
     </>
   );
 };
