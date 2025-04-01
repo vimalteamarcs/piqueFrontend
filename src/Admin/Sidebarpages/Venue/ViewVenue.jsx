@@ -156,45 +156,50 @@ export default function ViewVenue() {
             <AdminSideBar />
           </div>
           <div className="dash-profile-container">
-            <button
-              onClick={() => navigate(-1)}
-              className="btn btn-outline-dark btn-sm d-flex align-items-center mb-4"
-            >
-              <i
-                className="fa fa-arrow-left"
-                style={{ marginRight: "8px" }}
-              ></i>
-            </button>
+            <p className="subheadingPG d-flex justify-content-between align-items-center">
+
+              <button
+                onClick={() => navigate(-1)}
+                className="btn btn-outline-dark btn-sm d-flex align-items-center"
+              >
+                <i
+                  className="fa fa-arrow-left"
+                ></i>
+              </button>
+
+              <span className="text-end">
+                {hasVenues ? (
+                  <button
+                    className="btn btn-dark myBtn"
+                    onClick={() => {
+                      navigate("/admin/addvenuelocation", { state: user }); // ✅ Navigate to Add Location page
+                    }}
+                  >
+                    Add Location
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-dark myBtn"
+                    onClick={() => {
+                      navigate("/admin/addvenue", { state: user }); // ✅ Navigate to Add Venue page
+                    }}
+                  >
+                    Add Venue
+                  </button>
+                )}
+              </span>
+            </p>
 
             {user?.role ? (
               // User details section
               <div className="card">
                 <div className="card-body">
-                  <p className="headingPG">USER DETAILS</p>
+                  <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">USER DETAILS
 
-                  <hr />
-                  <div className="container">
-                    {hasVenues ? (
-                      <button
-                        className="btn btn-dark myBtn"
-                        onClick={() => {
-                          navigate("/admin/addvenuelocation", { state: user }); // ✅ Navigate to Add Location page
-                        }}
-                      >
-                        Add Location
-                      </button>
-                    ) : (
-                      <button
-                        className="btn btn-dark myBtn"
-                        onClick={() => {
-                          navigate("/admin/addvenue", { state: user }); // ✅ Navigate to Add Venue page
-                        }}
-                      >
-                        Add Venue
-                      </button>
-                    )}
-                  </div>
-                  <div className="container profile-font">
+                  </p>
+
+                  <hr className="mt-0" />
+                  <div className="">
                     <div className="mb-3 col-md-6 col-sm-12">
                       <p className="label-font">
                         <span className="fw-semibold"> Name: </span>
@@ -292,9 +297,8 @@ export default function ViewVenue() {
                                         </td>
                                         <td>{venue.phone || ""}</td>
                                         <td>{venue.email || ""}</td>
-                                        <td>{`${venue.addressLine1}, ${
-                                          venue.addressLine2 || ""
-                                        }`}</td>
+                                        <td>{`${venue.addressLine1}, ${venue.addressLine2 || ""
+                                          }`}</td>
                                         <td>{venue.zipCode || ""}</td>
                                         {/* <td>
                                         {venue?.city &&

@@ -290,7 +290,7 @@ const CategoryForm = () => {
                         )}
 
                         {/* Main Category Creation Form */}
-                        <p className="fw-semibold">ALL CATEGORY</p>
+                        <p className="fw-semibold">ALL CATEGORIES</p>
                         <hr className="mt-3 mb-0 w-100" />
                         {/* <!-- Modal --> */}
                         {/* <CategoryModal
@@ -324,11 +324,10 @@ const CategoryForm = () => {
                               {mainCategories.map((category) => (
                                 <div key={category.id} className="d-flex">
                                   <button
-                                    className={`list-group-item list-group-item-action ${
-                                      mainCategoryId === category.id
+                                    className={`list-group-item list-group-item-action ${mainCategoryId === category.id
                                         ? " text-info"
                                         : ""
-                                    }`}
+                                      }`}
                                     onClick={() => {
                                       setMainCategoryId(category.id);
                                     }}

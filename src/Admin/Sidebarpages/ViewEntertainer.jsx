@@ -159,10 +159,10 @@ export default function ViewEntertainer() {
                     <div className="">
                       <div className="row align-items-center">
                         <div className="col text-start mt-3">
-                          <p className="profile-font fw-semibold ">
+                          <p className="headingPG">
                             USER DETAILS
                           </p>
-                          <hr />
+                          <hr className="mt-0" />
                         </div>
                         <div className="col-auto profile-font">
                           {headshoturl ? (

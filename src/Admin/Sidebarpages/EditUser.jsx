@@ -116,7 +116,7 @@ export default function EditUser() {
             <div className="card">
               <div className="card-body">
 
-                <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">UPDATE USER DETAILS </p>
+                <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">UPDATE USER </p>
                 <hr className="mt-0" />
                 <form onSubmit={handleSubmit} className="">
                   <div className="row profile-font">
