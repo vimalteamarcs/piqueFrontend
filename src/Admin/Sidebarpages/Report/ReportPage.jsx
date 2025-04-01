@@ -1,6 +1,3 @@
-
-
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import DashLayout from "../../DashLayout";
@@ -27,6 +24,18 @@ const ReportPage = () => {
   const [search, setSearch] = useState("");
   const [from, setFrom] = useState(new Date().toISOString().slice(0, 7));
   const [to, setTo] = useState(new Date().toISOString().slice(0, 7));
+  const [debouncedSearch, setDebouncedSearch] = useState(search);
+
+  // Added  a Debouncing function
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500); // Adjust delay as needed
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [search]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,7 +49,7 @@ const ReportPage = () => {
             params: { from: from, to: to, search: search },
           }
         );
-
+        console.log("Response Data ", response.data, Date.now());
         setReportData(response.data.data);
 
         setPagination({
@@ -55,7 +64,7 @@ const ReportPage = () => {
       }
     };
     fetchData();
-  }, [to, from, search]);
+  }, [to, from, debouncedSearch]);
 
   useEffect(() => {
     if (from > to) {
@@ -65,7 +74,6 @@ const ReportPage = () => {
       setError(null);
     }
   }, [reportData, from, to]);
-
 
   // Ant Table Column
   const columns = [
@@ -225,8 +233,6 @@ const ReportPage = () => {
     },
   ];
 
-
-
   const downloadExcel = async () => {
     try {
       const response = await axios.get(
@@ -260,14 +266,10 @@ const ReportPage = () => {
       <DashLayout />
       <div className="container-fluid w-100 p-0">
         <div className="pageLayout">
-          <div
-            className="dash-sidebar-container"
-          >
+          <div className="dash-sidebar-container">
             <AdminSideBar />
           </div>
-          <div
-            className="dash-profile-container"
-          >
+          <div className="dash-profile-container">
             {loading ? (
               <div className="d-flex justify-content-center my-5">
                 <div className="spinner-grow text-dark" role="status">
