@@ -35,7 +35,7 @@ const ViewEventDetails = () => {
             },
           }
         );
-        console.log("response", response.data)
+        console.log("response", response.data);
         setEvent(response.data);
       } catch (err) {
         setError("Failed to load event details");
@@ -47,7 +47,8 @@ const ViewEventDetails = () => {
     const fetchBookingDetails = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}${GETBOOKING_BYEVENT_ID}${eventDta.id
+          `${import.meta.env.VITE_API_URL}${GETBOOKING_BYEVENT_ID}${
+            eventDta.id
           }`,
           {
             headers: {
@@ -119,15 +120,17 @@ const ViewEventDetails = () => {
 
                   <div className="mb-3 d-flex justify-content-end">
                     <button
-                      className={`btn btn-sm ${view === "event" ? "btn-dark" : "btn-outline-dark"
-                        } me-2`}
+                      className={`btn btn-sm ${
+                        view === "event" ? "btn-dark" : "btn-outline-dark"
+                      } me-2`}
                       onClick={() => setView("event")}
                     >
                       Home
                     </button>
                     <button
-                      className={`btn btn-sm ${view === "bookings" ? "btn-dark" : "btn-outline-dark"
-                        }`}
+                      className={`btn btn-sm ${
+                        view === "bookings" ? "btn-dark" : "btn-outline-dark"
+                      }`}
                       onClick={() => setView("bookings")}
                     >
                       Bookings
@@ -267,7 +270,10 @@ const ViewEventDetails = () => {
                                   <td>
                                     {booking.name ? (
                                       <strong
-                                        style={{ cursor: "pointer", color: "blue" }}
+                                        style={{
+                                          cursor: "pointer",
+                                          color: "blue",
+                                        }}
                                         onClick={() =>
                                           handleShow({
                                             name: booking.name,
@@ -280,7 +286,8 @@ const ViewEventDetails = () => {
                                             specificCatName:
                                               booking.specific_catName,
                                             availability: booking.availability,
-                                            pricePerEvent: booking.pricePerEvent,
+                                            pricePerEvent:
+                                              booking.pricePerEvent,
                                             vaccinated: booking.vaccinated,
                                             socialLinks: booking.socialLinks,
                                             createdAt: booking.createdAt,
@@ -310,26 +317,30 @@ const ViewEventDetails = () => {
                                   <td>{booking.specialNotes || "No notes"}</td>
                                   <td>
                                     {booking.createdAt
-                                      ? new Date(booking.createdAt).toLocaleString()
+                                      ? new Date(
+                                          booking.createdAt
+                                        ).toLocaleString()
                                       : " "}
                                   </td>
                                   <td>
                                     {booking.updatedAt
-                                      ? new Date(booking.updatedAt).toLocaleString()
+                                      ? new Date(
+                                          booking.updatedAt
+                                        ).toLocaleString()
                                       : " "}
                                   </td>
                                   <td>
                                     {booking.isAcceptedDate
                                       ? new Date(
-                                        booking.isAcceptedDate
-                                      ).toLocaleString()
+                                          booking.isAcceptedDate
+                                        ).toLocaleString()
                                       : " "}
                                   </td>
                                   <td>
                                     {booking.statusDate
                                       ? new Date(
-                                        booking.statusDate
-                                      ).toLocaleString()
+                                          booking.statusDate
+                                        ).toLocaleString()
                                       : " "}
                                   </td>
                                 </tr>
