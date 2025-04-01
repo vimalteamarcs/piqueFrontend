@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import DashLayout from "../DashLayout";
 import CustomTable from "../../components/CustomTable";
-import { ALL_ENTERTAINERS, CHANGE_STATUS_ENT, DELETE_ENT_PROFILE } from "../../../constants";
+import {
+  ALL_ENTERTAINERS,
+  CHANGE_STATUS_ENT,
+  DELETE_ENT_PROFILE,
+} from "../../../constants";
 import { useNavigate } from "react-router-dom";
 import AdminSideBar from "../../components/Venue/AdminSideBar";
 
@@ -72,14 +76,14 @@ export default function AllEntertainer() {
     const value = {
       id: Number(record.user.id),
       status: "inactive",
-    }
-    console.log("value to send", value)
+    };
+    console.log("value to send", value);
     // Implement the delete logic here
     try {
       const response = await axios.delete(
         `${import.meta.env.VITE_API_URL}${DELETE_ENT_PROFILE}${record.id}`,
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
       );
 
@@ -138,11 +142,7 @@ export default function AllEntertainer() {
       title: "Vaccinated",
       dataIndex: "vaccinated",
       key: "vaccinated",
-      render: (text) => (
-        <span>
-          {text}
-        </span>
-      ),
+      render: (text) => <span>{text}</span>,
     },
     // {
     //   title: "Actions",
@@ -154,7 +154,7 @@ export default function AllEntertainer() {
   return (
     <>
       <DashLayout />
-      <div className="container-fluid w-100 p-0">
+      {/* <div className="container-fluid w-100 p-0">
         <div className="pageLayout">
           <div className="dash-sidebar-container">
             <AdminSideBar />
@@ -202,6 +202,51 @@ export default function AllEntertainer() {
                     />
                   </div>
                 )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> */}
+      <div className="container-fluid w-100 p-0">
+        <div className="pageLayout">
+          <div className="dash-sidebar-container">
+            <AdminSideBar />
+          </div>
+          <div className="dash-profile-container">
+            <p className="headingPG">ENTERTAINERS DETAILS</p>
+            <div className="card">
+              <div className="card-body">
+                {/* Loader for the table */}
+                <div className="profile-font">
+                  <CustomTable
+                    data={entertainers}
+                    columns={columns}
+                    onView={handleView}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                    loading={loading} // Show loader only for the table
+                    pagination={{
+                      current: pagination.current,
+                      pageSize: pagination.pageSize,
+                      total: pagination.total,
+                      showSizeChanger: false,
+                    }}
+                    onTableChange={(pagination) => {
+                      fetchEntertainers(
+                        pagination.current,
+                        pagination.pageSize,
+                        search
+                      );
+                    }}
+                    search={search}
+                    showActions={true}
+                    onSearchChange={(value) => {
+                      setSearch(value);
+                      fetchEntertainers(1, pagination.pageSize, value);
+                    }}
+                  />
+                </div>
+                {/* End of table loader */}
               </div>
             </div>
           </div>

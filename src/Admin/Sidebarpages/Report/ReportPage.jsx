@@ -264,7 +264,7 @@ const ReportPage = () => {
   return (
     <>
       <DashLayout />
-      <div className="container-fluid w-100 p-0">
+      {/* <div className="container-fluid w-100 p-0">
         <div className="pageLayout">
           <div className="dash-sidebar-container">
             <AdminSideBar />
@@ -315,6 +315,56 @@ const ReportPage = () => {
                 />
               </>
             )}
+          </div>
+        </div>
+      </div> */}
+
+      <div className="container-fluid w-100 p-0">
+        <div className="pageLayout">
+          <div className="dash-sidebar-container">
+            <AdminSideBar />
+          </div>
+          <div className="dash-profile-container">
+            <div className="d-flex justify-content-between my-3">
+              <div className="d-flex gap-2">
+                <input
+                  type="month"
+                  className="form-control w-auto"
+                  value={from}
+                  onChange={(e) => setFrom(e.target.value)}
+                />
+                <input
+                  type="month"
+                  className="form-control w-auto"
+                  value={to}
+                  onChange={(e) => setTo(e.target.value)}
+                />
+                <button
+                  className="btn btn-success btn-sm h-50 mt-4 ms-3"
+                  onClick={downloadExcel}
+                >
+                  Download Excel
+                </button>
+              </div>
+            </div>
+
+            {/* CustomTable with Loader */}
+            <div className="profile-font">
+              <CustomTable
+                columns={columns}
+                data={reportData}
+                pagination={pagination}
+                search={search}
+                onSearchChange={(value) => {
+                  setSearch(value);
+                  setPagination((prev) => ({
+                    ...prev,
+                    current: 1, // Reset to first page on search
+                  }));
+                }}
+                loading={loading} // Loader for the table only
+              />
+            </div>
           </div>
         </div>
       </div>
