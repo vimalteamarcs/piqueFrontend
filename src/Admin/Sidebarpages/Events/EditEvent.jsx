@@ -112,18 +112,20 @@ const EditEvent = () => {
           <div className="dash-profile-container">
             <div className="card">
               <div className="card-body">
-                <button
-                  onClick={() => navigate(-1)}
-                  className="btn btn-outline-dark btn-sm float-end mb-4"
-                >
-                  <i className="fa fa-close"></i>
-                </button>
-                <p className="profile-font fw-semibold mb-2">EDIT EVENT</p>
-                <hr />
-                <div className="event-form p-3">
+
+                <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">
+                  Edit Event
+                  <span
+                    onClick={() => navigate(-1)}
+                    className=""
+                  >
+                    <i className="fa-regular fa-circle-xmark"></i>
+                  </span>
+                </p>
+                <hr className="mt-0" />
+                <div className="">
                   <p
-                    className="fw-medium label-font "
-                    style={{ color: "#9C9C9C", fontSize: "12px" }}
+                    className="formLightHeading"
                   >
                     GENERAL INFORMATION
                   </p>
@@ -289,8 +291,7 @@ const EditEvent = () => {
                     <div className="row mb-3"></div>
 
                     <p
-                      className="fw-medium label-font "
-                      style={{ color: "#9C9C9C", fontSize: "12px" }}
+                      className="formLightHeading"
                     >
                       VENUE INFORMATION
                     </p>
@@ -368,7 +369,7 @@ const EditEvent = () => {
                       <div className="col">
                         <button
                           type="submit"
-                          className="btn btn-dark label-font rounded-3 float-start"
+                          className="btn mybtn"
                         >
                           Update Event
                         </button>
@@ -379,8 +380,8 @@ const EditEvent = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </div >
+      </div >
     </>
   );
 };

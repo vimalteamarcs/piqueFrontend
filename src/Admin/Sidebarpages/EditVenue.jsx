@@ -294,21 +294,21 @@ export default function EditVenue() {
             <AdminSideBar />
           </div>
           <div className="dash-profile-container">
+            <button
+              onClick={() => navigate(-1)}
+              className="btn btn-outline-dark btn-sm d-flex align-items-center mb-2"
+            >
+              <i
+                className="fa fa-arrow-left"
+              ></i>
+            </button>
             <div className="card">
               <div className="card-body">
 
-                <button
-                  onClick={() => navigate(-1)}
-                  className="btn btn-outline-dark btn-sm d-flex align-items-center mb-1 m-2"
-                >
-                  <i
-                    className="fa fa-arrow-left"
-                    style={{ marginRight: "8px" }}
-                  ></i>
-                </button>
-                <p className="profile-font fw-semibold col mt-3">
-                  UPDATE VENUE DETAILS
-                </p><hr />
+                <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">
+                  Update Venue Details
+                </p>
+                <hr className="mt-0" />
 
 
                 {/* {Object.keys(errors).length > 0 && (
@@ -322,13 +322,12 @@ export default function EditVenue() {
                 </div>
               )} */}
 
-                <form onSubmit={handleSubmit} className="conatiner m-1 profile-font scrollable-container event-form ps-4 pt-3 pe-4">
-                  <div className="row text-start ">
-                    <p className=" profile-font fw-semibold text-muted mb-3">General Information</p>
-                    <hr className="fw-semibold" />
+                <form onSubmit={handleSubmit} className="scrollable-container">
+                  <div className="text-start ">
+                    <p class="formLightHeading mb-2">GENERAL INFORMATION</p>
                     <div className="row mb-3">
                       <div className="col-md-4 ">
-                        <label htmlFor="name" className="fw-semibold mb-2">
+                        <label htmlFor="name" className="form-label label-font fw-medium mb-0">
                           Name
                         </label>
                         <Input
@@ -343,7 +342,7 @@ export default function EditVenue() {
                         )}
                       </div>
                       <div className="col-md-4">
-                        <label htmlFor="phone" className="fw-semibold mb-2">
+                        <label htmlFor="phone" className="form-label label-font fw-medium mb-0">
                           Phone
                         </label>
                         <Input
@@ -358,7 +357,7 @@ export default function EditVenue() {
                         )}
                       </div>
                       <div className="col-md-4">
-                        <label htmlFor="email" className="fw-semibold mb-2">
+                        <label htmlFor="email" className="form-label label-font fw-medium mb-0">
                           Email
                         </label>
                         <Input
@@ -375,13 +374,10 @@ export default function EditVenue() {
                     </div>
                   </div>
                   <div className="row text-start ">
-                    <p className="text-start mt-4 profile-font fw-semibold text-muted">
-                      Address Details
-                    </p>
-                    <hr className="fw-semibold" />
-                    <div className="row mb-3">
+                    <p class="formLightHeading mb-2">Address Details</p>
+                    <div className="row mb-2">
                       <div className="col-md-4 text-start">
-                        <label htmlFor="country" className="fw-semibold mb-2">
+                        <label htmlFor="country" className="form-label label-font fw-medium mb-0">
                           Country
                         </label>
                         <Select
@@ -398,7 +394,7 @@ export default function EditVenue() {
                         )}
                       </div>
                       <div className="col-md-4 text-start">
-                        <label htmlFor="state" className="fw-semibold mb-2">
+                        <label htmlFor="state" className="form-label label-font fw-medium mb-0">
                           State
                         </label>
                         <Select
@@ -415,7 +411,7 @@ export default function EditVenue() {
                         )}
                       </div>
                       <div className="col-md-4 text-start">
-                        <label htmlFor="city" className="fw-semibold mb-2">
+                        <label htmlFor="city" className="form-label label-font fw-medium mb-0">
                           City
                         </label>
                         <Select
@@ -430,9 +426,9 @@ export default function EditVenue() {
                         )}
                       </div>
                     </div>
-                    <div className=" row mb-3 mt-2">
+                    <div className=" row mb-2">
                       <div className="col-md-4 text-start">
-                        <label htmlFor="addressLine1" className="fw-semibold mb-2">
+                        <label htmlFor="addressLine1" className="form-label label-font fw-medium mb-0">
                           Address Line 1
                         </label>
                         <Input
@@ -449,7 +445,7 @@ export default function EditVenue() {
                         )}
                       </div>
                       <div className="col-md-4 text-start">
-                        <label htmlFor="addressLine2" className="fw-semibold mb-2">
+                        <label htmlFor="addressLine2" className="form-label label-font fw-medium mb-0">
                           Address Line 2
                         </label>
                         <Input
@@ -466,7 +462,7 @@ export default function EditVenue() {
                         )}
                       </div>
                       <div className="col-md-4 text-start">
-                        <label htmlFor="zipCode" className="fw-semibold mb-2">
+                        <label htmlFor="zipCode" className="form-label label-font fw-medium mb-0">
                           Zip Code
                         </label>
                         <Input
@@ -481,9 +477,9 @@ export default function EditVenue() {
                         )}
                       </div>
                     </div>
-                    <div className=" row mb-3 mt-2">
+                    <div className=" row mb-2">
                       <div className="col-md-12 text-start">
-                        <label htmlFor="location" className="fw-semibold mb-2">
+                        <label htmlFor="location" className="form-label label-font fw-medium mb-0">
                           Description
                         </label>
                         <Input
@@ -586,22 +582,22 @@ export default function EditVenue() {
 
                   <Button
                     type="submit"
-                    className="btn btn-dark profile-font float-start"
+                    className="btn mybtn mt-2"
                     label="Submit"
                   />
 
                 </form>
                 <div className="d-flex justify-content-center mb-5">
                   <div className=" col-12 border-0">
-                    <div className="card-body">
-                      <p className="text-start text-muted profile-font fw-semibold mt-2">
+                    <div className="mt-4">
+                      <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">
                         Media Uploads
                       </p>
-                      <hr className="mb-4" />
+                      <hr className="mt-1" />
 
-                      <div className="row mt-4 event-form">
+                      <div className="row mt-1">
                         <div className="col-md-12 col-sm-12">
-                          <label className="fw-semibold profile-font mb-3 pt-2">Image Upload</label><br />
+                          <label className="form-label label-font fw-medium mb-0">Image Upload</label><br />
                           <input
                             type="file"
                             accept="image/*"
@@ -613,20 +609,20 @@ export default function EditVenue() {
                           {media.length > 0 && (
                             <div className="d-flex flex-wrap gap-3 mt-3">
                               {media.map((file, index) => (
-                                <div key={index} className="position-relative p-2">
+                                <div key={index} className="position-relative">
                                   <img
                                     src={file.url}
                                     alt={`Uploaded image ${index}`}
                                     className="media-image rounded"
                                     style={{ height: "90px", width: "90px" }}
                                   />
-                                  <button
+                                  <span
                                     type="button"
-                                    className="btn btn-link position-absolute"
+                                    className="upldIconremove"
                                     onClick={() => deleteMedia(file.id)}
                                   >
-                                    <i className="fa-solid fa-trash-can text-danger"></i>
-                                  </button>
+                                    <i className="fa-regular fa-circle-xmark text-danger"></i>
+                                  </span>
                                 </div>
                               ))}
                             </div>

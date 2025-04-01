@@ -2,7 +2,7 @@ import React from "react";
 
 const RadioButton = ({ name, options, value, onChange, label }) => {
   return (
-    <div className="input-group mb-3">
+    <div className="input-group mb-1">
       <div className="row w-100">
         {/* <div className="col-md-1">
           <label htmlFor={name} className="fw-semibold">
@@ -12,7 +12,7 @@ const RadioButton = ({ name, options, value, onChange, label }) => {
 
         <div className="col-md-12">
           {options.map((option, index) => (
-            <div key={index} className="form-check form-check-inline mb-1">
+            <div key={index} className="form-check form-check-inline mt-1">
               <input
                 type="radio"
                 id={`${name}-${option.value}`}
@@ -25,7 +25,7 @@ const RadioButton = ({ name, options, value, onChange, label }) => {
               />
               <label
                 htmlFor={`${name}-${option.value}`}
-                className="form-check-label ms-2"
+                className="form-check-label ms-0"
               >
                 {option.label}
               </label>

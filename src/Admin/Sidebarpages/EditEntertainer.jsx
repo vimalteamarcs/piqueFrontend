@@ -675,35 +675,32 @@ export default function EditEntertainer() {
             <AdminSideBar />
           </div>
           <div className="dash-profile-container">
+            <button
+              onClick={() => navigate(-1)}
+              className="btn btn-outline-dark btn-sm d-flex align-items-center mb-2"
+            >
+              <i
+                className="fa fa-arrow-left"
+              ></i>
+            </button>
             <div className="card">
               <div className="card-body">
                 {/* <Spinner show={loading} /> */}
                 <ToastContainer />
                 <div className="row">
                   <div className="col-md-12">
-                    <button
-                      onClick={() => navigate(-1)}
-                      className="btn btn-outline-dark btn-sm d-flex align-items-center mb-1 m-2"
-                    >
-                      <i
-                        className="fa fa-arrow-left"
-                        style={{ marginRight: "8px" }}
-                      ></i>
-                    </button>
-                    <p className="profile-font fw-semibold mt-3">PROFILE</p><hr />
+                    <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">PROFILE</p>
+                    <hr className="mt-0" />
                   </div>
-                  <div className="row justify-content-center mb-4 scrollable-container event-form pt-2 m-1">
+                  <div className="scrollable-container">
                     <form onSubmit={handleSubmit}>
                       <div className="d-flex justify-content-center">
                         <div className="col-12 border-0">
-                          <div className="card-body">
-                            <p className="text-start label-font fw-semibold text-muted">
-                              Entertainer Details
-                            </p>
-                            <hr />
+                          <div className="">
+                            <p class="formLightHeading mb-2">Entertainer Details</p>
                             <div className="row mb-3 label-font">
                               <div className="col-md-4">
-                                <label className="fw-semibold mb-2">Entertainer Name</label>
+                                <label className="form-label label-font fw-medium mb-0">Entertainer Name</label>
                                 <Input
                                   type="text"
                                   name="name"
@@ -716,7 +713,7 @@ export default function EditEntertainer() {
                                 )}
                               </div>
                               <div className="col-md-4">
-                                <label className="fw-semibold mb-2">
+                                <label className="form-label label-font fw-medium mb-0">
                                   Entertainer Main Category
                                 </label>
                                 <Select
@@ -727,7 +724,7 @@ export default function EditEntertainer() {
                                 />
                               </div>
                               <div className="col-md-4">
-                                <label className="fw-semibold mb-2">
+                                <label className="form-label label-font fw-medium mb-0">
                                   Entertainer Sub Category
                                 </label>
                                 <Select
@@ -742,17 +739,18 @@ export default function EditEntertainer() {
 
                             <div className="row mb-3 label-font">
                               <div className="col-md-4">
-                                <label className="fw-semibold mb-2">Bio</label>
+                                <label className="form-label label-font fw-medium mb-0">Bio</label>
                                 <textarea
                                   className="form-control"
                                   name="bio"
                                   value={formData.bio}
                                   onChange={handleInputChange}
                                   placeholder="Describe your business"
+                                  rows="1"
                                 />
                               </div>
                               <div className="col-md-4">
-                                <label className="fw-semibold mb-2">Contact Number 1</label>
+                                <label className="form-label label-font fw-medium mb-0">Contact Number 1</label>
                                 <Input
                                   type="text"
                                   name="phone1"
@@ -765,7 +763,7 @@ export default function EditEntertainer() {
                                 )}
                               </div>
                               <div className="col-md-4">
-                                <label className="fw-semibold mb-2">Contact Number 2</label>
+                                <label className="form-label label-font fw-medium mb-0">Contact Number 2</label>
                                 <Input
                                   type="text"
                                   name="phone2"
@@ -778,7 +776,7 @@ export default function EditEntertainer() {
 
                             <div className="row mb-3 label-font">
                               <div className="col-md-4">
-                                <label className="fw-semibold mb-2">Performance Role</label>
+                                <label className="form-label label-font fw-medium mb-0">Performance Role</label>
                                 <Select
                                   name="performanceRole"
                                   options={performanceRole}
@@ -793,7 +791,7 @@ export default function EditEntertainer() {
                                 )}
                               </div>
                               <div className="col-md-4">
-                                <label className="fw-semibold mb-2">Availability?</label>
+                                <label className="form-label label-font fw-medium mb-0">Availability?</label>
                                 <RadioButton
                                   name="availability"
                                   options={options}
@@ -835,7 +833,7 @@ export default function EditEntertainer() {
                             </div>
                             <div className="row mb-3 label-font">
                               <div className="col-md-4">
-                                <label className="fw-semibold mb-2">Vaccinated?</label>
+                                <label className="form-label label-font fw-medium mb-0">Vaccinated?</label>
                                 <RadioButton
                                   name="vaccinated"
                                   options={options}
@@ -849,7 +847,7 @@ export default function EditEntertainer() {
                                 )}
                               </div>
                               <div className="col-md-4">
-                                <label className="fw-semibold label-font">Status</label>
+                                <label className="form-label label-font fw-medium mb-0">Status</label>
                                 <Select
                                   name="status"
                                   options={status}
@@ -860,9 +858,10 @@ export default function EditEntertainer() {
                               </div>
                             </div>
 
-                            <div className="row mb-3">
+                            <p class="formLightHeading mb-3"> Country details </p>
+                            <div className="row mb-4">
                               <div className="col-md-4">
-                                <label className="form-label label-font mt-3  fw-medium">
+                                <label className="form-label label-font fw-medium mb-0">
                                   Country
                                 </label>
                                 <select
@@ -882,7 +881,7 @@ export default function EditEntertainer() {
                               </div>
 
                               <div className="col-md-4">
-                                <label className="form-label label-font mt-3 fw-medium">
+                                <label className="form-label label-font fw-medium mb-0">
                                   State
                                 </label>
                                 <select
@@ -902,7 +901,7 @@ export default function EditEntertainer() {
                               </div>
 
                               <div className="col-md-4">
-                                <label className="form-label label-font mt-3 fw-medium">
+                                <label className="form-label label-font fw-medium mb-0">
                                   City
                                 </label>
                                 <select
@@ -922,11 +921,12 @@ export default function EditEntertainer() {
                               </div>
 
                             </div>
-                            <p className="text-start text-muted fw-semibold label-font mt-2">Links</p>
-                            <hr />
+
+
+                            <p class="formLightHeading mb-3"> Links </p>
                             <div className="row mb-3 label-font">
-                              <label className="fw-semibold mb-2">Social Media Link</label>
-                              <div className="col-md-6 col-sm-12">
+                              <label className="form-label label-font fw-medium mb-0">Social Media Link</label>
+                              <div className="col-md-12 col-sm-12">
                                 <Input
                                   type="text"
                                   name="socialLinks"
@@ -952,18 +952,19 @@ export default function EditEntertainer() {
                     <div>
                       <div className="d-flex justify-content-center">
                         <div className="col-12 border-0 ">
-                          <div className="card-body">
-                            <p className="text-start text-muted label-font fw-semibold mt-2">
+                          <div className="mt-2">
+                            <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">
                               Media Uploads
                             </p>
-                            <hr />
+                            <hr className="mt-0" />
 
                             <div className="row mb-3 label-font">
                               <div className="col-md-12 col-sm-12">
-                                <label className="fw-semibold mb-2">
+                                <label className="form-label label-font fw-medium mb-0">
                                   Headshot Profile Pic
                                 </label>
                                 <Input
+                                  className=" form-control"
                                   type="file"
                                   name="headshot"
                                   accept="image/*"
@@ -971,7 +972,8 @@ export default function EditEntertainer() {
                                 />
 
                                 {media.headshot && (
-                                  <div className="position-relative">
+                                  <div className="position-relative mt-3"
+                                    style={{ height: "90px", width: "90px" }}>
                                     <img
                                       src={
                                         media.headshot instanceof File
@@ -985,7 +987,7 @@ export default function EditEntertainer() {
 
                                     {/* <button
                                       type="button"
-                                      className="btn btn-link position-absolute"
+                                      className="upldIconremove"
                                       onClick={() => {
                                         const confirmDelete = window.confirm(
                                           "Are you sure you want to delete this headshot?"
@@ -1017,8 +1019,9 @@ export default function EditEntertainer() {
 
                             <div className="row mt-4">
                               <div className="col-md-12 col-sm-12">
-                                <label className="fw-semibold label-font mb-2">Image Upload</label>
+                                <label className="form-label label-font fw-medium mb-0 mb-2">Image Upload</label>
                                 <Input
+                                  className=" form-control"
                                   type="file"
                                   name="images"
                                   accept="image/*"
@@ -1031,8 +1034,9 @@ export default function EditEntertainer() {
                                     {media.image.map((file, index) => (
                                       <div
                                         key={index}
-                                        className="position-relative p-2"
-                                      >
+                                        className="position-relative mt-3"
+                                        style={{ height: "90px", width: "90px" }}>
+
                                         <img
                                           src={
                                             file instanceof File
@@ -1045,7 +1049,7 @@ export default function EditEntertainer() {
                                         />
                                         {/* <button
                                           type="button"
-                                          className="btn btn-link position-absolute"
+                                          className="upldIconremove"
                                           onClick={() => {
                                             const confirmDelete = window.confirm(
                                               "Are you sure you want to delete this image?"
@@ -1081,7 +1085,7 @@ export default function EditEntertainer() {
                             {/* Video Upload */}
                             <div className="row mt-4">
                               <div className="col-md-12 col-sm-12">
-                                <label className="fw-semibold label-font mb-2">Video Upload</label>
+                                <label className="form-label label-font fw-medium mb-0 mb-2">Video Upload</label>
                                 <Input
                                   type="file"
                                   name="videos"
@@ -1095,7 +1099,8 @@ export default function EditEntertainer() {
                                     {media.video.map((file, index) => (
                                       <div
                                         key={index}
-                                        className="position-relative p-2"
+                                        className="position-relative mt-3"
+                                        style={{ height: "90px", width: "190px" }}
                                       >
                                         {file.url.includes("youtu.be") ? (
                                           <iframe
@@ -1120,7 +1125,7 @@ export default function EditEntertainer() {
 
                                         {/* <button
                                           type="button"
-                                          className="btn btn-link btn-sm position-absolute"
+                                          className="upldIconremove"
                                           onClick={() => {
                                             const confirmDelete = window.confirm(
                                               "Are you sure you want to delete this video?"
@@ -1155,9 +1160,10 @@ export default function EditEntertainer() {
                             <div className="row ">
                               <form onSubmit={uploadUrl}>
                                 <div className="col-md-12 col-sm-12">
-                                  <div className=" d-flex m-3">
-                                    <div className="col-md-2 p-1">URL:</div>
-                                    <div className="col-md-6">
+                                  <div className="mt-3">
+                                    <label className="form-label label-font fw-medium mb-0 mb-2">URL:</label>
+                                    {/* <div className="col-md-2 p-1">URL:</div> */}
+                                    <div className="col-md-12">
                                       <input
                                         type="text"
                                         className="form-control"
@@ -1187,10 +1193,10 @@ export default function EditEntertainer() {
                     </select>
                   </div> */}
 
-                                    <div className="col-md-4">
+                                    <div className="mt-2">
                                       <button
                                         type="submit"
-                                        className="btn btn-dark btn-sm ms-3 "
+                                        className="btn mybtn"
                                         disabled={loading}
                                       >
                                         {"Save"}

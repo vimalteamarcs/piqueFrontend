@@ -226,14 +226,11 @@ const CreateEvent = () => {
               <div className="card-body">
                 <div className="d-flex justify-content-between">
                 </div>
-                <div className="div event-form">
-                  <p
-                    className="label-font fw-semibold"
-                    style={{ fontSize: "14px" }}
-                  >
+                <div className="">
+                  <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">
                     Create Event
                   </p>
-                  {/* <hr /> */}
+                  <hr className="mt-0" />
                   {/* {message && (
                 <div className="alert alert-success label-font">{message}</div>
               )}
@@ -241,8 +238,7 @@ const CreateEvent = () => {
                 <div className="alert alert-danger label-font">{error}</div>
               )} */}
                   <p
-                    className=" fw-medium"
-                    style={{ color: "#9C9C9C", fontSize: "12px" }}
+                    className=" formLightHeading"
                   >
                     GENERAL INFORMATION
                   </p>
@@ -447,8 +443,7 @@ const CreateEvent = () => {
 
                     <div className="row mb-2"></div>
                     <p
-                      className=" fw-medium mt-4"
-                      style={{ color: "#9C9C9C", fontSize: "12px" }}
+                      className="formLightHeading"
                     >
                       VENUE INFORMATION
                     </p>
@@ -591,7 +586,7 @@ const CreateEvent = () => {
                     </div>
 
                     <div className="submit-btn-container">
-                      <button type="submit" className="btn btn-dark rounded-3">
+                      <button type="submit" className="btn mybtn">
                         Submit
                       </button>
                     </div>

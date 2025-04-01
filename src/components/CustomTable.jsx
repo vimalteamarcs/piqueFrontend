@@ -30,7 +30,7 @@ export default function CustomTable({
   const handleDeleteClick = (record) => {
     console.log(record);
     setSelectedRecord(record);
-    setDeleteType(); 
+    setDeleteType();
     setShowDeleteModal(true);
   };
 
@@ -55,29 +55,32 @@ export default function CustomTable({
       dataIndex: "actions",
       render: (_, record) => (
         <>
-          {onView && (
-            <Button
-              onClick={() => handleView(record)}
-              size="small"
-              style={{ marginRight: 3 }}
-              icon={<EyeOutlined />}
-            />
-          )}
-          {onEdit && (
-            <Button
-              onClick={() => handleEdit(record)}
-              size="small"
-              style={{ marginRight: 3 }}
-              icon={<EditOutlined />}
-            />
-          )}
-          {onDelete && (
-            <Button
-              onClick={() => handleDeleteClick(record)}
-              size="small"
-              icon={<DeleteOutlined />}
-            />
-          )}
+          <div className="btn-group" role="group">
+            {onView && (
+              <Button
+                className="btn btn-outline-primary"
+                onClick={() => handleView(record)}
+                size="small"
+                icon={<EyeOutlined />}
+              />
+            )}
+            {onEdit && (
+              <Button
+                className="btn btn-outline-primary"
+                onClick={() => handleEdit(record)}
+                size="small"
+                icon={<EditOutlined />}
+              />
+            )}
+            {onDelete && (
+              <Button
+                className="btn btn-outline-primary"
+                onClick={() => handleDeleteClick(record)}
+                size="small"
+                icon={<DeleteOutlined />}
+              />
+            )}
+          </div>
         </>
       ),
     },
