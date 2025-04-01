@@ -24,12 +24,12 @@ export default function AdminSideBar() {
 
   const isVenueActive =
     location.pathname.startsWith("/admin/allVenues") ||
-    location.pathname.startsWith("/admin/viewvenue") ||
-    location.pathname.startsWith("/admin/edituser");
+    location.pathname.startsWith("/admin/viewvenue");
+    // location.pathname.startsWith("/admin/edituser");
 
   const isEntertainerActive =
     location.pathname.startsWith("/admin/allentertainer") ||
-    location.pathname.startsWith("/admin/edituser") ||
+    // location.pathname.startsWith("/admin/edituser") ||
     location.pathname.startsWith("/admin/viewentertainer") ||
     location.pathname.startsWith("/admin/editentertainer");
 

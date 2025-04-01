@@ -14,7 +14,7 @@ const EntertainerCard = ({ entertainer, isWishlisted, isProcessing, onRemoveFrom
     setIsLoading(true);
     console.log("entertainer details", entertainer);
     const body = {
-      username: entertainer.name,
+      name: entertainer.name,
       url: "www.abc.com",
       category: entertainer.category,
       specific_category: entertainer.specific_category,

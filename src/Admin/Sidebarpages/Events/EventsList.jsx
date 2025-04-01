@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DashLayout from "../../DashLayout";
 import CustomTable from "../../../components/CustomTable";
-import { DELETE_EVENT, GET_ALL_EVENTS } from "../../../../constants";
+import { DELETE_EVENT, GET_ALL_EVENTS, GET_EVENTBY_ID } from "../../../../constants";
 import AdminSideBar from "../../../components/Venue/AdminSideBar";
 import { Tooltip } from "antd";
 
@@ -67,10 +67,39 @@ const EventsList = () => {
     }
   };
 
-  const handleEdit = (record) => {
-    console.log("Edit event:", record);
-    navigate("/admin/editevent", { state: record });
+  // const handleEdit = (record) => {
+  //   console.log("Edit event:", record);
+  //   navigate("/admin/editevent", { state: record });
+  // };
+
+  const handleEdit = async (record) => {
+    console.log("Fetching event details for edit:", record.id);
+  
+    const token = localStorage.getItem("token");
+    if (!token) {
+      toast.error("Authentication required. Please log in.");
+      return;
+    }
+  
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}${GET_EVENTBY_ID}${record.id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+  
+      if (response.status === 200 && response.data) {
+        navigate("/admin/editevent", { state: response.data });
+      } else {
+        toast.error("Failed to fetch event details.");
+      }
+    } catch (error) {
+      console.error("Error fetching event details:", error.response?.data || error.message);
+      toast.error("Error fetching event details.");
+    }
   };
+
   const deleteEvent = async (id) => {
     const token = localStorage.getItem("token");
     try {
