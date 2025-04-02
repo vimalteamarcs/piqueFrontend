@@ -23,6 +23,7 @@ body {
 .btn.mybtn {background-color: #333333;border-color: #333333;color: #fff;font-size: 12px;font-weight: 500;    line-height: 20px;padding: 8px 15px;border-radius: 10px;}
 .form-control, .form-select, textarea.form-control {font-size: .8rem !important;padding: .4rem .5rem !important;border: 1px solid #cfcfcf;min-height: 40px;}
 .formLightHeading {font-size: .7rem;font-weight: 400;color: #9C9C9C;margin-bottom: .8rem;letter-spacing: .5px;    text-transform: uppercase;}
+.cursor-pointer {cursor: pointer;color: #008ab4;}
 
 /* Default date - time input icon */
 input[type="datetime-local"]::-webkit-calendar-picker-indicator, input[type="month"]::-webkit-calendar-picker-indicator {font-size: 20px; /* Resize icon */width: 20px;height: 20px;cursor: pointer;}
@@ -85,7 +86,9 @@ table.dataTable thead th, table.dataTable tfoot th {font-weight: 600;} */
   padding: 0px 2px;
   border-radius: 25px;
   border: 1px solid #e7e7e7;}
-
+.catagory-list-box {padding: 2px 10px; background-color: #fbfbfb;border: 1px solid #efefef;border-radius: 8px;}
+.catagory-list-box .catagory-list {border-bottom: 1px solid #efefef;}
+.catagory-list-box .catagory-list:last-child {border-bottom: none;}
 
 .back-to-top {
   position: fixed;

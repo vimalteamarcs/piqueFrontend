@@ -290,8 +290,8 @@ const CategoryForm = () => {
                         )}
 
                         {/* Main Category Creation Form */}
-                        <p className="fw-semibold">ALL CATEGORIES</p>
-                        <hr className="mt-3 mb-0 w-100" />
+                        <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">ALL CATEGORIES</p>
+                        <hr className="mt-0" />
                         {/* <!-- Modal --> */}
                         {/* <CategoryModal
                       data={categoryData}
@@ -302,19 +302,19 @@ const CategoryForm = () => {
                         {/* Sub Category Creation Form */}
                         <div className="row">
                           <div className="col-md-4">
-                            <div className="d-flex mt-5">
-                              <p className=" profile-font fw-semibold">
+                            <div className="d-flex mt-1">
+                              <p className=" profile-font fw-semibold mb-3">
                                 Main Categories
                               </p>
-                              <button
-                                className="btn btn-outline-primary btn-sm mb-3 ms-2"
+                              <span
+                                className="fs-6 ms-2 cursor-pointer"
                                 onClick={() => setIsModalOpen(true)}
                               >
-                                <i className="fa-solid fa-plus"></i>
-                              </button>
+                                <i class="fa-regular fa-square-plus"></i>
+                              </span>
                             </div>
                             <div
-                              className="list-group  overflow-auto"
+                              className="list-group1 overflow-auto catagory-list-box"
                               style={{
                                 maxHeight: "600px",
                                 scrollbarWidth: "thin",
@@ -322,11 +322,11 @@ const CategoryForm = () => {
                               }}
                             >
                               {mainCategories.map((category) => (
-                                <div key={category.id} className="d-flex">
+                                <div key={category.id} className="d-flex catagory-list">
                                   <button
                                     className={`list-group-item list-group-item-action ${mainCategoryId === category.id
-                                        ? " text-info"
-                                        : ""
+                                      ? " text-black fw-semibold"
+                                      : ""
                                       }`}
                                     onClick={() => {
                                       setMainCategoryId(category.id);
@@ -341,7 +341,7 @@ const CategoryForm = () => {
                                     className="btn btn-outline"
                                     onClick={() => openCategoryModal(category)}
                                   >
-                                    <i className="fas fa-edit text-primary"></i>
+                                    <i class="fa-regular fa-pen-to-square text-primary"></i>
                                   </button>
                                   <button
                                     type="button"
@@ -350,7 +350,7 @@ const CategoryForm = () => {
                                       openDeleteModal(category, "Main Category")
                                     }
                                   >
-                                    <i className="fas fa-trash text-danger"></i>
+                                    <i class="fa-solid fa-trash-can text-danger"></i>
                                   </button>
                                 </div>
                               ))}
@@ -368,9 +368,15 @@ const CategoryForm = () => {
                           <div className="col-md-8">
                             {/* Subcategory Creation Form */}
                             <div className="row">
-                              <div className="d-flex mt-4">
-                                <p className=" profile-font mt-4 fw-semibold">
+                              <div className="d-flex mt-1">
+                                <p className=" profile-font mb-3 fw-semibold">
                                   SubCategories
+                                  <span
+                                    className="fs-6 ms-2 cursor-pointer"
+                                    onClick={() => setSubCategoryModalShow(true)}
+                                  >
+                                    <i class="fa-regular fa-square-plus"></i>
+                                  </span>
                                 </p>
                                 {/* <button className="btn btn-outline-primary btn-sm mb-3 mt-4 ms-2" onClick={() => setIsSubModalOpen(true)}><i className="fa-solid fa-plus"></i></button>
                           </div>
@@ -400,12 +406,6 @@ const CategoryForm = () => {
                                   </button>
                                 </form>
                           )} */}
-                                <button
-                                  className="btn btn-outline-primary btn-sm mb-3 mt-4 ms-2"
-                                  onClick={() => setSubCategoryModalShow(true)}
-                                >
-                                  <i className="fa-solid fa-plus"></i>
-                                </button>
                               </div>
 
                               <SubCategoryModal
@@ -431,7 +431,7 @@ const CategoryForm = () => {
                                     }}
                                   >
                                     {subCategories.map((sub) => (
-                                      <div key={sub.id} className="mb-3">
+                                      <div key={sub.id} className="mb-2">
                                         <div
                                           className=""
                                           style={{
@@ -439,11 +439,11 @@ const CategoryForm = () => {
                                             position: "relative",
                                           }}
                                         >
-                                          <div className="card-body p-2">
+                                          <div className="card-body p-0 me-2">
                                             <button
                                               type="button"
                                               className="btn btn-outline-dark btn-sm text-capitalize position-relative"
-                                              style={{ paddingRight: "30px" }}
+                                              style={{ paddingRight: "20px" }}
                                               data-bs-toggle="custom-modal"
                                               data-bs-target="#emodal"
                                               onClick={() =>
@@ -476,10 +476,11 @@ const CategoryForm = () => {
                                               type="button"
                                               className="btn-close position-absolute p-1"
                                               style={{
-                                                top: "50%",
-                                                right: "15px",
+                                                top: "14px",
+                                                right: "10px",
                                                 transform: "translateY(-50%)",
-                                                fontSize: "10px", // Makes the button smaller
+                                                fontSize: "7px",
+                                                backgroundColor: "#fff"
                                               }}
                                               onClick={() =>
                                                 openDeleteModal(

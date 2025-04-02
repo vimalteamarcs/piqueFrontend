@@ -127,7 +127,7 @@ export default function ManageAllowedCountries() {
                     {/* Country Search Input */}
                     <div className="mb-3 position-relative">
                       <label className="">Search Country</label>
-                      <div className="row d-flex">
+                      <div className="row">
                         {" "}
                         <div className="col-md-6 col-sm-12">
                           <input
@@ -161,7 +161,7 @@ export default function ManageAllowedCountries() {
                           )}
                         </div>
                         <button
-                          className="btn btn-dark btn-sm col-md-2 col-sm-12 mx-3 px-1"
+                          className="btn mybtn col-md-1 col-sm-12"
                           onClick={handleAllowCountry}
                         >
                           Add
@@ -169,7 +169,7 @@ export default function ManageAllowedCountries() {
                       </div>
                     </div>
 
-                    <hr />
+                    {/* <hr clasName="m-0" /> */}
 
                     {/* Allowed Countries List */}
 
@@ -182,7 +182,7 @@ export default function ManageAllowedCountries() {
                       }}
                     >
                       {allowedCountries.map((country) => (
-                        <div key={country.id} className="mb-3">
+                        <div key={country.id} className="mb-2">
                           <div
                             className=" profile-font"
                             style={{
@@ -190,11 +190,11 @@ export default function ManageAllowedCountries() {
                               position: "relative",
                             }}
                           >
-                            <div className="card-body p-2 profile-font">
+                            <div className="card-body p-0 profile-font me-2">
                               <button
                                 type="button"
                                 className="btn btn-outline-dark btn-sm text-capitalize position-relative"
-                                style={{ paddingRight: "30px" }}
+                                style={{ paddingRight: "20px" }}
                                 data-bs-toggle="modal"
                                 data-bs-target="#exampleModal"
                               >
@@ -204,10 +204,11 @@ export default function ManageAllowedCountries() {
                                 type="button"
                                 className="btn-close position-absolute p-1"
                                 style={{
-                                  top: "35%",
-                                  right: "12px",
+                                  top: "14px",
+                                  right: "10px",
                                   transform: "translateY(-50%)",
-                                  fontSize: "10px", // Makes the button smaller
+                                  fontSize: "7px",
+                                  backgroundColor: "#fff"
                                 }}
                                 // onClick={() => {
                                 //   if (
