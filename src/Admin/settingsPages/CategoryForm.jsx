@@ -325,7 +325,7 @@ const CategoryForm = () => {
                                 <div key={category.id} className="d-flex catagory-list">
                                   <button
                                     className={`list-group-item list-group-item-action ${mainCategoryId === category.id
-                                      ? " text-black fw-semibold"
+                                      ? " text-primary"
                                       : ""
                                       }`}
                                     onClick={() => {
@@ -338,14 +338,14 @@ const CategoryForm = () => {
                                   {/* Open Modal when clicking edit */}
                                   <button
                                     type="button"
-                                    className="btn btn-outline"
+                                    className="btn btn-outline px-1"
                                     onClick={() => openCategoryModal(category)}
                                   >
                                     <i class="fa-regular fa-pen-to-square text-primary"></i>
                                   </button>
                                   <button
                                     type="button"
-                                    className="btn btn-outline"
+                                    className="btn btn-outline px-1"
                                     onClick={() =>
                                       openDeleteModal(category, "Main Category")
                                     }
