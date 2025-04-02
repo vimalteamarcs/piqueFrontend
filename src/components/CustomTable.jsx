@@ -83,7 +83,10 @@ export default function CustomTable({
       title: "SNo",
       dataIndex: "srNo",
       key: "srNo",
-      render: (text, record, index) => index + 1,
+      render: (text, record, index) => {
+        const { current, pageSize } = pagination; // Get current page and page size
+        return (current - 1) * pageSize + index + 1;
+      },
     },
     ...columns,
     actionColumn, // Only adds if actionColumn exists

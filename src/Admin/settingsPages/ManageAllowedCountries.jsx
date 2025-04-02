@@ -122,7 +122,7 @@ export default function ManageAllowedCountries() {
             <p className="headingPG">ALLOWED COUNTRIES</p>
             <div className="card">
               <div className="card-body">
-                <div className="div profile-font">
+                <div className="">
                   <div className="">
                     {/* Country Search Input */}
                     <div className="mb-3 position-relative">
