@@ -22,6 +22,7 @@ body {
 .card {border-color: #f1f2f3 !important;border-radius: 0.5rem;background-color: #fff;}
 .btn.mybtn {background-color: #333333;border-color: #333333;color: #fff;font-size: 12px;font-weight: 500;    line-height: 20px;padding: 8px 15px;border-radius: 10px;}
 .form-control, .form-select, textarea.form-control {font-size: .8rem !important;padding: .4rem .5rem !important;border: 1px solid #cfcfcf;min-height: 40px;}
+.form-control.is-invalid, .form-select.is-invalid, textarea.form-control.is-invalid {background-image: none;}
 .formLightHeading {font-size: .7rem;font-weight: 400;color: #9C9C9C;margin-bottom: .8rem;letter-spacing: .5px;    text-transform: uppercase;}
 .cursor-pointer {cursor: pointer;color: #008ab4;}
 
