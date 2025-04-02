@@ -35,23 +35,23 @@ export default function EditVenue() {
     venueData
       ? { ...venueData }
       : {
-          name: "",
-          phone: "",
-          email: "",
-          addressLine1: "",
-          addressLine2: "",
-          description: "",
-          city: "",
-          state: "",
-          zipCode: "",
-          country: "",
-          // lat: "",
-          // long: "",
-          // amenities: [""],
-          // websiteUrl: "",
-          // timings: "",
-          // bookingPolicies: "",
-        }
+        name: "",
+        phone: "",
+        email: "",
+        addressLine1: "",
+        addressLine2: "",
+        description: "",
+        city: "",
+        state: "",
+        zipCode: "",
+        country: "",
+        // lat: "",
+        // long: "",
+        // amenities: [""],
+        // websiteUrl: "",
+        // timings: "",
+        // bookingPolicies: "",
+      }
   );
 
   useEffect(() => {
@@ -139,8 +139,8 @@ export default function EditVenue() {
       [name]: ["city", "state", "country"].includes(name)
         ? Number(value)
         : name === "amenities"
-        ? value.split(",")
-        : value,
+          ? value.split(",")
+          : value,
     }));
 
     if (name === "country") {
@@ -302,7 +302,7 @@ export default function EditVenue() {
             </button>
             <div className="card">
               <div className="card-body">
-                <p className="headingPG">Update Venue</p>
+                <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">Update Venue</p>
                 <hr className="mt-0" />
 
                 {/* {Object.keys(errors).length > 0 && (

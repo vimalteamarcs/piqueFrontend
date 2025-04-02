@@ -613,6 +613,9 @@ export default function EditEntertainer() {
 
       if (response.status === 201 || response.status === "success") {
         toast.success("Entertainer Updated successfully!", { autoClose: 1000 });
+        setTimeout(() => {
+          navigate(-1);
+        }, 1000);
       }
     } catch (error) {
       console.error("Error submitting form:", error.response || error.message);
@@ -679,7 +682,7 @@ export default function EditEntertainer() {
                 <ToastContainer />
                 <div className="row">
                   <div className="col-md-12">
-                    <p className="headingPG">UPDATE ENTERTAINERS</p>
+                    <p className="subheadingPG d-flex justify-content-between align-items-center">UPDATE ENTERTAINERS</p>
 
                     <hr className="mt-0" />
                   </div>
@@ -799,19 +802,15 @@ export default function EditEntertainer() {
                               </div>
                               <div className="col-md-4">
                                 <label className="form-label label-font fw-medium mb-0">
-                                  Availability?
+                                  Status
                                 </label>
-                                <RadioButton
-                                  name="availability"
-                                  options={options}
-                                  value={formData.availability}
+                                <Select
+                                  name="status"
+                                  options={status}
+                                  defaultOption="--Select Status--"
+                                  value={formData.status}
                                   onChange={handleInputChange}
                                 />
-                                {errors.availability && (
-                                  <div className="text-danger">
-                                    {errors.availability}
-                                  </div>
-                                )}
                               </div>
                               {/* <div className="col-md-4">
                                 <label className="fw-semibold mb-2">Price Per Event</label>
@@ -824,7 +823,7 @@ export default function EditEntertainer() {
                                 />
                               </div> */}
                               <div className="col-md-4">
-                                <label className="fw-semibold mb-2">
+                                <label className="form-label label-font fw-medium mb-0">
                                   Price Per Event
                                 </label>
                                 <div className="input-group">
@@ -844,6 +843,22 @@ export default function EditEntertainer() {
                             <div className="row mb-3 label-font">
                               <div className="col-md-4">
                                 <label className="form-label label-font fw-medium mb-0">
+                                  Availability?
+                                </label>
+                                <RadioButton
+                                  name="availability"
+                                  options={options}
+                                  value={formData.availability}
+                                  onChange={handleInputChange}
+                                />
+                                {errors.availability && (
+                                  <div className="text-danger">
+                                    {errors.availability}
+                                  </div>
+                                )}
+                              </div>
+                              <div className="col-md-4">
+                                <label className="form-label label-font fw-medium mb-0">
                                   Vaccinated?
                                 </label>
                                 <RadioButton
@@ -857,18 +872,6 @@ export default function EditEntertainer() {
                                     {errors.vaccinated}
                                   </div>
                                 )}
-                              </div>
-                              <div className="col-md-4">
-                                <label className="form-label label-font fw-medium mb-0">
-                                  Status
-                                </label>
-                                <Select
-                                  name="status"
-                                  options={status}
-                                  defaultOption="--Select Status--"
-                                  value={formData.status}
-                                  onChange={handleInputChange}
-                                />
                               </div>
                             </div>
 

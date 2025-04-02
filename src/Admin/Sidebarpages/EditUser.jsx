@@ -89,6 +89,9 @@ export default function EditUser() {
       toast.success("User Updated successfully!", {
         autoClose: 1000, // Close after 1 second
       });
+      setTimeout(() => {
+        navigate(-1);
+      }, 1000);
       //navigate(-1);
     } catch (error) {
       toast.error(error.message);

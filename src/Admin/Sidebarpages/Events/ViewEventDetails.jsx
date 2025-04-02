@@ -47,8 +47,7 @@ const ViewEventDetails = () => {
     const fetchBookingDetails = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}${GETBOOKING_BYEVENT_ID}${
-            eventDta.id
+          `${import.meta.env.VITE_API_URL}${GETBOOKING_BYEVENT_ID}${eventDta.id
           }`,
           {
             headers: {
@@ -93,10 +92,37 @@ const ViewEventDetails = () => {
             <AdminSideBar />
           </div>
           <div className="dash-profile-container">
+            <div className="d-flex justify-content-between">
+              <button
+                onClick={() => navigate(-1)}
+                className="btn btn-outline-dark rounded-3 btn-sm d-flex align-items-center mb-3"
+              >
+                <i
+                  className="fa fa-arrow-left"
+                ></i>
+              </button>
+
+              {/* Buttons to toggle views */}
+
+              <div className="mb-3 d-flex justify-content-end">
+                <button
+                  className={`btn btn-sm ${view === "event" ? "btn-dark" : "btn-outline-dark"
+                    } me-2`}
+                  onClick={() => setView("event")}
+                >
+                  Home
+                </button>
+                <button
+                  className={`btn btn-sm ${view === "bookings" ? "btn-dark" : "btn-outline-dark"
+                    }`}
+                  onClick={() => setView("bookings")}
+                >
+                  Bookings
+                </button>
+              </div>
+            </div>
             <div className="card">
               <div className="card-body">
-                <p className="text-danger">{error}</p>
-
                 {selectedEntertainer && (
                   <EntertainerModal
                     show={showModal}
@@ -104,39 +130,6 @@ const ViewEventDetails = () => {
                     entertainerDetail={selectedEntertainer}
                   />
                 )}
-                <div className="d-flex justify-content-between">
-                  <button
-                    onClick={() => navigate(-1)}
-                    className="btn btn-outline-dark rounded-3 btn-sm d-flex align-items-center mb-3"
-                  >
-                    <i
-                      className="fa fa-arrow-left"
-                      style={{ marginRight: "8px" }}
-                    ></i>
-                    Back
-                  </button>
-
-                  {/* Buttons to toggle views */}
-
-                  <div className="mb-3 d-flex justify-content-end">
-                    <button
-                      className={`btn btn-sm ${
-                        view === "event" ? "btn-dark" : "btn-outline-dark"
-                      } me-2`}
-                      onClick={() => setView("event")}
-                    >
-                      Home
-                    </button>
-                    <button
-                      className={`btn btn-sm ${
-                        view === "bookings" ? "btn-dark" : "btn-outline-dark"
-                      }`}
-                      onClick={() => setView("bookings")}
-                    >
-                      Bookings
-                    </button>
-                  </div>
-                </div>
 
                 {isLoading ? (
                   <div
@@ -151,11 +144,11 @@ const ViewEventDetails = () => {
                   <>
                     {/* Show Event Details */}
                     {view === "event" && event && (
-                      <div className="card p-3">
-                        <p className="profile-font fw-semibold mb-0">
+                      <div className="">
+                        <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">
                           EVENT DETAILS
                         </p>
-                        <hr />
+                        <hr className="mt-0" />
                         <div className="row">
                           <div className="col-md-6 profile-font">
                             <p>
@@ -318,29 +311,29 @@ const ViewEventDetails = () => {
                                   <td>
                                     {booking.createdAt
                                       ? new Date(
-                                          booking.createdAt
-                                        ).toLocaleString()
+                                        booking.createdAt
+                                      ).toLocaleString()
                                       : " "}
                                   </td>
                                   <td>
                                     {booking.updatedAt
                                       ? new Date(
-                                          booking.updatedAt
-                                        ).toLocaleString()
+                                        booking.updatedAt
+                                      ).toLocaleString()
                                       : " "}
                                   </td>
                                   <td>
                                     {booking.isAcceptedDate
                                       ? new Date(
-                                          booking.isAcceptedDate
-                                        ).toLocaleString()
+                                        booking.isAcceptedDate
+                                      ).toLocaleString()
                                       : " "}
                                   </td>
                                   <td>
                                     {booking.statusDate
                                       ? new Date(
-                                          booking.statusDate
-                                        ).toLocaleString()
+                                        booking.statusDate
+                                      ).toLocaleString()
                                       : " "}
                                   </td>
                                 </tr>

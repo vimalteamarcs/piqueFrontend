@@ -16,12 +16,12 @@ const CreateEvent = () => {
   const [formData, setFormData] = useState({
     title: "",
     location: "",
-    venuelocation:"",
+    venuelocation: "",
     venueId: Number(0),
     userId: Number(localStorage.getItem("userId")),
     description: "",
     startTime: "",
-    phone:"",
+    phone: "",
     endTime: "",
     recurring: "none",
     status: "unpublished",
@@ -100,9 +100,9 @@ const CreateEvent = () => {
       newErrors.venueId = "Venue selection is required.";
     }
     if (!formData.phone || formData.phone.trim() === "") {
-      newErrors.phone = "Venue contact number is required.";
+      newErrors.phone = "Venue contact is required";
     } else if (!/^\d{10}$/.test(formData.phone)) {
-      newErrors.phone = "Please enter a valid 10-digit contact number.";
+      newErrors.phone = "Please enter a valid number";
     }
     // Ensure startTime and endTime are valid Dates
     const startTime = new Date(formData.startTime);
@@ -110,11 +110,11 @@ const CreateEvent = () => {
 
     if (isNaN(startTime)) {
       newErrors.startTime =
-        "Start Time must be a valid date in the format YYYY-MM-DDTHH:mm:ssZ";
+        "Start time & date is required";
     }
     if (isNaN(endTime)) {
       newErrors.endTime =
-        "End Time must be a valid date in the format YYYY-MM-DDTHH:mm:ssZ";
+        "End time & date is required";
     }
 
     // Ensure endTime is after startTime
@@ -293,7 +293,7 @@ const CreateEvent = () => {
                               value={formData.title}
                               onChange={handleInputChange}
                             />
-                            {errors.title && 
+                            {errors.title &&
                               <div className="invalid-feedback d-block">{errors.title}</div>
                             }
                           </div>

@@ -85,8 +85,8 @@ export default function Dashboard() {
 
             <div className="card">
               <div className="card-body">
-                <p className="profile-font fw-semibold ms-2 pt-3">Analytics</p>
-                <div className="row d-flex gap-3 p-3">
+                <p className="profile-font fw-semibold ms-2 pt-0 mb-1">Analytics</p>
+                <div className="row d-flex gap-3 p-3 pb-1">
                   <div className="col total-bookings p-2 ps-3">
                     <div className="d-flex justify-content-between mb-0">
                       <p className="profile-font fw-semibold">Total Bookings</p>
