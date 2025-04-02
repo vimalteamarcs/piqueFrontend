@@ -20,16 +20,16 @@ export default function AddUserModal({ showModal, closeModal }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  
+
     let newErrors = { ...errors, [name]: "" };
-  
+
     if (name === "phoneNumber") {
       const phoneRegex = /^[0-9]{10}$/;
       if (!phoneRegex.test(value)) {
         newErrors.phoneNumber = "Phone number must be exactly 10 digits.";
       }
     }
-  
+
     setErrors(newErrors);
   };
 
@@ -78,7 +78,7 @@ export default function AddUserModal({ showModal, closeModal }) {
         <div className="modal-dialog custom-user-modal">
           <div className="modal-content p-2">
             <div className="modal-header">
-              <p className="modal-title fw-semibold mb-0">Add User</p>
+              <p className="modal-title">Add User</p>
               <button type="button" className="btn btn-close btn-sm" onClick={closeModal}></button>
             </div>
             <div className="modal-body profile-font">

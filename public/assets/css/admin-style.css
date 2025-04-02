@@ -43,6 +43,10 @@ input[type="datetime-local"]::-ms-clear,input[type="datetime-local"]::-ms-reveal
 .table tbody tr td .btn-group, table tbody tr td .btn-group  {}
 .table tbody tr td .btn-group .btn-outline-primary, table tbody tr td .btn-group .btn-outline-primary  {background-color: #F8F8F8;color: #333;border-color: #D1D1D1; padding: .8rem .8rem;font-size: 0.8rem;min-width: 25px;display: inline-flex;}
 
+.badge.invoice-status-paid {background-color: #fff;color: #333;border: 1px solid #9b9b9b;min-width: 90px;}
+.badge.invoice-status-pending{background-color: #FFB8B8;color: #333;min-width: 90px;}
+.badge.invoice-paymentsent {background-color: #B8FFD3;color: #333;min-width: 90px;}
+
 /* .table.dataTableUI {font-size: .8rem;}
 .table.dataTableUI thead th, .table.dataTableUI td, table.dataTable.no-footer, table.dataTable.footer {border-color: #dee2e6;} 
 .dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {font-size: .8rem;}

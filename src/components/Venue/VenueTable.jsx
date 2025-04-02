@@ -44,7 +44,7 @@ export default function VenueTable({
   // Function to handle API call
   const handleSaveChanges = async () => {
     setIsLoading(true);
-    console.log("isLoading set to true"); 
+    console.log("isLoading set to true");
 
     const updatedData = {
       addressLine1: formData.addressLine1,
@@ -53,7 +53,7 @@ export default function VenueTable({
       phone: formData.phone,
       venueId: Number(selectedVenue.id),
     };
-    console.log("updated data",updatedData)
+    console.log("updated data", updatedData)
     try {
       const token = localStorage.getItem("token");
 
@@ -75,12 +75,12 @@ export default function VenueTable({
             console.error("prevVenues is not an array:", prevVenues);
             return [];
           }
-        
+
           return prevVenues.map((venue) =>
             venue.id === selectedVenue.id ? { ...venue, ...formData } : venue
           );
         });
-        
+
         setSelectedVenue(null);
       } else {
         toast.error("Failed to update location.");
@@ -88,8 +88,8 @@ export default function VenueTable({
     } catch (error) {
       console.error("Error updating venue:", error);
       toast.error("An error occurred while updating the venue.");
-    }finally {
-      console.log("isLoading set to false"); 
+    } finally {
+      console.log("isLoading set to false");
       setIsLoading(false);
     }
   };
@@ -111,10 +111,10 @@ export default function VenueTable({
           },
         }
       );
-  
+
       if (response.data.status) {
         toast.success("Venue deleted successfully!");
-  
+
         // Remove venue from state
         setVenues((prevVenues) => prevVenues.filter((venue) => venue.id !== venueId));
       } else {
@@ -129,7 +129,7 @@ export default function VenueTable({
       setVenueToDelete(null);
     }
   };
-  
+
 
   return (
     <>
@@ -157,7 +157,7 @@ export default function VenueTable({
                 </tr>
               </thead>
               <tbody className="profile-font text-secondary">
-              {venues.map((venue, index) => (
+                {venues.map((venue, index) => (
                   <tr key={venue.id}>
                     <td>{index + 1}</td>
                     <td>{venue.addressLine1} </td>
@@ -195,7 +195,7 @@ export default function VenueTable({
               <div className="modal-dialog event-modal">
                 <div className="modal-content pt-0 ps-2">
                   <div className="modal-header">
-                    <p className="modal-title fw-semibold">Edit Details</p>
+                    <p className="modal-title">Edit Details</p>
                     <button
                       type="button"
                       className="btn-close"
@@ -298,7 +298,7 @@ export default function VenueTable({
               <div className="modal-dialog venue-modal">
                 <div className="modal-content">
                   <div className="modal-header">
-                    <h5 className="modal-title profile-font">Delete Venue?</h5>
+                    <h5 className="modal-title">Delete Venue?</h5>
                     <button
                       type="button"
                       className="btn-close"

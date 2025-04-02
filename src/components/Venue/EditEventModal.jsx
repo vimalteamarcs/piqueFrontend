@@ -70,7 +70,7 @@ export default function EditEventModal({ event, onClose, fetchEvents }) {
       <div className="modal-dialog event-modal" role="document">
         <div className="modal-content pe-2 ps-2">
           <div className="modal-header">
-            <h5 className="modal-title fw-semibold">Edit Event</h5>
+            <h5 className="modal-title">Edit Event</h5>
             <button
               type="button"
               className="btn-close"

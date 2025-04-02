@@ -90,7 +90,7 @@ export default function VenueDashNavbar() {
                       id="venueDropdown"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
-                      style={{fontSize:"14px"}}
+                      style={{ fontSize: "14px" }}
                     >
                       Venue Name
                       <div className="nav-bars ms-1">
@@ -165,7 +165,7 @@ export default function VenueDashNavbar() {
         <div className="modal-dialog logout-modal modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title profile-font" id="logoutModalLabel">
+              <h5 className="modal-title" id="logoutModalLabel">
                 Confirm Logout
               </h5>
               <button

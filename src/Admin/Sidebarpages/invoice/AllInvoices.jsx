@@ -133,14 +133,14 @@ const AllInvoices = () => {
       key: "status",
       render: (status) => {
         const normalizedStatus = status?.toString().trim().toLowerCase();
-        let statusClass = "badge bg-warning text-dark";
+        let statusClass = "badge invoice-paymentsent";
 
         if (normalizedStatus === "paid") {
-          statusClass = "badge bg-success";
+          statusClass = "badge invoice-status-paid";
         } else if (normalizedStatus === "pending") {
-          statusClass = "badge bg-secondary";
+          statusClass = "badge invoice-status-pending";
         } else if (normalizedStatus === "overdue") {
-          statusClass = "badge bg-danger";
+          statusClass = "badge invoice-paymentsent";
         }
 
         return <span className={statusClass}>{status}</span>;
@@ -188,43 +188,43 @@ const AllInvoices = () => {
         </div>
       </div> */}
       <div className="container-fluid w-100 p-0">
-  <div className="pageLayout">
-    <div className="dash-sidebar-container">
-      <AdminSideBar />
-    </div>
-    <div className="dash-profile-container">
-      <div className="d-flex justify-content-between mb-2">
-      <p className="headingPG">Invoices</p>
-        <button
-          type="button"
-          className="btn btn-dark btn-sm rounded-3"
-          onClick={handleGenerateInvoice}
-        >
-          Generate Invoice
-        </button>
+        <div className="pageLayout">
+          <div className="dash-sidebar-container">
+            <AdminSideBar />
+          </div>
+          <div className="dash-profile-container">
+            <div className="d-flex justify-content-between mb-2">
+              <p className="headingPG">Invoices</p>
+              <button
+                type="button"
+                className="btn btn-dark btn-sm rounded-3"
+                onClick={handleGenerateInvoice}
+              >
+                Generate Invoice
+              </button>
+            </div>
+            <ToastContainer />
+            <div className="profile-font">
+              {/* Table loader */}
+              <CustomTable
+                data={invoices}
+                columns={columns}
+                onView={handleView}
+                showActions={true}
+                // onDelete={handleDelete}
+                loading={loading} // Loader for the table only
+                pagination={pagination}
+                onTableChange={(pagination) => {
+                  fetchInvoices(pagination.current, pagination.pageSize, search);
+                }}
+                search={search}
+                onSearchChange={handleSearchChange}
+              />
+              {/* End of Table Loader */}
+            </div>
+          </div>
+        </div>
       </div>
-      <ToastContainer />
-      <div className="profile-font">
-        {/* Table loader */}
-        <CustomTable
-          data={invoices}
-          columns={columns}
-          onView={handleView}
-          showActions={true}
-          // onDelete={handleDelete}
-          loading={loading} // Loader for the table only
-          pagination={pagination}
-          onTableChange={(pagination) => {
-            fetchInvoices(pagination.current, pagination.pageSize, search);
-          }}
-          search={search}
-          onSearchChange={handleSearchChange}
-        />
-        {/* End of Table Loader */}
-      </div>
-    </div>
-  </div>
-</div>
 
     </>
   );
