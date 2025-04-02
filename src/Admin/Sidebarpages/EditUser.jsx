@@ -138,7 +138,6 @@ export default function EditUser() {
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
-                        required
                       />
                       {errors.name && (
                         <div className="text-danger label-font">
@@ -161,7 +160,6 @@ export default function EditUser() {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        required
                       />
                       {errors.email && (
                         <div className="text-danger">{errors.email}</div>
@@ -184,7 +182,6 @@ export default function EditUser() {
                         name="phoneNumber"
                         value={formData.phoneNumber}
                         onChange={handleChange}
-                        required
                       />
                       {errors.phoneNumber && (
                         <div className="text-danger">{errors.phoneNumber}</div>

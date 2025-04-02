@@ -19,7 +19,7 @@ export default function AddLocation() {
   const location = useLocation();
   const venue = location.state || {};
   console.log(venue);
-
+  const [errors, setErrors] = useState({});
   const [locations, setLocations] = useState([
     {
       addressLine1: "",
@@ -116,8 +116,38 @@ export default function AddLocation() {
     }
   };
 
+  const validateFormData = () => {
+    let newErrors = {};
+    locations.forEach((loc, index) => {
+      if (!loc.addressLine1.trim()) {
+        newErrors[`addressLine1${index}`] = "Address Line 1 is required.";
+      }
+      if (!loc.addressLine2.trim()) {
+        newErrors[`addressLine2${index}`] = "Address Line 2 is required.";
+      }
+      if (!loc.zipCode.trim()) {
+        newErrors[`zipCode${index}`] = "Zip Code is required.";
+      } else if (!/^[0-9]{5,6}$/.test(loc.zipCode)) {
+        newErrors[`zipCode${index}`] = "Zip Code must be 5-6 digits.";
+      }
+      if (!loc.country) {
+        newErrors[`country${index}`] = "Country is required.";
+      }
+      if (!loc.state) {
+        newErrors[`state${index}`] = "State is required.";
+      }
+      if (!loc.city) {
+        newErrors[`city${index}`] = "City is required.";
+      }
+    });
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateFormData()) return;
     try {
       for (const formData of locations) {
         const venueFormData = {
@@ -201,13 +231,13 @@ export default function AddLocation() {
                           </label>
                           <input
                             type="text"
-                            className="form-control label-font"
+                            className={`form-control ${errors[`addressLine1${index}`] ? "is-invalid" : ""}`}
                             placeholder="Enter address line 1"
                             name="addressLine1"
                             value={loc.addressLine1}
                             onChange={(e) => handleChange(index, e)}
-                            required
                           />
+                          {errors[`addressLine1${index}`] && <div className="invalid-feedback">{errors[`addressLine1${index}`]}</div>}
                         </div>
 
                         <div className="col-md-6">
@@ -216,12 +246,13 @@ export default function AddLocation() {
                           </label>
                           <input
                             type="text"
-                            className="form-control label-font"
+                            className={`form-control ${errors[`addressLine2${index}`] ? "is-invalid" : ""}`}
                             placeholder="Enter address line 2"
                             name="addressLine2"
                             value={loc.addressLine2}
                             onChange={(e) => handleChange(index, e)}
                           />
+                          {errors[`addressLine2${index}`] && <div className="invalid-feedback">{errors[`addressLine2${index}`]}</div>}
                         </div>
                       </div>
 
@@ -231,10 +262,10 @@ export default function AddLocation() {
                             Country
                           </label>
                           <select
-                            className="form-control label-font"
+                            className={`form-control label-font ${errors[`country${index}`] ? "is-invalid" : ""}`}
                             name="country"
+                            value={loc.country}
                             onChange={(e) => handleChange(index, e)}
-                            required
                           >
                             <option value="">Select Country</option>
                             {countries.map((c) => (
@@ -243,6 +274,9 @@ export default function AddLocation() {
                               </option>
                             ))}
                           </select>
+                          {errors[`country${index}`] && <div className="invalid-feedback">{errors[`country${index}`]}</div>}
+
+
                         </div>
 
                         <div className="col-md-6">
@@ -250,10 +284,10 @@ export default function AddLocation() {
                             State
                           </label>
                           <select
-                            className="form-control label-font"
+                            className={`form-control label-font ${errors[`state${index}`] ? "is-invalid" : ""}`}
                             name="state"
+                            value={loc.state}
                             onChange={(e) => handleChange(index, e)}
-                            required
                           >
                             <option value="">Select State</option>
                             {states.map((s) => (
@@ -262,7 +296,11 @@ export default function AddLocation() {
                               </option>
                             ))}
                           </select>
+                          {errors[`state${index}`] && <div className="invalid-feedback">{errors[`state${index}`]}</div>}
+
+
                         </div>
+
                       </div>
 
                       <div className="row">
@@ -271,10 +309,10 @@ export default function AddLocation() {
                             City
                           </label>
                           <select
-                            className="form-control label-font"
+                            className={`form-control label-font ${errors[`city${index}`] ? "is-invalid" : ""}`}
                             name="city"
+                            value={loc.city}
                             onChange={(e) => handleChange(index, e)}
-                            required
                           >
                             <option value="">Select City</option>
                             {cities.map((c) => (
@@ -283,6 +321,9 @@ export default function AddLocation() {
                               </option>
                             ))}
                           </select>
+                          {errors[`city${index}`] && <div className="invalid-feedback">{errors[`city${index}`]}</div>}
+
+
                         </div>
                         <div className="col-md-6">
                           <label className="form-label label-font mt-3 mb-0 fw-medium">
@@ -290,13 +331,14 @@ export default function AddLocation() {
                           </label>
                           <input
                             type="text"
-                            className="form-control label-font"
+                            className={`form-control label-font ${errors[`zipCode${index}`] ? "is-invalid" : ""}`}
                             placeholder="Enter zip code"
                             name="zipCode"
                             value={loc.zipCode}
                             onChange={(e) => handleChange(index, e)}
-                            required
                           />
+                          {errors[`zipCode${index}`] && <div className="invalid-feedback">{errors[`zipCode${index}`]}</div>}
+
                         </div>
                       </div>
                     </div>

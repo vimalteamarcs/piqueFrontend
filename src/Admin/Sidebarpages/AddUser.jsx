@@ -39,6 +39,9 @@ export default function AddUser() {
     if (!phoneRegex.test(formData.phoneNumber)) {
       newErrors.phoneNumber = "Phone number must be exactly 10 digits.";
     }
+    if(!formData.password){
+      newErrors.password = "Password is required.";
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -97,14 +100,12 @@ export default function AddUser() {
                       <span style={{ color: "red", display: "inline" }}>*</span>
                       <input
                         type="text"
-                        className={`form-control ${
-                          errors.name ? "is-invalid" : ""
-                        }`}
+                        className={`form-control ${errors.name ? "is-invalid" : ""
+                          }`}
                         name="name"
                         value={formData.name}
                         placeholder="Enter User Name"
                         onChange={handleChange}
-                        required
                       />
                       {errors.name && (
                         <div className="text-danger">{errors.name}</div>
@@ -118,14 +119,12 @@ export default function AddUser() {
                       <span style={{ color: "red", display: "inline" }}>*</span>
                       <input
                         type="email"
-                        className={`form-control ${
-                          errors.email ? "is-invalid" : ""
-                        }`}
+                        className={`form-control ${errors.email ? "is-invalid" : ""
+                          }`}
                         name="email"
                         value={formData.email}
                         placeholder="Enter email address"
                         onChange={handleChange}
-                        required
                       />
                       {errors.email && (
                         <div className="text-danger">{errors.email}</div>
@@ -141,14 +140,12 @@ export default function AddUser() {
                       <span style={{ color: "red", display: "inline" }}>*</span>
                       <input
                         type="text"
-                        className={`form-control ${
-                          errors.phoneNumber ? "is-invalid" : ""
-                        }`}
+                        className={`form-control ${errors.phoneNumber ? "is-invalid" : ""
+                          }`}
                         name="phoneNumber"
                         value={formData.phoneNumber}
                         placeholder="Enter phone Number"
                         onChange={handleChange}
-                        required
                       />
                       {errors.phoneNumber && (
                         <div className="text-danger">{errors.phoneNumber}</div>
@@ -178,7 +175,8 @@ export default function AddUser() {
                           name="password"
                           value={formData.password}
                           onChange={handleChange}
-                          className="form-control"
+                          className={`form-control ${errors.password ? "is-invalid" : ""
+                          }`}
                         />
 
                         <button
@@ -193,7 +191,11 @@ export default function AddUser() {
                             }
                           ></i>
                         </button>
+                        
                       </div>
+                      {errors.password && (
+                        <div className="text-danger">{errors.password}</div>
+                      )}
                     </div>
                   </div>
                   <div className="row">

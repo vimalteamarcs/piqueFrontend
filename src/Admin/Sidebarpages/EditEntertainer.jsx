@@ -889,7 +889,6 @@ export default function EditEntertainer() {
                                   name="country"
                                   value={formData.country}
                                   onChange={handleInputChange}
-                                  required
                                 >
                                   <option value="">Select Country</option>
                                   {countries.map((c) => (
@@ -909,7 +908,6 @@ export default function EditEntertainer() {
                                   name="state"
                                   onChange={handleInputChange}
                                   value={formData.state}
-                                  required
                                 >
                                   <option value="">Select State</option>
                                   {states.map((s) => (
@@ -929,7 +927,6 @@ export default function EditEntertainer() {
                                   name="city"
                                   value={formData.city}
                                   onChange={handleInputChange}
-                                  required
                                 >
                                   <option value="">Select City</option>
                                   {cities.map((c) => (
