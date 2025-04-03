@@ -31,7 +31,7 @@ export default function BookingPage() {
       title="Entertainer Booking Page"
       description="Fill the form details and book the entertainer."
     >
-      <div className="container d-flex flex-column min-vh-100">
+      <div className="container d-flex flex-column min-vh-100 p-0">
         <div className="row mt-5">
           <div className="col-md-12">
             <Button
@@ -93,7 +93,6 @@ export default function BookingPage() {
         </div>
 
       </div>
-      <PiqueFooter />
     </DashLayoutVenue>
   )
 }

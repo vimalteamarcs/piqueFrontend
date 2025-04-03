@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Input from "../Input";
 import Button from "../Button";
 import axios from "axios";
@@ -20,6 +20,25 @@ export default function SearchBar({ updateFilters }) {
   );
 
   const navigate = useNavigate();
+  const inputRef = useRef(null);
+  const suggestionsRef = useRef(null);
+
+  useEffect(() => {
+    // Close dropdown when clicking outside the input or suggestions
+    const handleClickOutside = (event) => {
+      if (
+        inputRef.current &&
+        !inputRef.current.contains(event.target) &&
+        suggestionsRef.current &&
+        !suggestionsRef.current.contains(event.target)
+      ) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -71,26 +90,56 @@ export default function SearchBar({ updateFilters }) {
     }
   };
 
+  // const handleSearchChange = (e) => {
+  //   const query = e.target.value;
+  //   setSearchQuery(query);
+  //   fetchSuggestions(query);
+
+  //   if (query.trim() === "") {
+  //     const updatedParams = new URLSearchParams(searchParams);
+  //     updatedParams.delete("search");
+  //     setSearchParams(updatedParams);
+
+  //     setSuggestions([]);
+  //     setShowSuggestions(false);
+  //   }
+  // };
+
   const handleSearchChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-    fetchSuggestions(query);
-
-    if (query.trim() === "") {
+  
+    if (query.trim() === "") { // Ensure all spaces are removed before checking length
+      setSuggestions([]);
+      setShowSuggestions(false);
+  
       const updatedParams = new URLSearchParams(searchParams);
       updatedParams.delete("search");
       setSearchParams(updatedParams);
-
-      setSuggestions([]);
-      setShowSuggestions(false);
+  
+      return; // Stop further execution
     }
+  
+    // Introduce a small delay to ensure state updates properly
+    setTimeout(() => fetchSuggestions(query), 100);
   };
+  
+  
+  
+  
 
   const handleSuggestionClick = (suggestion) => {
     setSearchQuery(suggestion.name);
-    setShowSuggestions(false);
     setSelectedCategory(suggestion.id);
+    setTimeout(() => setShowSuggestions(false), 0); // Delay closing
   };
+  
+
+  // const handleSuggestionClick = (suggestion) => {
+  //   setSearchQuery(suggestion.name);
+  //   setShowSuggestions(false);
+  //   setSelectedCategory(suggestion.id);
+  // };
 
   const handleSearchClick = async () => {
     if (!selectedCategory) {
@@ -147,49 +196,49 @@ export default function SearchBar({ updateFilters }) {
 
   return (
     <>
-      <div className="container-fluid bg-searchbar mt-0 p-0">
+      <div className="container-fluid bg-searchbar mt-0 p-0 w-100">
         <div className="container">
           <div className="row search-bar gx-1 pt-2">
-            <div className="col position-relative">
-              <input
+            <div className="col-1 position-relative">
+              <Input
                 type="date"
-                className="custom-date-form rounded-3 custom-search-font custom-date-input p-3"
+                className="rounded-3 custom-search-font p-3"
                 style={{ "border": "none" }}
               />
             </div>
-            <div className="col">
-              <input
+            <div className="col-1">
+              <Input
                 type="time"
-                className="custom-time-form rounded-3 custom-search-font p-3"
+                className="rounded-3 custom-search-font p-3"
                 style={{ "border": "none" }}
               />
             </div>
-            <div className="col">
+            <div className="col-4">
               <select
-                className="custom-neighbour-form custom-search-font rounded-3 p-1"
+                className="form-select custom-search-font rounded-3 p-1"
                 aria-label="Default select example"
                 style={{ "border": "none" }}
               >
 
                 <option value="default">Neighbourhoods</option>
-                <option value="1">US</option>
-                <option value="2">India</option>
+                <option value="us">US</option>
+                <option value="india">India</option>
               </select>
             </div>
 
-            <div className="col">
-              <input
+            <div className="col-4">
+              {/* <input
                 type="text"
                 placeholder="Search Entertainers"
                 value={searchQuery}
                 onChange={handleSearchChange}
                 onFocus={() => setShowSuggestions(true)}
-                className="custom-search-form custom-search-font rounded-3 p-2"
+                className="form-control custom-search-font rounded-3 p-2"
                 style={{ "border": "none" }}
               />
               {showSuggestions && suggestions.length > 0 && (
                 <ul
-                  className="dropdown-menu show position-absolute shadow"
+                  className="dropdown-menu show position-absolute shadow suggestion-dropdown"
                   style={{ width: "48%" }}
                 >
                   {suggestions.map((suggestion, index) => (
@@ -203,12 +252,37 @@ export default function SearchBar({ updateFilters }) {
                     </li>
                   ))}
                 </ul>
-              )}
+              )} */}
+
+<input
+        ref={inputRef}
+        type="text"
+        placeholder="Search Entertainers"
+        value={searchQuery}
+        onChange={handleSearchChange}
+        onFocus={() => setShowSuggestions(true)}
+        className="form-control custom-search-font rounded-3 p-2"
+        style={{ "border": "none" }}
+      />
+
+      {showSuggestions && suggestions.length > 0 && (
+        <ul ref={suggestionsRef} className="dropdown-menu show position-absolute shadow" style={{ width: "32%" }}>
+          {suggestions.map((suggestion, index) => (
+            <li
+              key={index}
+              className="dropdown-item"
+              onClick={() => setSearchQuery(suggestion.name)}
+            >
+              {suggestion.name}
+            </li>
+          ))}
+        </ul>
+      )}
             </div>
 
-            <div className="col">
+            <div className="col-2">
               <Button
-                className="btn btn-dark rounded-3 custom-search-font" style={{width:"150px", fontSize:"12px", height:"38px", color:"white"}}
+                className="btn btn-dark rounded-3 custom-search-font w-100" style={{ fontSize:"12px", height:"38px", color:"white"}}
                 onClick={handleSearchClick}
               >
                 <i className="fa fa-search me-3 fs-6"></i>

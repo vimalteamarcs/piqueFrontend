@@ -172,7 +172,7 @@ const Signup = () => {
         body
       );
       console.log(response.data);
-      toast.success("OTP sent successfully to your mail!", { position: "top-center" });
+      toast.success("OTP sent successfully to your mail!", { position: "top-right" });
       localStorage.setItem("case","signup")
       navigate("/otpverification", { state: { email: formData.email } });
     } catch (error) {
@@ -229,7 +229,7 @@ const Signup = () => {
         data
       );
       console.log("Registration Successful", response.data);
-      localStorage.removeItem("userDetails");
+      // localStorage.removeItem("userDetails");
       toast.success("Registration Successful!", { position: "top-right" });
       const token = response.data.token;
       const role = response.data.data.role;

@@ -55,7 +55,7 @@ export default function VenueCalendar() {
   return (
     <>
       <DashLayoutVenue title="Calendar" description="View and manage your work">
-                <div className="container-fluid d-flex flex-column min-vh-100">
+                <div className="container-fluid d-flex flex-column min-vh-100 p-0">
                   <SearchBar />
                   <div className="d-flex">
                     <div className="sidebar-container">
@@ -74,7 +74,6 @@ export default function VenueCalendar() {
         </div>
         </div>
         </div>
-        <PiqueFooter/>
       </DashLayoutVenue>
     </>
   );

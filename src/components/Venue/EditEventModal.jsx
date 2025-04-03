@@ -4,6 +4,7 @@ import Input from "../Input";
 import Select from "../Select";
 
 export default function EditEventModal({ event, onClose, fetchEvents }) {
+  const [errors, setErrors] = useState({});
   const formatDateTimeLocal = (dateTime) => {
     if (!dateTime) return "";
     const date = new Date(dateTime);
@@ -36,10 +37,78 @@ export default function EditEventModal({ event, onClose, fetchEvents }) {
   }, [event]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [name]: value.trim() ? "" : prevErrors[name] // Clears error when value is valid
+    }));
+  };
+  
+
+  const validateForm = () => {
+    let newErrors = {};
+
+    if (!formData.title.trim()) {
+      newErrors.title = "Event title is required.";
+    }
+
+    if (!formData.startTime) {
+      newErrors.startTime = "Start time and date is required.";
+    }
+
+    if (!formData.endTime) {
+      newErrors.endTime = "End time and date is required.";
+    } else {
+      const startDateTime = new Date(formData.startTime);
+      const endDateTime = new Date(formData.endTime);
+  
+      if (endDateTime < startDateTime) {
+        newErrors.endTime = "End date and time must be after the start date and time.";
+      } else {
+        const startDate = formData.startTime.split("T")[0];
+        const endDate = formData.endTime.split("T")[0];
+  
+        if (startDate === endDate) {
+          const startTime = formData.startTime.split("T")[1];
+          const endTime = formData.endTime.split("T")[1];
+  
+          if (endTime <= startTime) {
+            newErrors.endTime = "End time must be after the start time when the date is the same.";
+          }
+        }
+      }
+    }
+
+    if (!formData.recurring) {
+      newErrors.recurring = "Recurring type is required.";
+    }
+
+    if (!formData.status) {
+      newErrors.status = "Status is required.";
+    }
+
+    if (!formData.location) {
+      newErrors.location = "Location is required.";
+    }
+
+    if (!formData.description) {
+      newErrors.description = "Description is required.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSave = async () => {
+    if (!validateForm()) {
+      return; 
+    }
     const token = localStorage.getItem("token");
     console.log("data:", formData)
     try {
@@ -61,13 +130,14 @@ export default function EditEventModal({ event, onClose, fetchEvents }) {
   };
 
   return (
+    <>
+    <div className="modal-backdrop fade show"></div>
     <div
-      className="modal d-block"
+      className="modal fade show d-block"
       tabIndex="-1"
-      role="dialog"
-      style={{ background: "rgba(0, 0, 0, 0.5)" }}
+     
     >
-      <div className="modal-dialog event-modal" role="document">
+      <div className="modal-dialog" >
         <div className="modal-content pe-2 ps-2">
           <div className="modal-header">
             <h5 className="modal-title">Edit Event</h5>
@@ -78,64 +148,68 @@ export default function EditEventModal({ event, onClose, fetchEvents }) {
             ></button>
           </div>
           <div className="modal-body">
-            <div className="mb-1">
-              <label className="form-label profile-font fw-bold">
-                Event Name
+            <div className="mb-3">
+              <label className="form-label profile-font fw-semibold">
+                Event Name<span style={{ color: "red", display: "inline" }}>*</span>
               </label>
               <Input
                 type="text"
-                className="form-control profile-font"
+                className={`form-control profile-font ${errors.title ? "is-invalid" : ""}`}
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
               />
+              {errors.title && <div className="text-danger">{errors.title}</div>}
             </div>
 
-            <div className="mb-1">
-              <label className="form-label profile-font fw-bold">
-                Start Time
+            <div className="mb-3">
+              <label className="form-label profile-font fw-semibold">
+                Start Time<span style={{ color: "red", display: "inline" }}>*</span>
               </label>
               <Input
                 type="datetime-local"
-                className="form-control profile-font"
+                className={`form-control profile-font ${errors.startTime ? "is-invalid" : ""}`}
                 name="startTime"
                 value={formData.startTime}
                 onChange={handleChange}
               />
+              {errors.startTime && <div className="text-danger">{errors.startTime}</div>}
             </div>
 
-            <div className="mb-1">
-              <label className="form-label profile-font fw-bold">
-                End Time
+            <div className="mb-3">
+              <label className="form-label profile-font fw-semibold">
+                End Time<span style={{ color: "red", display: "inline" }}>*</span>
               </label>
               <Input
                 type="datetime-local"
-                className="form-control profile-font"
-                name="startTime"
+                className={`form-control profile-font ${errors.endTime ? "is-invalid" : ""}`}
+                name="endTime"
                 value={formData.endTime}
                 onChange={handleChange}
               />
+              {errors.endTime && <div className="text-danger">{errors.endTime}</div>}
             </div>
 
-            <div className="mb-1">
-              <label className="form-label profile-font fw-bold">
-                Location
+            <div className="mb-3">
+              <label className="form-label profile-font fw-semibold">
+                Location<span style={{ color: "red", display: "inline" }}>*</span>
               </label>
               <Input
                 type="text"
-                className="form-control profile-font"
+                className={`form-control profile-font ${errors.location ? "is-invalid" : ""}`}
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
               />
+              {errors.location && <div className="text-danger">{errors.location}</div>}
             </div>
 
-            <div className="mb-1">
-              <label className="form-label fw-bold profile-font">Status</label>
+            <div className="mb-3">
+              <label className="form-label fw-semibold profile-font">Status<span style={{ color: "red", display: "inline" }}>*</span></label>
               <Select
                 name="status"
                 value={formData.status}
-                className="form-control profile-font"
+                className={`form-control profile-font ${errors.status ? "is-invalid" : ""}`}
                 onChange={handleChange}
                 options={[
                   { value: "pending", label: "Pending" },
@@ -145,16 +219,17 @@ export default function EditEventModal({ event, onClose, fetchEvents }) {
                 ]}
                 defaultOption="--Select Status--"
               />
+              {errors.status && <div className="text-danger">{errors.status}</div>}
             </div>
 
-            <div className="mb-1">
-              <label className="form-label fw-bold profile-font">
-                Recurring
+            <div className="mb-3">
+              <label className="form-label fw-semibold profile-font">
+                Recurring<span style={{ color: "red", display: "inline" }}>*</span>
               </label>
               <Select
                 name="recurring"
                 value={formData.recurring}
-                className="form-control profile-font"
+                className={`form-control profile-font ${errors.recurring ? "is-invalid" : ""}`}
                 onChange={handleChange}
                 options={[
                   { value: "none", label: "None" },
@@ -164,6 +239,7 @@ export default function EditEventModal({ event, onClose, fetchEvents }) {
                 ]}
                 defaultOption="--Select Recurring Type--"
               />
+              {errors.recurring && <div className="text-danger">{errors.recurring}</div>}
             </div>
           </div>
           <div className="modal-footer">
@@ -185,5 +261,6 @@ export default function EditEventModal({ event, onClose, fetchEvents }) {
         </div>
       </div>
     </div>
+    </>
   );
 }

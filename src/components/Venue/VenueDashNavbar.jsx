@@ -121,22 +121,22 @@ export default function VenueDashNavbar() {
                           Events
                         </NavLink>
                       </li> */}
-                      <li>
+                      {/* <li>
                         <NavLink
                           className="dropdown-item venue-drop-item"
                           to="/"
                         >
                           Notifications & Reminders
                         </NavLink>
-                      </li>
-                      <li>
+                      </li> */}
+                      {/* <li>
                         <NavLink
                           className="dropdown-item venue-drop-item"
                           to="/"
                         >
                           Help & Support
                         </NavLink>
-                      </li>
+                      </li> */}
                       <li>
                         <button
                           className="dropdown-item venue-drop-item text-dark"
@@ -162,7 +162,7 @@ export default function VenueDashNavbar() {
         aria-labelledby="logoutModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog logout-modal modal-dialog-centered">
+        <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="logoutModalLabel">

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Button from "../Button";
 import Input from "../Input";
-import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function VenueTable({
   venues,
@@ -18,9 +19,11 @@ export default function VenueTable({
     email: "",
     phone: "",
   });
+  const [errors, setErrors] = useState({});
   const [venueToDelete, setVenueToDelete] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (selectedVenue) {
@@ -39,12 +42,46 @@ export default function VenueTable({
       ...formData,
       [e.target.name]: e.target.value,
     });
+
+    setErrors({
+      ...errors,
+      [e.target.name]: "",
+    });
+  };
+
+  const validateForm = () => {
+    let newErrors = {};
+  
+    if (!formData.addressLine1.trim()) {
+      newErrors.addressLine1 = "Address Line 1 is required.";
+    }
+  
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required.";
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address.";
+    }
+  
+    const phoneRegex = /^\d{10}$/;
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required.";
+    } else if (!phoneRegex.test(formData.phone)) {
+      newErrors.phone = "Enter a valid 10-digit phone number.";
+    }
+  
+    setErrors(newErrors);
+  
+    return Object.keys(newErrors).length === 0; // Returns true if no errors
   };
 
   // Function to handle API call
   const handleSaveChanges = async () => {
+    if (!validateForm()) {
+      return; // Stop submission if validation fails
+    }
     setIsLoading(true);
-    console.log("isLoading set to true");
+    // console.log("isLoading set to true"); 
 
     const updatedData = {
       addressLine1: formData.addressLine1,
@@ -58,7 +95,7 @@ export default function VenueTable({
       const token = localStorage.getItem("token");
 
       const response = await axios.put(
-        `${import.meta.env.VITE_API_URL}venues/update`,
+        `${import.meta.env.VITE_API_URL}venues`,
         updatedData,
         {
           headers: {
@@ -88,8 +125,8 @@ export default function VenueTable({
     } catch (error) {
       console.error("Error updating venue:", error);
       toast.error("An error occurred while updating the venue.");
-    } finally {
-      console.log("isLoading set to false");
+    }finally {
+      // console.log("isLoading set to false"); 
       setIsLoading(false);
     }
   };
@@ -133,10 +170,13 @@ export default function VenueTable({
 
   return (
     <>
-      <p className="fw-bold mb-0">LOCATIONS</p>
+    <div className="d-flex justify-content-between mb-0">
+    <p className="fw-bold">LOCATIONS</p>
+<button className="btn btn-dark" onClick={() => navigate("/venue/profile")}>Add Location</button>
+    </div>
       <hr />
       <div className="row">
-        <Toaster position="top-center" reverseOrder={false} />
+        <ToastContainer position="top-right" reverseOrder={false} />
         {loading ? (
           <div className="d-flex justify-content-center my-5">
             <div className="spinner-grow text-dark" role="status">
@@ -166,13 +206,13 @@ export default function VenueTable({
                     <td>{venue.phone}</td>
                     <td>
                       <Button
-                        className="btn btn-outline-warning btn-sm"
+                        className="btn btn-outline-secondary rounded-3 btn-sm"
                         onClick={() => handleEditClick(venue)}
                       >
                         <i className="fa-solid fa-pen-to-square"></i>
                       </Button>
                       <Button
-                        className="btn btn-outline-danger ms-1 btn-sm"
+                        className="btn btn-outline-secondary ms-1 rounded-3 btn-sm"
                         onClick={() => {
                           setVenueToDelete(venue.id);
                           setShowDeleteModal(true);
@@ -192,7 +232,7 @@ export default function VenueTable({
           <>
             <div className="modal-backdrop fade show"></div>
             <div className="modal fade show d-block" tabIndex="-1">
-              <div className="modal-dialog event-modal">
+              <div className="modal-dialog">
                 <div className="modal-content pt-0 ps-2">
                   <div className="modal-header">
                     <p className="modal-title">Edit Details</p>
@@ -215,54 +255,58 @@ export default function VenueTable({
                         <div className="row mb-2">
                           <div className="col-md-6">
                             <label className="form-label profile-font fw-semibold">
-                              Address Line 1
+                              Address Line 1<span style={{ color: "red", display: "inline" }}>*</span>
                             </label>
                             <Input
                               type="text"
                               name="addressLine1"
-                              className="form-control profile-font"
+                              className={`form-control profile-font ${errors.addressLine1 ? "is-invalid" : ""}`}
                               value={formData.addressLine1}
                               onChange={handleChange}
                             />
+                            {errors.addressLine1 && <div className="text-danger">{errors.addressLine1}</div>}
                           </div>
                           <div className="col-md-6">
                             <label className="form-label profile-font fw-semibold">
-                              Address Line 2
+                              Address Line 2<span style={{ color: "red", display: "inline" }}>*</span>
                             </label>
                             <Input
                               type="text"
                               name="addressLine2"
-                              className="form-control profile-font"
+                              className={`form-control profile-font ${errors.addressLine2 ? "is-invalid" : ""}`}
                               value={formData.addressLine2}
                               onChange={handleChange}
                             />
+                            {errors.addressLine2 && <div className="text-danger">{errors.addressLine2}</div>}
                           </div>
                         </div>
 
                         <div className="row mb-2">
                           <div className="col-md-6">
                             <label className="form-label profile-font fw-semibold">
-                              Email
+                              Email<span style={{ color: "red", display: "inline" }}>*</span>
                             </label>
                             <Input
                               type="email"
                               name="email"
-                              className="form-control profile-font"
+                              className={`form-control profile-font ${errors.email ? "is-invalid" : ""}`}
                               value={formData.email}
                               onChange={handleChange}
                             />
+                            {errors.email && <div className="text-danger">{errors.email}</div>}
                           </div>
                           <div className="col-md-6">
                             <label className="form-label profile-font fw-semibold">
-                              Contact Number
+                              Contact Number<span style={{ color: "red", display: "inline" }}>*</span>
                             </label>
                             <Input
                               type="text"
                               name="phone"
-                              className="form-control profile-font"
+                              className={`form-control profile-font ${errors.phone ? "is-invalid" : ""}`}
                               value={formData.phone}
                               onChange={handleChange}
                             />
+                            {errors.phone && <div className="text-danger">{errors.phone}</div>}
                           </div>
                         </div>
                         <div className="modal-footer">
@@ -295,7 +339,7 @@ export default function VenueTable({
           <>
             <div className="modal-backdrop fade show"></div>
             <div className="modal fade show d-block" tabIndex="-1">
-              <div className="modal-dialog venue-modal">
+              <div className="modal-dialog">
                 <div className="modal-content">
                   <div className="modal-header">
                     <h5 className="modal-title">Delete Venue?</h5>

@@ -7,7 +7,7 @@ import ProfileSidebar from "../../components/Venue/ProfileSidebar";
 import BookingsTable from "../../components/Venue/BookingsTable";
 import UpdateBookingModal from "../../components/Venue/UpdateBookingModal";
 import moment from "moment";
-import { Toaster } from "react-hot-toast";
+import { ToastContainer } from "react-toastify";
 
 export default function AllBookings() {
   const [bookings, setBookings] = useState([]);
@@ -30,7 +30,7 @@ export default function AllBookings() {
           },
         }
       );
-      console.log(response.data)
+      console.log("bookings fetched",response.data)
       setBookings(response.data.bookings || []);
     } catch (err) {
       setError("Failed to fetch bookings");
@@ -51,7 +51,7 @@ export default function AllBookings() {
 
   return (
     <DashLayoutVenue title="All Bookings" description="View all bookings made">
-      <div className="container-fluid d-flex flex-column min-vh-100">
+      <div className="container-fluid d-flex flex-column min-vh-100 p-0">
         <SearchBar />
         <div className="d-flex">
           <div className="sidebar-container">
@@ -70,8 +70,8 @@ export default function AllBookings() {
           </div>
         </div>
       </div>
-      <Toaster
-  position="top-center"
+      <ToastContainer
+  position="top-right"
   reverseOrder={false}
 />
       {isModalOpen && selectedBooking && (
@@ -82,7 +82,6 @@ export default function AllBookings() {
         />
       )}
 
-      <PiqueFooter />
     </DashLayoutVenue>
   );
 }

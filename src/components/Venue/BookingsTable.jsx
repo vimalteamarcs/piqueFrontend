@@ -53,7 +53,14 @@ export default function BookingsTable({
                         .format("DD-MMM-YYYY")
                         .toUpperCase()}
                     </td>
-                    <td>{moment.utc(booking.showDate).format("HH:mm")}</td>
+                    <td>
+                      {new Date(`1970-01-01T${booking.showTime}`).toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                      })}
+                    </td>
+
                     <td>{booking.pricePerEvent}</td>
                     <td>
                       <Button
@@ -70,7 +77,7 @@ export default function BookingsTable({
             </table>
           </div>
         ) : (
-          <div className="alert alert-warning text-center mt-5">
+          <div className="text-danger">
             No bookings yet.
           </div>
         )}

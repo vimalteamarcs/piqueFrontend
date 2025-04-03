@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import moment from "moment";
-import toast, { Toaster } from "react-hot-toast";
 import Input from "../Input";
+import { toast } from "react-toastify";
 
 export default function UpdateBookingModal({ booking, onClose, refreshBookings }) {
   const [newShowDate, setNewShowDate] = useState(moment.utc(booking.showDate).format("YYYY-MM-DD"));
@@ -45,15 +45,18 @@ export default function UpdateBookingModal({ booking, onClose, refreshBookings }
 
   return (
     <>
-
+<div className="modal-backdrop fade show"></div>
     <div className="modal fade show d-block" tabIndex="-1" role="dialog">
       <div className="modal-dialog" role="document">
         <div className="modal-content p-1">
           <div className="modal-header">
             <h6 className="modal-title">Update Show Date & Time</h6>
-            <button type="button" className="btn btn-outline-dark close" onClick={onClose}>
-              <span>&times;</span>
-            </button>
+            <button
+                      type="button"
+                      className="btn-close"
+                      onClick={onClose}
+                      // disabled={isLoading}
+                    ></button>
           </div>
           <div className="modal-body">
             <div className="form-group">

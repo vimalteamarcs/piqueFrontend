@@ -2228,7 +2228,7 @@ body {
   }
 }
 
-.vaccination-badge {
+/* .vaccination-badge {
   position: absolute !important;
   top: 280px !important;
   left: 80.5% !important;
@@ -2240,7 +2240,7 @@ body {
   font-size: 12px !important;
   font-weight: bold !important;
   color: white !important;
-}
+} */
 
 .star-font {
   font-size: 11px;

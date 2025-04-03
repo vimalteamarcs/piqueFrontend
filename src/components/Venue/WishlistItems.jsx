@@ -32,16 +32,19 @@ export default function WishlistItems() {
     fetchWishlist();
   }, []);
 
-  // const removeFromWishlist = async (body) => {
-  //   setProcessingId(entertainer.id);
+  // const removeFromWishlist = async (entertainerEid) => {
+  //   setProcessingId(entertainerEid);
+  //   const entertainer = wishlist.find((item) => item.ent_id === entertainerEid);
+  // if (!entertainer) return;
   //   const body = {
   //     name: entertainer.name,
-  //     url: "www.abc.com", 
+  //     url: entertainer.url,
   //     category: entertainer.category,
   //     specific_category: entertainer.specific_category,
-  //     entId: Number(entertainer.id),
-  //   };
+  //     entId: Number(entertainer.ent_id),
 
+  //   };
+  // console.log("wish body",body)
   //   try {
   //     const response = await axios.post(
   //       `${import.meta.env.VITE_API_URL}venues/toogle/wishlist`,
@@ -52,36 +55,119 @@ export default function WishlistItems() {
   //           Authorization: `Bearer ${localStorage.getItem("token")}`,
   //         },
   //       }
-  //     )
-  //       console.log("Removed from wishlist:", response.data);
-
-  //       if (response.status === 200 || response.status === 201) {
-  //         const isStillWishlisted = response.data.isWishlisted;
-
-  //         if (!isStillWishlisted) {
-  //           setWishlist((prevWishlist) =>
-  //             prevWishlist.filter((item) => item.id !== body.entId)
-  //           );
-  //         };
+  //     );
+  
+  //     console.log("Wishlist toggle response:", response.data);
+  
+  //     if (response.status === 200 || response.status === 201) {
+  //       const message = response.data.message;
+  
+  //       if (message.includes("Removed")) {
+  //         setWishlist((prevWishlist) =>
+  //           prevWishlist.filter((item) => item.ent_id !== entertainerEid)
+  //         );
+  //       } else if (message.includes("Added")) {
+          
+  //         console.log("Unexpected: Entertainer added back in wishlist page");
   //       }
-  //     } catch (error) {
-  //       console.error("Error removing from wishlist:", error);
-  //     } finally {
-  //       setProcessingId(null);
   //     }
+  //   } catch (error) {
+  //     console.error("Error removing from wishlist:", error);
+  //   } finally {
+  //     setProcessingId(null);
+  //   }
+  // };
+  
+  // const removeFromWishlist = async (entertainerEid) => {
+  //   setProcessingId(entertainerEid);
+  //   console.log("Entertainer id: " , entertainerEid)
+  //   const entertainer = wishlist.find((item) => item.ent_id === entertainerEid);
+  //   if (!entertainer) {
+  //     console.error("Entertainer not found in wishlist:", entertainerEid);
+  //     return;
+  //   }
+  
+  //   console.log("Entertainer Object:", entertainer);
+  
+  //   const body = {
+  //     name: entertainer.name,
+  //     url: entertainer.url,
+  //     category: entertainer.category,
+  //     specific_category: entertainer.specific_category,
+  //     entId: Number(entertainer.ent_id) || 0,  // Ensure it's a number
+  //     username: entertainer.username,
   //   };
-
+  
+  //   console.log("Wishlist body:", body);
+  
+  //   if (!body.entId || isNaN(body.entId)) {
+  //     console.error("Invalid entId:", body.entId);
+  //     setProcessingId(null);
+  //     return;
+  //   }
+  
+  //   try {
+  //     const response = await axios.post(
+  //       `${import.meta.env.VITE_API_URL}venues/toogle/wishlist`,
+  //       body,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //         },
+  //       }
+  //     );
+  
+  //     console.log("Wishlist toggle response:", response.data);
+  
+  //     if (response.status === 200 || response.status === 201) {
+  //       setWishlist((prevWishlist) =>
+  //         prevWishlist.filter((item) => item.ent_id !== entertainerEid)
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.error("Error removing from wishlist:", error);
+  //   } finally {
+  //     setProcessingId(null);
+  //   }
+  // };
+  
   const removeFromWishlist = async (entertainerEid) => {
     setProcessingId(entertainerEid);
-    const entertainer = wishlist.find((item) => item.eid === entertainerEid);
-  if (!entertainer) return;
+    console.log("Entertainer ID:", entertainerEid);
+  
+    const entertainer = wishlist.find((item) => item.ent_id === entertainerEid);
+    if (!entertainer) {
+      console.error("Entertainer not found in wishlist:", entertainerEid);
+      setProcessingId(null);
+      return;
+    }
+  
+    const entId = Number(entertainer.ent_id);
+    if (!entId || isNaN(entId)) {
+      console.error("Invalid entId:", entId);
+      setProcessingId(null);
+      return;
+    }
+  
     const body = {
+      // name: entertainer.name,
+      // url: entertainer.url,
+      // category: entertainer.category,
+      // specific_category: entertainer.specific_category,
+      // entId,
+      // username: entertainer.username,
+
       name: entertainer.name,
-      url: "www.abc.com",
+      username:entertainer.user_name,
+      ratings: 4,
+      url: entertainer.mediaUrl,
       category: entertainer.category,
       specific_category: entertainer.specific_category,
-      entId: Number(entertainer.eid),
+      entId: Number(entertainer.ent_id || entertainer.eid),
     };
+  
+    console.log("Wishlist request body:", JSON.stringify(body, null, 2));
   
     try {
       const response = await axios.post(
@@ -98,16 +184,9 @@ export default function WishlistItems() {
       console.log("Wishlist toggle response:", response.data);
   
       if (response.status === 200 || response.status === 201) {
-        const message = response.data.message;
-  
-        if (message.includes("Removed")) {
-          setWishlist((prevWishlist) =>
-            prevWishlist.filter((item) => item.eid !== entertainerEid)
-          );
-        } else if (message.includes("Added")) {
-          
-          console.log("Unexpected: Entertainer added back in wishlist page");
-        }
+        setWishlist((prevWishlist) =>
+          prevWishlist.filter((item) => item.ent_id !== entertainerEid)
+        );
       }
     } catch (error) {
       console.error("Error removing from wishlist:", error);
@@ -116,7 +195,6 @@ export default function WishlistItems() {
     }
   };
   
-
   return (
     <>
       <p className="fw-bold">WISHLIST</p>

@@ -10,13 +10,9 @@ import EntertainerListFooter from "../../components/Venue/EntertainerListFooter"
 export default function AllEntertainer() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [entertainers, setEntertainers] = useState([]);
-  const [filteredEntertainers, setFilteredEntertainers] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [selectedEntertainer, setSelectedEntertainer] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState("");
   const searchQuery = searchParams.get("search") || "";
   const availability = searchParams.get("availability") || "";
   const category = searchParams.get("category") || "";
@@ -101,10 +97,14 @@ export default function AllEntertainer() {
                 entertainers.map((entertainer) => (
                   <EntertainerCard
                     key={entertainer.eid}
+                    isWishlisted={entertainer.isWishlisted}
+                    isProcessing={false}
                     entertainer={entertainer}
                   />
                 ))
-              ) : null}
+              ) : <div>
+                <p className="text-danger text-center">No Entertainers found</p>
+                </div>}
             </div>
           </div>
         </div>

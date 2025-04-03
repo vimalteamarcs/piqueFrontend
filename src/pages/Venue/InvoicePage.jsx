@@ -10,7 +10,7 @@ export default function InvoicePage() {
         title="All Bookings"
         description="View all bookings made"
       >
-        <div className="container-fluid d-flex flex-column min-vh-100">
+        <div className="container-fluid d-flex flex-column min-vh-100 p-0">
           <SearchBar />
           <div className="d-flex">
             <div className="sidebar-container">

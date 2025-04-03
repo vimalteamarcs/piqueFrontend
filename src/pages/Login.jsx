@@ -166,7 +166,7 @@ const Login = () => {
   
         toast.success("Verification OTP sent to your email.");
         
-        navigate("/otpverification");
+        navigate("/otpverification", { state: { email: formData.email } });
         return;
       }
   

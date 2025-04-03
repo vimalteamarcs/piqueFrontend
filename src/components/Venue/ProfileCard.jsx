@@ -3,7 +3,8 @@ import Input from "../Input";
 import Select from "../Select";
 import Button from "../Button";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
+import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileCard() {
   const [isEditing, setIsEditing] = useState(false);
@@ -13,6 +14,7 @@ export default function ProfileCard() {
   const [countries, setCountries] = useState([]);
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
   const [loading, setLoading] = useState(true);
+  const [errors, setErrors] = useState({});
   const [venue, setVenue] = useState({
     name: "",
     addressLine1: "",
@@ -23,8 +25,21 @@ export default function ProfileCard() {
     zipCode: "",
     phone: "",
     email: "",
-    description: "",
   });
+  const navigate = useNavigate();
+
+  const validateForm = () => {
+    let newErrors = {};
+    if (!venue.name.trim()) newErrors.name = "Residence Name is required";
+    if (!venue.addressLine1.trim()) newErrors.addressLine1 = "Address Line 1 is required";
+    if(!venue.addressLine2) newErrors.addressLine2 = "Address Line 2 is required";
+    if (!venue.country) newErrors.country = "Country is required";
+    if (!venue.state) newErrors.state = "State is required";
+    if (!venue.city) newErrors.city = "City is required";
+    if (!venue.zipCode.trim() || isNaN(venue.zipCode)) newErrors.zipCode = "ZIP code is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const fetchVenues = async () => {
     setLoading(true);
@@ -41,11 +56,11 @@ export default function ProfileCard() {
       localStorage.setItem("venueId", response.data.venues[0].id);
 
       if (response.data?.status && Array.isArray(response.data.venues)) {
-        const venueData = response.data.venues[0] || {}; 
+        const venueData = response.data.venues[0] || {};
 
         setVenue({
           name: venueData.name || "",
-          addressLine1: "", 
+          addressLine1: "",
           addressLine2: "",
           country: 0,
           state: 0,
@@ -155,29 +170,31 @@ export default function ProfileCard() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    
+
     setVenue((prev) => ({
       ...prev,
       [name]: value,
     }));
-  
+
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
+
     if (name === "country") {
       setStates([]);
       setCities([]);
       fetchStates(value);
     }
-  
+
     if (name === "state") {
       setCities([]);
       fetchCities(value);
     }
-  
+
     // ✅ Only call addVenue() if all required fields are filled
     if (name === "name" && value.trim() !== "" && venue.addressLine1 && venue.country && venue.state && venue.city) {
       addVenue();
     }
   };
-  
+
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -208,7 +225,9 @@ export default function ProfileCard() {
     }
   };
 
-  const addVenue = async () => {
+  const addVenue = async (e) => {
+    e.preventDefault();
+    if (!validateForm()) return;
     try {
       const token = localStorage.getItem("token");
       const venueData = {
@@ -221,7 +240,7 @@ export default function ProfileCard() {
         zipCode: venue.zipCode,
         country: Number(venue.country),
       };
-  
+
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}venues/location/add`,
         venueData,
@@ -232,20 +251,24 @@ export default function ProfileCard() {
           },
         }
       );
-  
+
       if (response.status >= 200 && response.status < 300) {
         toast.success("Venue Location added successfully!");
+        setTimeout(() => {
+          navigate("/venue/locations");
+        }, 1000);
         console.log("Venue Added:", response.data);
       }
     } catch (error) {
       console.error("Error adding venue:", error);
-      toast.error("Failed to add venue.");
+      toast.error(error);
     }
   };
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     const token = localStorage.getItem("token");
     const venueData = {
       name: venue.name,
@@ -257,7 +280,6 @@ export default function ProfileCard() {
       zipCode: venue.zipCode,
       phone: localStorage.getItem("phone"),
       email: localStorage.getItem("email"),
-      // description: venue.description,
       isParent: true,
       parentId: null,
       venueId: Number(localStorage.getItem("venueId")),
@@ -293,19 +315,22 @@ export default function ProfileCard() {
       <form onSubmit={handleSubmit}>
         <div className="d-flex justify-content-between align-items-center mb-0">
           <div className="div">
-          <p className="fw-semibold profilecard-font mb-0">PROFILE</p>
+            <p className="fw-semibold profilecard-font mb-0">PROFILE</p>
           </div>
           <div className="div">
-            <button type="button" className="btn btn-outline-dark rounded-3 label-font" onClick={addVenue}>Add Location</button>
-          <button type="submit" className="btn venue-btn label-font mb-0 ms-2">
-            Submit
-          </button>
+            <button type="button" className="btn btn-dark rounded-3 label-font" onClick={addVenue}>Add Location</button>
+            {!venue.name.trim() && (
+              <button type="submit" className="btn venue-btn label-font mb-0 ms-2">
+                Submit
+              </button>
+            )}
+
           </div>
-          
+
         </div>
         <hr />
-        <Toaster position="top-center" reverseOrder={false} />
-        <p className="text-muted label-font" style={{color:"#525252"}}>
+        <ToastContainer position="top-right" reverseOrder={false} />
+        <p className="text-muted label-font" style={{ color: "#525252" }}>
           This information will be shared with entertainers who are booked for
           Pique.
         </p>
@@ -319,116 +344,122 @@ export default function ProfileCard() {
           <>
             <div className="row mb-3 profile-font">
               <div className="col-md-12 col-sm-12">
-                <label className="fw-medium label-font">Residence Name*</label>
+                <label className="fw-medium label-font">Residence Name<span style={{ color: "red", display: "inline" }}>*</span></label>
                 <Input
                   type="text"
-                  className="custom-full-form label-font ps-3"
+                  className={`form-control ${errors.name ? "is-invalid" : ""}`}
                   name="name"
                   value={venue.name ?? ""}
                   onChange={handleChange}
                   placeholder="Enter your venue Name"
                 />
+                {errors.name && <div className="invalid-feedback">{errors.name}</div>}
               </div>
             </div>
 
             <div className="row mb-3 profile-font">
               <div className="col-md-6 col-sm-12">
-                <label className=" fw-medium label-font mb-0">Address Line 1*</label>
+                <label className=" fw-medium label-font mb-0">Address Line 1<span style={{ color: "red", display: "inline" }}>*</span></label>
                 <p className="card-font mb-0">Street address, P.O. box, c/o</p>
                 <Input
                   type="text"
                   name="addressLine1"
                   value={venue.addressLine1}
                   onChange={handleChange}
-                  className="custom-mid-form label-font ps-3"
+                  className={`form-control ${errors.addressLine1 ? "is-invalid" : ""}`}
                   placeholder="Street Address, P.O.box,c/o"
                 />
+                {errors.addressLine1 && <div className="text-danger">{errors.addressLine1}</div>}
               </div>
               <div className="col-md-6 col-sm-12">
-                <label className="fw-medium label-font mb-0">Address Line 2*</label>
+                <label className="fw-medium label-font mb-0">Address Line 2<span style={{ color: "red", display: "inline" }}>*</span></label>
                 <p className="card-font mb-0">Apartment, suite, unit, building, floor, etc.</p>
                 <Input
                   type="text"
                   name="addressLine2"
                   value={venue.addressLine2}
                   onChange={handleChange}
-                  className="custom-mid-form label-font ps-3"
+                  className={`form-control ${errors.addressLine2 ? "is-invalid" : ""}`}
                   placeholder="Apartment,suite,unit,building,floor,etc."
                 />
+                {errors.addressLine2 && <div className="text-danger">{errors.addressLine2}</div>}
               </div>
             </div>
 
             <div className="row mb-3 profile-font">
               <div className="col-md-6 col-sm-12">
-                <label className="fw-medium label-font">Country</label>
+                <label className="fw-medium label-font">Country<span style={{ color: "red", display: "inline" }}>*</span></label>
                 <Select
                   name="country"
                   options={countries}
                   value={venue.country}
                   onChange={handleChange}
                   defaultOption="--Select Country--"
-                  className="custom-mid-form label-font ps-3"
+                  className={`form-control ${errors.country ? "is-invalid" : ""}`}
                 />
+                {errors.country && <div className="text-danger">{errors.country}</div>}
               </div>
               <div className="col-md-6 col-sm-12">
-                <label className="fw-medium label-font">State/Province</label>
+                <label className="fw-medium label-font">State/Province<span style={{ color: "red", display: "inline" }}>*</span></label>
                 <Select
                   name="state"
                   options={states}
                   value={venue.state}
                   onChange={handleChange}
                   defaultOption="--Select State--"
-                  className="custom-mid-form label-font ps-3"
+                  className={`form-control ${errors.state ? "is-invalid" : ""}`}
                 />
+                {errors.state && <div className="text-danger">{errors.state}</div>}
               </div>
             </div>
 
             <div className="row mb-3 profile-font">
               <div className="col-md-6 col-sm-12">
-                <label className="fw-medium label-font">City</label>
+                <label className="fw-medium label-font">City<span style={{ color: "red", display: "inline" }}>*</span></label>
                 <Select
                   name="city"
                   options={cities}
                   value={venue.city}
                   onChange={handleChange}
                   defaultOption="--Select City--"
-                  className="custom-mid-form label-font ps-3"
+                  className={`form-control ${errors.city ? "is-invalid" : ""}`}
                 />
+                {errors.city && <div className="text-danger">{errors.city}</div>}
               </div>
               <div className="col-md-6 col-sm-12">
-                <label className="fw-medium label-font">ZIP/Postal Code</label>
+                <label className="fw-medium label-font">ZIP/Postal Code<span style={{ color: "red", display: "inline" }}>*</span></label>
                 <Input
                   name="zipCode"
                   value={venue.zipCode}
                   onChange={handleChange}
-                  className="custom-mid-form label-font ps-3"
+                  className={`form-control ${errors.zipCode ? "is-invalid" : ""}`}
                   placeholder="Enter zip code"
                 />
+                {errors.zipCode && <div className="text-danger">{errors.zipCode}</div>}
               </div>
             </div>
 
             <div className="row profile-font mb-2">
               <div className="col-md-6 col-sm-12">
-                <label className=" fw-medium label-font">Contact Person Name*</label>
+                <label className=" fw-medium label-font">Contact Person Name</label>
                 <Input
                   type="text"
                   name="name"
                   value={localStorage.getItem("userName")}
                   onChange={handleChange}
-                  className="custom-mid-form label-font ps-3"
+                  className="form-control label-font ps-3"
                   placeholder="Enter your email address"
                   disabled
                 />
               </div>
               <div className="col-md-6 col-sm-12">
-                <label className="fw-medium label-font">Contact Number*</label>
+                <label className="fw-medium label-font">Contact Number</label>
                 <Input
                   type="text"
                   name="phone"
                   value={localStorage.getItem("phone")}
                   onChange={handleChange}
-                  className="custom-mid-form label-font ps-3"
-
+                  className="form-control label-font ps-3"
                   placeholder="Enter phone number"
                   disabled
                 />
