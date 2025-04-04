@@ -44,11 +44,12 @@ export default function FilterModal({
 
   const clearAllFilters = () => {
     setSelectedCategories([]);
+    setTempSelectedCategories([]);
     setSelectedLocation([]);
     setStartDate("");
     setEndDate("");
     setSearchParams({});
-    setIsModalOpen(false);
+    // setIsModalOpen(false);
   };
 
   return (

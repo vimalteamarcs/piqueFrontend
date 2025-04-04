@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate } from "react-router-dom";
-import Button from "../components/Button";
 import axios from "axios";
 import Input from "../components/Input";
-import toast, { Toaster } from "react-hot-toast";
+import { toast, ToastContainer } from "react-toastify";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -25,6 +24,7 @@ const Signup = () => {
   const [selectedCode, setSelectedCode] = useState("");
   const [loading, setLoading] = useState(true);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {
     fetchCountryCodes();
@@ -160,6 +160,12 @@ const Signup = () => {
       toast.error("Please enter an email.");
       return;
     }
+    if (!formData.name) {
+      toast.error("Please enter your name")
+    }
+    if (!formData.phoneNumber) {
+      toast.error("Please enter your phone number")
+    }
     localStorage.setItem("userDetails", JSON.stringify(formData));
     navigate("/otpverification", {
       state: { email: formData.email, source: "register" },
@@ -173,7 +179,7 @@ const Signup = () => {
       );
       console.log(response.data);
       toast.success("OTP sent successfully to your mail!", { position: "top-right" });
-      localStorage.setItem("case","signup")
+      localStorage.setItem("case", "signup")
       navigate("/otpverification", { state: { email: formData.email } });
     } catch (error) {
       console.log(error)
@@ -214,6 +220,10 @@ const Signup = () => {
     setErrors(newErrors);
 
     if (Object.values(newErrors).some((error) => error !== "")) {
+      return;
+    }
+    if (!isChecked) {
+      toast.error("Please agree to the Terms of Services and Privacy Policy.");
       return;
     }
     const data = {
@@ -278,7 +288,7 @@ const Signup = () => {
           content={`Register as a new  ${formData.role} and get started with our platform.`}
         />
       </Helmet>
-      <Toaster />
+      <ToastContainer />
       {/* <PiqueNavbar /> */}
       <div className="container min-vh-100">
         <div className="row mt-5">
@@ -506,7 +516,10 @@ const Signup = () => {
                         <input
                           type="checkbox"
                           id="terms&Services"
-                          className="me-1"
+                          className="form-check-input"
+                          checked={isChecked}
+                          onChange={(e) => setIsChecked(e.target.checked)}
+                          name="termsAndServices"
                         />
                       </div>
                       <div className="col-11">
@@ -519,7 +532,7 @@ const Signup = () => {
                           </p>
                         </label>
                       </div>
-                      
+
                     </div>
                   </div>
                   <button

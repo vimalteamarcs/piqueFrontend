@@ -319,11 +319,11 @@ export default function ProfileCard() {
           </div>
           <div className="div">
             <button type="button" className="btn btn-dark rounded-3 label-font" onClick={addVenue}>Add Location</button>
-            {!venue.name.trim() && (
+           
               <button type="submit" className="btn venue-btn label-font mb-0 ms-2">
                 Submit
               </button>
-            )}
+          
 
           </div>
 
@@ -465,6 +465,8 @@ export default function ProfileCard() {
                 />
               </div>
             </div>
+
+
           </>
         )}
       </form>

@@ -215,7 +215,8 @@ export default function WishlistItems() {
             <EntertainerCard
               key={entertainer.id}
               entertainer={entertainer}
-              isWishlisted={true}
+              // isWishlisted={true}
+              isWishlisted={entertainer.isWishlisted}
               isProcessing={processingId === entertainer.id}
               onRemoveFromWishlist={removeFromWishlist}
             />
