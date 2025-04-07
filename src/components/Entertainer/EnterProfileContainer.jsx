@@ -62,21 +62,21 @@ export default function EnterProfileContainer({
   };
   return (
     <>
-      <div className="profile-container">
+      <div className="entertainer-profile-container">
         <p className="fw-bold mb-0">PROFILE</p>
         <hr />
         <p className="dash-font text-muted">
           The contact information provided below is for Pique Entertainment's
           records only.
         </p>
-        <form className="scrollable-container">
-          <div className="row">
+        <form className="scrollable-container" onSubmit={handleSubmit}>
+          <div className="row mb-3">
             <div className="col-md-6">
               <label className="dash-font fw-semibold">Name*</label>
               <Input
                 type="text"
                 name="name"
-                className="form-control dash-font"
+                className="form-control dash-font mb-3"
                 value={formData.name || ""}
                 placeholder="Enter Entertainer Name"
                 onChange={handleInputChange}
@@ -129,7 +129,7 @@ export default function EnterProfileContainer({
               </div>
             </div>
           </div>
-          <div className="row mb-2">
+          <div className="row mb-3">
             <div className="col-md-6">
               <label className="dash-font fw-semibold">Contact Number 1</label>
               <Input
@@ -154,7 +154,7 @@ export default function EnterProfileContainer({
             </div>
           </div>
 
-          <div className="row mb-2">
+          <div className="row mb-3">
             <div className="col-md-6">
               <label className="dash-font fw-semibold">Main Category</label>
               <Select
@@ -178,10 +178,10 @@ export default function EnterProfileContainer({
             </div>
           </div>
 
-          <div className="row">
+          <div className="row mb-2">
             <div className="col-md-6 dash-font">
               <label className="dash-font fw-semibold">Availability</label>
-              <RadioButton
+              {/* <RadioButton
                 name="availability"
                 options={options}
                 value={formData.availability || ""}
@@ -194,11 +194,18 @@ export default function EnterProfileContainer({
                   })
                 }
                 className="form-control dash-font"
+              /> */}
+              <RadioButton
+                name="availability"
+                options={options}
+                value={formData.availability || ""}
+                onChange={(e) => handleInputChange(e)} // just pass the event
               />
+
             </div>
             <div className="col-md-6 dash-font">
               <label className="dash-font fw-semibold">Vaccinated?</label>
-              <RadioButton
+              {/* <RadioButton
                 name="vaccinated"
                 className="form-control dash-font"
                 options={options}
@@ -211,11 +218,18 @@ export default function EnterProfileContainer({
                     },
                   })
                 }
+              /> */}
+              <RadioButton
+                name="vaccinated"
+                options={options}
+                value={formData.vaccinated || ""}
+                onChange={(e) => handleInputChange(e)} // just pass the event
               />
+
             </div>
           </div>
 
-          <div className="row mb-2">
+          <div className="row mb-3">
             <div className="col-md-6 dash-font">
               <label className="dash-font fw-semibold">Performance Role</label>
               <Select
@@ -244,7 +258,7 @@ export default function EnterProfileContainer({
             </div>
           </div>
 
-          <div className="row mb-2">
+          <div className="row mb-3">
             <div className="col-md-6 dash-font">
               <label className="dash-font fw-semibold">Country</label>
               <Select
@@ -269,7 +283,7 @@ export default function EnterProfileContainer({
             </div>
           </div>
 
-          <div className="row mb-2">
+          <div className="row mb-3">
             <div className="col-md-6 dash-font">
               <label className="dash-font fw-semibold">City</label>
               <Select
@@ -279,6 +293,17 @@ export default function EnterProfileContainer({
                 onChange={handleInputChange}
                 defaultOption="--Select City--"
                 className="form-control profile-font"
+              />
+            </div>
+            <div className="col-md-6 dash-font">
+              <label className="dash-font fw-semibold">Social Links</label>
+              <Input
+                type="text"
+                name="socialLinks"
+                className="form-control dash-font"
+                value={formData.socialLinks || ""}
+                placeholder="Enter your social links"
+                onChange={handleInputChange}
               />
             </div>
           </div>

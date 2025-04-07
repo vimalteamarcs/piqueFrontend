@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Input from "../../components/Input";
-import Select from "../../components/Select";
-import RadioButton from "../../components/RadioButton";
-import Button from "../../components/Button";
 import axios from "axios";
-import toast, { Toaster } from "react-hot-toast";
 import DashLayoutEnter from "../../components/Entertainer/DashLayoutEnter";
-import PiqueFooter from "../../components/PiqueComponents/PiqueFooter";
-import MediaUpload from "../../components/Entertainer/MediaUpload";
-import EntertainerDetailsForm from "../../components/Entertainer/EntertainerDetails";
 import EnterAccountSidebar from "../../components/Entertainer/EnterAccountSidebar";
 import EnterProfileContainer from "../../components/Entertainer/EnterProfileContainer";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function Profile() {
   const token = localStorage.getItem("token");
@@ -72,7 +65,6 @@ export default function Profile() {
             },
           }
         );
-        console.log("Categories:", response.data);
 
         if (
           response.data &&
@@ -107,7 +99,6 @@ export default function Profile() {
         const entertainer = response.data?.entertainers?.[0];
 
         if (entertainer) {
-          console.log("Fetched Entertainer:", entertainer);
           localStorage.setItem("entertainerId", entertainer.id);
 
           setFormData({
@@ -179,7 +170,6 @@ export default function Profile() {
   };
 
   const handleCategoryChange = async (selectedValue) => {
-    console.log("handleCategoryChange triggered:", selectedValue);
 
     setFormData((prev) => ({
       ...prev,
@@ -479,7 +469,7 @@ export default function Profile() {
  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("data", formData);
+    // console.log("data", formData);
 
     const userData = {};
     const entertainerData = {
@@ -494,11 +484,12 @@ export default function Profile() {
       vaccinated: formData.vaccinated,
       pricePerEvent: Number(formData.pricePerEvent) || null,
       socialLinks: formData.socialLinks,
-      country: formData.country,
-      state: formData.state,
-      city: formData.city,
+      country: Number(formData.country),
+      state: Number(formData.state),
+      city: Number(formData.city),
       status: localStorage.getItem("status"),
     };
+    console.log("entertainerdata",entertainerData)
 
     const entertainerId = localStorage.getItem("entertainerId");
     console.log(entertainerId);
@@ -523,9 +514,9 @@ export default function Profile() {
 
         console.log("Update response:", updateResponse);
         if (updateResponse.status === 200) {
-          toast.success("Entertainer updated successfully!");
+          toast.success("Entertainer updated successfully!", {position:"top-right"});
         } else {
-          toast.error("Failed to update entertainer.");
+          toast.error("Failed to update entertainer.", {position:"top-right"});
         }
       } else {
         console.log("Creating new entertainer profile");
@@ -555,6 +546,7 @@ export default function Profile() {
         title="Profile"
         description="View and manage your profile"
       >
+        <ToastContainer/>
         <div className="container d-flex">
           <EnterAccountSidebar/>
           <EnterProfileContainer

@@ -172,7 +172,7 @@ export default function VenueTable({
     <>
     <div className="d-flex justify-content-between mb-0">
     <p className="fw-bold">LOCATIONS</p>
-<button className="btn btn-dark" onClick={() => navigate("/venue/profile")}>Add Location</button>
+<button className="btn btn-dark" onClick={() => navigate("/venue/addvenuelocation")}>Add Location</button>
     </div>
       <hr />
       <div className="row">
@@ -188,7 +188,7 @@ export default function VenueTable({
             <table className="table">
               <thead>
                 <tr className="profile-font">
-                  <th>Sr.No.</th>
+                  <th>SNo</th>
                   <th>Address Line 1</th>
                   <th>Address Line 2</th>
                   <th>Email</th>
@@ -311,14 +311,14 @@ export default function VenueTable({
                         </div>
                         <div className="modal-footer">
                           <Button
-                            className="btn btn-danger btn-sm rounded-3"
+                            className="btn btn-danger btn-sm "
                             onClick={() => setSelectedVenue(null)}
                             disabled={isLoading}
                           >
-                            Discard
+                            Cancel
                           </Button>
                           <Button
-                            className="btn btn-sm venue-btn"
+                            className="btn btn-dark btn-sm"
                             type="button"
                             onClick={handleSaveChanges}
                             disabled={isLoading}

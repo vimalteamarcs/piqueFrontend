@@ -20,7 +20,6 @@ const SearchEntertainers = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then(response => {
-          console.log("Category API Response:", response.data); // Debugging
           if (response.data && Array.isArray(response.data.data)) {
             setCategories(response.data.data);
             setShowSuggestions(true);
@@ -59,7 +58,6 @@ const SearchEntertainers = () => {
       const response = await axios.get(`http://localhost:8080/venues/search/entertainers`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log("Entertainers API Response:", response.data); // Debugging
       const filteredEntertainers = response.data.entertainers.filter(ent => ent.category === selectedCategory.id);
       setEntertainers(filteredEntertainers);
     } catch (error) {

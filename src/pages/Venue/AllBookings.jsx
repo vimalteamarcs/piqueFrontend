@@ -30,7 +30,6 @@ export default function AllBookings() {
           },
         }
       );
-      console.log("bookings fetched",response.data)
       setBookings(response.data.bookings || []);
     } catch (err) {
       setError("Failed to fetch bookings");

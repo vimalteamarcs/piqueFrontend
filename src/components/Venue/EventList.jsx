@@ -79,7 +79,7 @@ export default function EventList() {
           <table className="table table-responsive">
             <thead>
               <tr className="profile-font">
-                <th>Sr No.</th>
+                <th>SNo</th>
                 <th>Title</th>
                 <th>Start Date</th>
                 <th>Status</th>
@@ -114,7 +114,7 @@ export default function EventList() {
                   <td>{event.location}</td>
                   <td>{event.recurring}</td>
                   <td>
-                    <Button className="btn btn-outline-warning btn-sm" onClick={() => handleEdit(event)}>
+                    <Button className="btn btn-outline-secondary btn-sm" onClick={() => handleEdit(event)}>
                       <i className="fa-solid fa-pen-to-square"></i>
                     </Button>
                   </td>

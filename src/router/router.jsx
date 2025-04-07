@@ -66,6 +66,9 @@ import AddEvents from "../pages/Venue/AddEvents";
 import OtpVerification from "../pages/OtpVerification";
 import ResetPassword from "../pages/ResetPassword";
 import InvoicePage from "../pages/Venue/InvoicePage";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
+import TermsAndCondition from "../pages/TermsAndCondition";
+import AddLocationVenue from "../pages/Venue/AddLocationVenue";
 const basename = import.meta.env.VITE_BASE || "/P/";
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -81,7 +84,8 @@ const router = createBrowserRouter(
       <Route path="/error" element={<ErrorPage />} />
       <Route path="/otpverification" element={<OtpVerification />} />
       <Route path="/reset-password" element={<ResetPassword />} />
-
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/terms-and-conditions" element={<TermsAndCondition />} />
 
 
       {/* Protected User Routes (Venues & Entertainers) */}
@@ -105,6 +109,7 @@ const router = createBrowserRouter(
         <Route path='/venue/locations' element={<VenueList />} />
         <Route path="/venue/addlocation" element={<AddLocation />} />
         <Route path='/venue/addevents' element={<AddEvents />} />
+        <Route path='/venue/addvenuelocation' element={<AddLocationVenue />} />
         <Route path='/venue/invoices' element={<InvoicePage />} />
 
       </Route>

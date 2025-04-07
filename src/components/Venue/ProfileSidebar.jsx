@@ -1,23 +1,24 @@
 import React, { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 export default function ProfileSidebar() {
   const name = localStorage.getItem("userName");
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Check if any Events link is active
   const isEventsActive =
     location.pathname.startsWith("/venue/events") ||
     location.pathname.startsWith("/venue/calendar") ||
-    location.pathname.startsWith("/venue/sync")||
+    location.pathname.startsWith("/venue/sync") ||
     location.pathname.startsWith("/venue/addevents");
 
   const [isEventsOpen, setIsEventsOpen] = useState(isEventsActive);
 
   return (
     <div className="p-2 profile-font">
-      <p className="fw-medium mb-1 ms-3" style={{fontSize:"20px"}}><i className="fa-solid fa-angle-left fs-6 me-1"></i>Account</p>
-      <p className="text-muted fw-regular ms-4" style={{fontSize:"14px"}}>{name}</p>
+      <button className="btn fw-medium mb-1 ms-2" onClick={() => { navigate('/venue') }} style={{ fontSize: "20px" }}><i className="fa-solid fa-angle-left fs-6 me-1"></i>Account</button>
+      <p className="text-muted fw-regular ms-4" style={{ fontSize: "14px" }}>{name}</p>
       <nav className="nav flex-column position-relative ms-4 label-font">
         {/* VENUE PROFILE, CONTACT PERSON, WISHLIST */}
         {[
@@ -46,8 +47,7 @@ export default function ProfileSidebar() {
             key={to}
             to={to}
             className={({ isActive }) =>
-              `nav-link py-2 px-4 mb-2 d-flex align-items-center sidebar-link ${
-                isActive ? "active-link" : ""
+              `nav-link py-2 px-4 mb-2 d-flex align-items-center sidebar-link ${isActive ? "active-link" : ""
               }`
             }
           >
@@ -58,18 +58,16 @@ export default function ProfileSidebar() {
 
         <div className="nav-item">
           <div
-            className={`nav-link py-2 px-4 mb-2 d-flex align-items-center sidebar-link ${
-              isEventsActive ? "active-link" : ""
-            }`}
+            className={`nav-link py-2 px-4 mb-2 d-flex align-items-center sidebar-link ${isEventsActive ? "active-link" : ""
+              }`}
             onClick={() => setIsEventsOpen(!isEventsOpen)}
             style={{ cursor: "pointer" }}
           >
-            <i className="fa-solid fa-bookmark me-3 fs-5 icon-transition"></i>
+            <i className="fa-solid fa-bookmark me-4 fs-5 icon-transition"></i>
             <span className="text-dark">EVENTS</span>
             <i
-              className={`fa-solid fa-chevron-${
-                isEventsOpen ? "up" : "down"
-              } ms-auto`}
+              className={`fa-solid fa-chevron-${isEventsOpen ? "up" : "down"
+                } ms-auto`}
             ></i>
           </div>
 
@@ -77,15 +75,14 @@ export default function ProfileSidebar() {
             <div className="ps-4">
               {[
                 { to: "/venue/events", label: "Event List" },
-                { to: "/venue/calendar", label: "Calendar" },
-                { to: "/venue/sync", label: "Sync an External Calendar" },
+                // { to: "/venue/calendar", label: "Calendar" },
+                // { to: "/venue/sync", label: "Sync an External Calendar" },
               ].map(({ to, label }) => (
                 <NavLink
                   key={to}
                   to={to}
                   className={({ isActive }) =>
-                    `nav-link py-2 px-4 mb-2 d-flex align-items-center sidebar-link ${
-                      isActive ? "active-link" : ""
+                    `nav-link py-2 px-4 mb-2 d-flex align-items-center sidebar-link ${isActive ? "active-link" : ""
                     }`
                   }
                 >
@@ -98,32 +95,31 @@ export default function ProfileSidebar() {
 
         {/* INVOICES, RATINGS, NOTIFICATIONS */}
         {[{
-            to: "/venue/bookings",
-            icon: "fa-check-to-slot",
-            label: "BOOKINGS",
-          },
-          {
-            to: "/venue/invoices",
-            icon: "fa-file-invoice",
-            label: "INVOICES & PAYMENTS",
-          },
-          {
-            to: "/venue/ratings",
-            icon: "fa-folder-plus",
-            label: "RATINGS & REVIEWS",
-          },
-          {
-            to: "/venue/notifications",
-            icon: "fa-bell",
-            label: "NOTIFICATIONS & REMINDERS",
-          },
+          to: "/venue/bookings",
+          icon: "fa-check-to-slot",
+          label: "BOOKINGS",
+        },
+        // {
+        //   to: "/venue/invoices",
+        //   icon: "fa-file-invoice",
+        //   label: "INVOICES & PAYMENTS",
+        // },
+        // {
+        //   to: "/venue/ratings",
+        //   icon: "fa-folder-plus",
+        //   label: "RATINGS & REVIEWS",
+        // },
+        // {
+        //   to: "/venue/notifications",
+        //   icon: "fa-bell",
+        //   label: "NOTIFICATIONS & REMINDERS",
+        // },
         ].map(({ to, icon, label }) => (
           <NavLink
             key={to}
             to={to}
             className={({ isActive }) =>
-              `nav-link py-2 px-4 mb-2 d-flex align-items-center sidebar-link ${
-                isActive ? "active-link" : ""
+              `nav-link py-2 px-4 mb-2 d-flex align-items-center sidebar-link ${isActive ? "active-link" : ""
               }`
             }
           >

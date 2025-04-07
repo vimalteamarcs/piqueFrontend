@@ -23,7 +23,6 @@ export default function BookingPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // onBook(bookingFormData);
-    console.log(bookingFormData)
   };
 
   return (

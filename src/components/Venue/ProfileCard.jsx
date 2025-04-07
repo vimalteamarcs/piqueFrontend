@@ -5,6 +5,7 @@ import Button from "../Button";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import MapView from "./MapView";
 
 export default function ProfileCard() {
   const [isEditing, setIsEditing] = useState(false);
@@ -27,12 +28,83 @@ export default function ProfileCard() {
     email: "",
   });
   const navigate = useNavigate();
+  const [coordinates, setCoordinates] = useState(null);
+
+  const cityName = cities.find(c => c.value === Number(venue.city))?.label || "";
+  const stateName = states.find(s => s.value === Number(venue.state))?.label || "";
+  const countryName = countries.find(c => c.value === Number(venue.country))?.label || "";
+
+  const fullAddress = [
+    venue.addressLine1,
+    venue.addressLine2,
+    cityName,
+    stateName,
+    countryName
+  ]
+    .filter(Boolean)
+    .join(", ") + (venue.zipCode ? ` - ${venue.zipCode}` : "");
+
+  console.log("fulladdress", fullAddress);
+
+  console.log("coordinates", coordinates);
+
+
+  useEffect(() => {
+    const fetchCoordinates = async () => {
+      if (!venue.addressLine1 || !venue.city || !venue.state || !venue.country) return;
+  
+      const cityName = cities.find(c => c.value === Number(venue.city))?.label || "";
+      const stateName = states.find(s => s.value === Number(venue.state))?.label || "";
+      const countryName = countries.find(c => c.value === Number(venue.country))?.label || "";
+  
+      const fullAddress = [venue.addressLine1, cityName, stateName, countryName, venue.zipCode]
+        .filter(Boolean)
+        .join(", ");
+  
+      
+  
+      try {
+        let url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fullAddress)}`;
+        let res = await fetch(url);
+        let data = await res.json();
+        
+  
+        if (data.length > 0) {
+          setCoordinates([parseFloat(data[0].lat), parseFloat(data[0].lon)]);
+        } else {
+          console.warn("⚠️ No coordinates found for the full address. Trying city, state, country...");
+          
+          // Fallback to city, state, country if the full address fails
+          const fallbackAddress = [cityName, stateName, countryName].filter(Boolean).join(", ");
+          let fallbackUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(fallbackAddress)}`;
+          let fallbackRes = await fetch(fallbackUrl);
+          let fallbackData = await fallbackRes.json();
+          
+  
+          if (fallbackData.length > 0) {
+            setCoordinates([parseFloat(fallbackData[0].lat), parseFloat(fallbackData[0].lon)]);
+          } else {
+            console.error("❌ No coordinates found for fallback address.");
+          }
+        }
+      } catch (err) {
+        console.error("❌ Geocoding API error:", err);
+      }
+    };
+  
+    const debounceFetch = setTimeout(fetchCoordinates, 500); // Debounce to prevent frequent API calls
+    return () => clearTimeout(debounceFetch); // Cleanup function
+  
+  }, [venue.addressLine1, venue.city, venue.state, venue.country, venue.zipCode, cities, states, countries]);
+  
+
+
 
   const validateForm = () => {
     let newErrors = {};
     if (!venue.name.trim()) newErrors.name = "Residence Name is required";
     if (!venue.addressLine1.trim()) newErrors.addressLine1 = "Address Line 1 is required";
-    if(!venue.addressLine2) newErrors.addressLine2 = "Address Line 2 is required";
+    if (!venue.addressLine2) newErrors.addressLine2 = "Address Line 2 is required";
     if (!venue.country) newErrors.country = "Country is required";
     if (!venue.state) newErrors.state = "State is required";
     if (!venue.city) newErrors.city = "City is required";
@@ -40,6 +112,50 @@ export default function ProfileCard() {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+
+  // const fetchVenues = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     const response = await axios.get(
+  //       `${import.meta.env.VITE_API_URL}venues`,
+  //       {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //       }
+  //     );
+
+  //     console.log("Venue Response:", response.data);
+  //     localStorage.setItem("venueId", response.data.venues[0].id);
+
+  //     if (response.data?.status && Array.isArray(response.data.venues)) {
+  //       const venueData = response.data.venues[0] || {};
+
+  //       setVenue({
+  //         name: venueData.name || "",
+  //         addressLine1: "",
+  //         addressLine2: "",
+  //         country: 0,
+  //         state: 0,
+  //         city: 0,
+  //         zipCode: "",
+  //         phone: "",
+  //         email: "",
+  //         description: "",
+  //       });
+
+  //       setIsEditing(true);
+  //       setHeadshot(venueData.media?.[0]?.url || null);
+  //       fetchStates(venueData.country);
+  //       fetchCities(venueData.state);
+  //     } else {
+  //       console.warn("No venues found.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching venues:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const fetchVenues = async () => {
     setLoading(true);
@@ -51,32 +167,35 @@ export default function ProfileCard() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
+  
       console.log("Venue Response:", response.data);
-      localStorage.setItem("venueId", response.data.venues[0].id);
-
-      if (response.data?.status && Array.isArray(response.data.venues)) {
-        const venueData = response.data.venues[0] || {};
-
+  
+      // Find the venue where isParent is true
+      const parentVenue = response.data.venues.find(venue => venue.isParent);
+  
+      if (parentVenue) {
+        localStorage.setItem("venueId", parentVenue.id);
+  
+        // Pre-fill form with parentVenue data
         setVenue({
-          name: venueData.name || "",
-          addressLine1: "",
-          addressLine2: "",
-          country: 0,
-          state: 0,
-          city: 0,
-          zipCode: "",
-          phone: "",
-          email: "",
-          description: "",
+          name: parentVenue.name || "",
+          addressLine1: parentVenue.addressLine1 || "",
+          addressLine2: parentVenue.addressLine2 || "",
+          country: parentVenue.country || 0,
+          state: parentVenue.state || 0,
+          city: parentVenue.city || 0,
+          zipCode: parentVenue.zipCode || "",
+          phone: parentVenue.phone || "",
+          email: parentVenue.email || "",
+          description: parentVenue.description || "",
         });
-
+  
         setIsEditing(true);
-        setHeadshot(venueData.media?.[0]?.url || null);
-        fetchStates(venueData.country);
-        fetchCities(venueData.state);
+        setHeadshot(parentVenue.media?.[0]?.url || null);
+        fetchStates(parentVenue.country);
+        fetchCities(parentVenue.state);
       } else {
-        console.warn("No venues found.");
+        console.warn("No parent venue found.");
       }
     } catch (error) {
       console.error("Error fetching venues:", error);
@@ -84,6 +203,7 @@ export default function ProfileCard() {
       setLoading(false);
     }
   };
+  
 
   useEffect(() => {
     fetchVenues();
@@ -225,45 +345,45 @@ export default function ProfileCard() {
     }
   };
 
-  const addVenue = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-    try {
-      const token = localStorage.getItem("token");
-      const venueData = {
-        phone: localStorage.getItem("phone") || venue.phone,
-        email: localStorage.getItem("email") || venue.email,
-        addressLine1: venue.addressLine1,
-        addressLine2: venue.addressLine2,
-        city: Number(venue.city),
-        state: Number(venue.state),
-        zipCode: venue.zipCode,
-        country: Number(venue.country),
-      };
+  // const addVenue = async (e) => {
+  //   e.preventDefault();
+  //   if (!validateForm()) return;
+  //   try {
+  //     const token = localStorage.getItem("token");
+  //     const venueData = {
+  //       phone: localStorage.getItem("phone") || venue.phone,
+  //       email: localStorage.getItem("email") || venue.email,
+  //       addressLine1: venue.addressLine1,
+  //       addressLine2: venue.addressLine2,
+  //       city: Number(venue.city),
+  //       state: Number(venue.state),
+  //       zipCode: venue.zipCode,
+  //       country: Number(venue.country),
+  //     };
 
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}venues/location/add`,
-        venueData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+  //     const response = await axios.post(
+  //       `${import.meta.env.VITE_API_URL}venues/location/add`,
+  //       venueData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
 
-      if (response.status >= 200 && response.status < 300) {
-        toast.success("Venue Location added successfully!");
-        setTimeout(() => {
-          navigate("/venue/locations");
-        }, 1000);
-        console.log("Venue Added:", response.data);
-      }
-    } catch (error) {
-      console.error("Error adding venue:", error);
-      toast.error(error);
-    }
-  };
+  //     if (response.status >= 200 && response.status < 300) {
+  //       toast.success("Venue Location added successfully!");
+  //       setTimeout(() => {
+  //         navigate("/venue/locations");
+  //       }, 1000);
+  //       console.log("Venue Added:", response.data);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding venue:", error);
+  //     toast.error(error);
+  //   }
+  // };
 
 
   const handleSubmit = async (e) => {
@@ -286,11 +406,12 @@ export default function ProfileCard() {
     };
 
     console.log("Data:", venueData);
+
+
     try {
-      const response = await axios[isEditing ? "put" : "post"](
-        isEditing
-          ? `${import.meta.env.VITE_API_URL}venues/update`
-          : `${import.meta.env.VITE_API_URL}venues`,
+      const response = await axios.put(
+ `${import.meta.env.VITE_API_URL}venues`,
+        
         venueData,
         {
           headers: {
@@ -310,6 +431,7 @@ export default function ProfileCard() {
     }
   };
 
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -318,12 +440,12 @@ export default function ProfileCard() {
             <p className="fw-semibold profilecard-font mb-0">PROFILE</p>
           </div>
           <div className="div">
-            <button type="button" className="btn btn-dark rounded-3 label-font" onClick={addVenue}>Add Location</button>
-           
-              <button type="submit" className="btn venue-btn label-font mb-0 ms-2">
-                Submit
-              </button>
-          
+            {/* <button type="button" className="btn btn-dark rounded-3 label-font" onClick={addVenue}>Add Location</button> */}
+
+            <button type="submit" className="btn venue-btn label-font mb-0 ms-2">
+              Submit
+            </button>
+
 
           </div>
 
@@ -470,6 +592,14 @@ export default function ProfileCard() {
           </>
         )}
       </form>
+      {coordinates && (
+  <div className="mt-4">
+    <h5 className="mb-3">Map Location</h5>
+    <MapView key={coordinates?.join(",")} coordinates={coordinates} />
+  </div>
+)}
+
+
     </>
   );
 }

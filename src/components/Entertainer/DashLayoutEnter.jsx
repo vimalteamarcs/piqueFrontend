@@ -14,7 +14,7 @@ export default function DashLayoutEnter({ title, description, children }) {
                 <EnterDashSidebar /> */}
                 <div className="content">
                     <EnterDashNavbar />
-                    <EnterSubNavbar/>
+                    {/* <EnterSubNavbar/> */}
                     {children}
                 </div>
             {/* </div> */}

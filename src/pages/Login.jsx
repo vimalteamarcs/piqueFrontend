@@ -75,14 +75,12 @@ const Login = () => {
         `${import.meta.env.VITE_API_URL}auth/forgot-password`,
         body
       );
-      console.log(response.data);
       toast.success("Password reset link sent to your registered  email", {
         position: "top-center",
       });
 
       // navigate("/reset-password", { state: { email: formData.email } });
     } catch (error) {
-      console.log(error);
       toast.error("User not found", {
         position: "top-center",
       });
@@ -146,7 +144,6 @@ const Login = () => {
       const { access_token, data } = response.data;
       const { user } = data;
       const { isVerified, role, id, status, name, phone, email } = user;
-      console.log("Login successful", response.data);
       localStorage.setItem("token", access_token);
       localStorage.setItem("role", role);
       localStorage.setItem("userId", id);
@@ -176,14 +173,11 @@ const Login = () => {
       // Navigate based on role
       if (role === "venue") {
         navigate("/venue");
-      } else if (role === "entertainer") {
-        navigate("/entertainer");
       } else {
-        navigate("/error");
-      }
+        navigate("/entertainer");
+      } 
     } catch (error) {
       console.error("Login error", error);
-      console.log(error)
       toast.error(
         error.response?.data?.message || "An error occurred. Please try again."
       );
@@ -296,7 +290,7 @@ const Login = () => {
                 </form>
                 <p className="text-center mt-3 profile-font">
                   Don't have an account?
-                  <Link to="/signup/venue" className="text-primary">
+                  <Link to="/signup/venue" className="text-primary fw-semibold">
                     Sign Up Now
                   </Link>
                 </p>

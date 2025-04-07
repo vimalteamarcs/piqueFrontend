@@ -150,7 +150,6 @@ export default function AddVenue() {
       isParent: false,
       parentId: Number(localStorage.getItem('venueId')) || 0,
     };
-    console.log("data to send", venueFormData);
 
     try {
       const response = await axios.post(
@@ -163,7 +162,6 @@ export default function AddVenue() {
           },
         }
       );
-      console.log("Venue added successfully:", response.data);
       toast.success("Venue added successfully!");
       const venueId = response.data.id;
       localStorage.setItem("venueId", venueId);

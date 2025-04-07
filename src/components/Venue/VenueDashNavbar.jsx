@@ -79,7 +79,7 @@ export default function VenueDashNavbar() {
                   <NavLink className="nav-btn ms-2" to="/venue">
                     <img src={`${imagePath}messageIcon.svg`} />
                   </NavLink>
-                  <NavLink className="nav-btn ms-2" to="/venue">
+                  <NavLink className="nav-btn ms-2" to="/venue/profile">
                     <img src={`${imagePath}userIcon.svg`} />
                   </NavLink>
 

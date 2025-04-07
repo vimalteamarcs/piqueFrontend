@@ -1,178 +1,55 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import EntertainerCard from "./EntertainerCard";
+import { useNavigate } from "react-router-dom";
 
 export default function WishlistItems() {
   const [wishlist, setWishlist] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [processingId, setProcessingId] = useState(null);
+  const navigate = useNavigate();
+
+  const fetchWishlist = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}venues/entertainers/wishlist`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      setWishlist(response.data.data || []);
+    } catch (err) {
+      setError("Failed to fetch wishlist.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchWishlist = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}venues/entertainers/wishlist`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        console.log("wishlist items", response.data);
-        setWishlist(response.data.data);
-      } catch (err) {
-        console.error("Error fetching wishlist:", err);
-        setError("Failed to fetch wishlist.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchWishlist();
   }, []);
 
-  // const removeFromWishlist = async (entertainerEid) => {
-  //   setProcessingId(entertainerEid);
-  //   const entertainer = wishlist.find((item) => item.ent_id === entertainerEid);
-  // if (!entertainer) return;
-  //   const body = {
-  //     name: entertainer.name,
-  //     url: entertainer.url,
-  //     category: entertainer.category,
-  //     specific_category: entertainer.specific_category,
-  //     entId: Number(entertainer.ent_id),
+  const removeFromWishlist = async (eid) => {
+    console.log("inside remove wishlist function");
+    
+    setProcessingId(eid);
 
-  //   };
-  // console.log("wish body",body)
-  //   try {
-  //     const response = await axios.post(
-  //       `${import.meta.env.VITE_API_URL}venues/toogle/wishlist`,
-  //       body,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //         },
-  //       }
-  //     );
-  
-  //     console.log("Wishlist toggle response:", response.data);
-  
-  //     if (response.status === 200 || response.status === 201) {
-  //       const message = response.data.message;
-  
-  //       if (message.includes("Removed")) {
-  //         setWishlist((prevWishlist) =>
-  //           prevWishlist.filter((item) => item.ent_id !== entertainerEid)
-  //         );
-  //       } else if (message.includes("Added")) {
-          
-  //         console.log("Unexpected: Entertainer added back in wishlist page");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Error removing from wishlist:", error);
-  //   } finally {
-  //     setProcessingId(null);
-  //   }
-  // };
-  
-  // const removeFromWishlist = async (entertainerEid) => {
-  //   setProcessingId(entertainerEid);
-  //   console.log("Entertainer id: " , entertainerEid)
-  //   const entertainer = wishlist.find((item) => item.ent_id === entertainerEid);
-  //   if (!entertainer) {
-  //     console.error("Entertainer not found in wishlist:", entertainerEid);
-  //     return;
-  //   }
-  
-  //   console.log("Entertainer Object:", entertainer);
-  
-  //   const body = {
-  //     name: entertainer.name,
-  //     url: entertainer.url,
-  //     category: entertainer.category,
-  //     specific_category: entertainer.specific_category,
-  //     entId: Number(entertainer.ent_id) || 0,  // Ensure it's a number
-  //     username: entertainer.username,
-  //   };
-  
-  //   console.log("Wishlist body:", body);
-  
-  //   if (!body.entId || isNaN(body.entId)) {
-  //     console.error("Invalid entId:", body.entId);
-  //     setProcessingId(null);
-  //     return;
-  //   }
-  
-  //   try {
-  //     const response = await axios.post(
-  //       `${import.meta.env.VITE_API_URL}venues/toogle/wishlist`,
-  //       body,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //         },
-  //       }
-  //     );
-  
-  //     console.log("Wishlist toggle response:", response.data);
-  
-  //     if (response.status === 200 || response.status === 201) {
-  //       setWishlist((prevWishlist) =>
-  //         prevWishlist.filter((item) => item.ent_id !== entertainerEid)
-  //       );
-  //     }
-  //   } catch (error) {
-  //     console.error("Error removing from wishlist:", error);
-  //   } finally {
-  //     setProcessingId(null);
-  //   }
-  // };
-  
-  const removeFromWishlist = async (entertainerEid) => {
-    setProcessingId(entertainerEid);
-    console.log("Entertainer ID:", entertainerEid);
-  
-    const entertainer = wishlist.find((item) => item.ent_id === entertainerEid);
+    const entertainer = wishlist.find((item) => item.eid === eid);
     if (!entertainer) {
-      console.error("Entertainer not found in wishlist:", entertainerEid);
       setProcessingId(null);
       return;
     }
-  
-    const entId = Number(entertainer.ent_id);
-    if (!entId || isNaN(entId)) {
-      console.error("Invalid entId:", entId);
-      setProcessingId(null);
-      return;
-    }
-  
-    const body = {
-      // name: entertainer.name,
-      // url: entertainer.url,
-      // category: entertainer.category,
-      // specific_category: entertainer.specific_category,
-      // entId,
-      // username: entertainer.username,
+console.log("url",`${import.meta.env.VITE_API_URL}venues/entertainer/wishlist/${Number(entertainer.eid)}`);
 
-      name: entertainer.name,
-      username:entertainer.user_name,
-      ratings: 4,
-      url: entertainer.mediaUrl,
-      category: entertainer.category,
-      specific_category: entertainer.specific_category,
-      entId: Number(entertainer.ent_id || entertainer.eid),
-    };
-  
-    console.log("Wishlist request body:", JSON.stringify(body, null, 2));
-  
+    
+
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}venues/toogle/wishlist`,
-        body,
+      const response = await axios.delete(
+        `${import.meta.env.VITE_API_URL}venues/entertainer/wishlist/${Number(entertainer.eid)}`,
+        
         {
           headers: {
             "Content-Type": "application/json",
@@ -180,21 +57,25 @@ export default function WishlistItems() {
           },
         }
       );
-  
-      console.log("Wishlist toggle response:", response.data);
-  
+
       if (response.status === 200 || response.status === 201) {
-        setWishlist((prevWishlist) =>
-          prevWishlist.filter((item) => item.ent_id !== entertainerEid)
-        );
+        console.log("resksjhdbcfjahb",response);
+        
+        setWishlist((prev) => prev.filter((item) => item.eid !== eid));
+      } else {
+        console.error("Unexpected response:", response);
       }
     } catch (error) {
-      console.error("Error removing from wishlist:", error);
+      console.error("Error removing from wishlist:", error.response?.data || error);
     } finally {
       setProcessingId(null);
     }
   };
-  
+
+  const handleCardClick = (eid) => {
+    navigate(`/venue/entertainerDetails`,{ state: { entertainerId:eid } }); 
+  };
+
   return (
     <>
       <p className="fw-bold">WISHLIST</p>
@@ -209,22 +90,83 @@ export default function WishlistItems() {
       ) : error ? (
         <p className="text-danger">{error}</p>
       ) : wishlist.length > 0 ? (
-
         <div className="row">
-          {wishlist.map((entertainer) => (
+          {/* {wishlist.map((entertainer) => (
             <EntertainerCard
-              key={entertainer.id}
+              key={entertainer.eid}
               entertainer={entertainer}
-              // isWishlisted={true}
-              isWishlisted={entertainer.isWishlisted}
-              isProcessing={processingId === entertainer.id}
+              isWishlisted={true}
+              isProcessing={processingId === entertainer.eid}
               onRemoveFromWishlist={removeFromWishlist}
             />
-          ))}
-      </div>
+          ))} */}
+          {wishlist.map((entertainer) => (
+  <div className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4" key={entertainer.eid}>
+    <div
+      className="card card-rounded mb-3 rounded-4 overflow-hidden"
+      style={{ cursor: "pointer", border: "none" }} onClick={() => handleCardClick(entertainer.eid)}
+    >
+      <button
+        className="favorite-btn position-absolute top-1 me-3 end-0 m-2 border-0 bg-transparent"
+        onClick={(e) => {
+          e.stopPropagation(); 
+          removeFromWishlist(entertainer.eid);
+        }}
+        disabled={processingId === entertainer.eid}
+      >
+        {processingId === entertainer.eid ? (
+          <div className="spinner-border spinner-border-sm text-danger" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
         ) : (
-          <p>No items in wishlist.</p>
+          <i
+            className={`fa-solid fa-heart text-danger`}
+            style={{ fontSize: "1.5rem" }}
+          ></i>
         )}
+      </button>
+
+      <img
+        src={entertainer.mediaUrl || entertainer.url}
+        className="card-img"
+        style={{
+          aspectRatio: "4 / 3",
+          objectFit: "cover",
+          borderRadius: "12px",
+        }}
+        alt={entertainer.name}
+      />
+      <div className="d-flex justify-content-between mt-2">
+        <p className="icon-font fw-semibold mb-0">
+          {entertainer.specific_category_name}
+        </p>
+        <p className="icon-font mb-0">{entertainer.ratings}</p>
+      </div>
+      <div className="d-flex justify-content-between">
+        <p className="mb-2 mt-0">By {entertainer.user_name}</p>
+        <div className="ratings">
+          {[...Array(5)].map((_, index) => (
+            <i
+              key={index}
+              className={`fa-star ${
+                index < entertainer.ratings ? "fa-solid text-warning" : "fa-regular text-muted"
+              }`}
+              style={{ fontSize: "0.6rem" }}
+            ></i>
+          ))}
+        </div>
+      </div>
+      <p className="text-muted custom-card-text mt-0">
+        {entertainer.category_name} - {entertainer.state}, {entertainer.country}
+      </p>
+    </div>
+  </div>
+))}
+
+        </div>
+      ) : (
+        <p>No items in wishlist.</p>
+      )}
     </>
   );
 }

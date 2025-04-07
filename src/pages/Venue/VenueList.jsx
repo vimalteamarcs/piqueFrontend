@@ -24,7 +24,6 @@ export default function VenueList() {
         }
       );
 
-      console.log("Venue Data:", response.data);
 
       if (!response.data || !Array.isArray(response.data.data)) {
         console.error("Unexpected API response format:", response.data);

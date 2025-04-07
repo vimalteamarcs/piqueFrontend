@@ -40,8 +40,8 @@ export default function EnterDashNavbar() {
 
   return (
     <>
-      <div className="container">
-        <nav className="navbar navbar-expand-lg mb-0 ">
+      <div className="container-fluid" style={{boxShadow:"0px 3px 6px #00000029"}}>
+        <nav className="navbar navbar-expand-lg mb-0">
           <div className="container">
             {/* <!-- Logo Section --> */}
             <Link
@@ -70,16 +70,50 @@ export default function EnterDashNavbar() {
 
             {/* <!-- Navbar Links --> */}
             <div className="collapse navbar-collapse" id="navbarContent">
-                <ul className="navbar-nav mx-auto mb-2 mb-lg-0 ">
+                {/* <ul className="navbar-nav mx-auto mb-2 mb-lg-0 ">
                   <p className="fw-semibold fs-6 nav-font mt-3">
                     Entertainment | Education | Engagement
                   </p>
-                </ul>
-
+                </ul> */}
+          <div className="row navbar-nav mx-auto mb-2 mb-lg-0 gx-5">
+            <div className="col-md-4 mt-3">
+              <NavLink
+                to="/entertainer"
+                className={({ isActive }) =>
+                  `text-decoration-none text-black dash-link ${isActive ? "active-dash" : ""}`
+                }
+              >
+                <img src={`${imagePath}entdashIcon.svg`} alt="Dashboard" />
+                <p className="dash-navbar-font fw-semibold mt-1">Dashboard</p>
+              </NavLink>
+            </div>
+            <div className="col-md-4 mt-3">
+              <NavLink
+                to="/entertainer/calendar"
+                className={({ isActive }) =>
+                  `text-decoration-none text-black dash-link ${isActive ? "active-dash" : ""}`
+                }
+              >
+                <img src={`${imagePath}Icon akar-calendar.svg`} alt="Calendar" />
+                <p className="dash-navbar-font fw-semibold mt-1">Calendar</p>
+              </NavLink>
+            </div>
+            <div className="col-md-4 mt-3">
+              <NavLink
+                to="/entertainer/messages"
+                className={({ isActive }) =>
+                  `text-decoration-none text-black dash-link ${isActive ? "active-dash" : ""}`
+                }
+              >
+                <img src={`${imagePath}Icon feather-message-square.svg`} alt="Messages" />
+                <p className="dash-navbar-font fw-semibold mt-1">Messages</p>
+              </NavLink>
+            </div>
+          </div>
                
 
                 <div className="d-flex align-items-center">
-                <p className="profile-font mt-3 fw-semibold">Manage Bookings</p>
+                <p className="profile-font mt-1 fw-medium">Manage Bookings</p>
                   <NavLink className="nav-btn ms-2" to="/entertainer">
                     <img src={`${imagePath}userIcon.svg`} />
                   </NavLink>

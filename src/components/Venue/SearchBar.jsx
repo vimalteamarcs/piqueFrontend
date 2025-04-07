@@ -124,15 +124,20 @@ export default function SearchBar({ updateFilters }) {
     setTimeout(() => fetchSuggestions(query), 100);
   };
 
-
-
-
-
   const handleSuggestionClick = (suggestion) => {
     setSearchQuery(suggestion.name);
-    setSelectedCategory(suggestion.id);
-    setTimeout(() => setShowSuggestions(false), 0); // Delay closing
+    setSelectedCategory(suggestion.id); // ✅ ensures category number is stored
+    setShowSuggestions(false);
   };
+
+
+
+
+  // const handleSuggestionClick = (suggestion) => {
+  //   setSearchQuery(suggestion.name);
+  //   setSelectedCategory(suggestion.id);
+  //   setTimeout(() => setShowSuggestions(false), 0); // Delay closing
+  // };
 
 
   // const handleSuggestionClick = (suggestion) => {
@@ -142,10 +147,10 @@ export default function SearchBar({ updateFilters }) {
   // };
 
   const handleSearchClick = async () => {
-    if (!selectedCategory) {
-      alert("Please select a category.");
-      return;
-    }
+    // if (!selectedCategory) {
+    //   alert("Please select a category.");
+    //   return;
+    // }
 
     setSearchParams({ category: selectedCategory, search: searchQuery });
     navigate('/venue/entertainers')
@@ -161,6 +166,8 @@ export default function SearchBar({ updateFilters }) {
   }, [searchParams]);
 
   const fetchEntertainers = async (category, searchQueryParam) => {
+    
+    
     const apiUrl = `${import.meta.env.VITE_API_URL}venues/search/entertainers`;
     const token = localStorage.getItem("token");
     const params = {};
@@ -192,6 +199,88 @@ export default function SearchBar({ updateFilters }) {
     }
   };
 
+  const [formattedDate, setFormattedDate] = useState("");
+  
+const [selectedDate, setSelectedDate] = useState(""); 
+
+   
+
+  const fetchEntertainersByDate = async (selectedDate) => {
+  try {
+    const apiUrl = `${import.meta.env.VITE_API_URL}venues/search/entertainers`;
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("No token found. User might be logged out.");
+      return;
+    }
+
+    // Format date to YYYY-MM-DD
+    const formattedDate = selectedDate ? new Date(selectedDate).toISOString().split("T")[0] : null;
+
+    const params = {};
+    if (formattedDate) {
+      params.date = formattedDate;
+    }
+
+      updateFilters({
+        
+        date: formattedDate || "",
+      });
+      
+console.log("params",params);
+
+    const response = await axios.get(apiUrl, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      params,
+    });
+
+    console.log("after date",response.data.entertainers);
+    
+    setEntertainers(response.data.entertainers || []);
+
+    
+
+  } catch (error) {
+    console.error("Error fetching entertainers:", error.response?.data || error.message);
+    setEntertainers([]);
+  }
+};
+
+
+const handleDateChange = (event) => {
+  const rawDate = event.target.value; // e.g., "2025-04-05"
+  setSelectedDate(rawDate); // Keep original value for input
+
+  if (rawDate) {
+    const dateObj = new Date(rawDate);
+    
+    // Format date as "YYYY-MM-DD" for API call
+    const formattedDateForApi = dateObj.toISOString().split("T")[0];
+
+    // Extracting the day and ensuring it's two digits
+    const day = dateObj.getDate().toString().padStart(2, "0");
+
+    // Extracting the short month name manually
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const month = monthNames[dateObj.getMonth()];
+
+    // Extracting the year
+    const year = dateObj.getFullYear();
+
+    // Setting the formatted date as "05 Apr 2025"
+    setFormattedDate(`${day} ${month} ${year}`);
+console.log("after date",selectedCategory, formattedDateForApi);
+
+
+    // Call fetchEntertainers with selected category and formatted date
+    fetchEntertainersByDate( formattedDateForApi);
+  }
+};
+
 
 
   return (
@@ -201,29 +290,47 @@ export default function SearchBar({ updateFilters }) {
           <div className="row search-bar gx-1 pt-2">
             <div className="col-md-2 col-sm-12 col-12">
               <Input
-                type="date"
-                className="rounded-3 custom-search-font p-3"
-                style={{ "border": "none" }}
-              />
+        type="date"
+        className="rounded-3 custom-search-font p-3"
+        style={{ border: "1px solid #EAEAEA" }}
+        value={selectedDate}
+        onChange={handleDateChange}
+      />
             </div>
-            <div className="col-md-2 col-sm-12 col-12">
+            {/* <div className="col-md-2 col-sm-12 col-12">
               <Input
                 type="time"
                 className="rounded-3 custom-search-font p-3"
-                style={{ "border": "none" }}
+                style={{ "border": "1px solid #EAEAEA" }}
+                        
+
               />
-            </div>
-            <div className="col-md-3 col-sm-12 col-12">
-              <select
-                className="form-select custom-search-font rounded-3 p-1"
+            </div> */}
+            <div className="col-md-3 col-sm-12 col-12 position-relative">
+              <i className="fa-solid fa-location-dot locationBH"></i>
+              {/* <select
+                className="form-select custom-search-font rounded-3 locnBG"
                 aria-label="Default select example"
-                style={{ "border": "none" }}
-              ><i class="fa-solid fa-location-dot"></i>
+                style={{ border: "1px solid #EAEAEA" }}
+              >
 
                 <option value="default">Neighbourhoods</option>
                 <option value="us">US</option>
                 <option value="india">India</option>
+              </select> */}
+              <select
+                className="form-select custom-search-font rounded-3 locnBG"
+                aria-label="Select neighbourhood"
+                defaultValue=""
+                style={{ border: "1px solid #EAEAEA" }}
+              >
+                <option value="" disabled hidden>
+                  Neighbourhoods
+                </option>
+                <option value="us">US</option>
+                <option value="india">India</option>
               </select>
+
             </div>
 
             <div className="col-md-3 col-sm-12 col-12">
@@ -262,7 +369,7 @@ export default function SearchBar({ updateFilters }) {
                 onChange={handleSearchChange}
                 onFocus={() => setShowSuggestions(true)}
                 className="form-control custom-search-font rounded-3 p-2"
-                style={{ "border": "none" }}
+                style={{ "border": "1px solid #EAEAEA" }}
               />
 
               {showSuggestions && suggestions.length > 0 && (
@@ -271,7 +378,8 @@ export default function SearchBar({ updateFilters }) {
                     <li
                       key={index}
                       className="dropdown-item"
-                      onClick={() => setSearchQuery(suggestion.name)}
+                      // onClick={() => setSearchQuery(suggestion.name)}
+                      onClick={() => handleSuggestionClick(suggestion)}
                     >
                       {suggestion.name}
                     </li>
@@ -295,3 +403,5 @@ export default function SearchBar({ updateFilters }) {
     </>
   );
 }
+
+

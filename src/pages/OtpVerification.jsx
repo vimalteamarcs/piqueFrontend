@@ -65,7 +65,6 @@ export default function OtpVerification() {
   
     try {
       const response = await axios.post(apiUrl, body);
-      console.log("otp verification response",response.data);
   
       const updatedData = { ...userDetails, emailVerified: true };
       localStorage.setItem("userDetails", JSON.stringify(updatedData));
@@ -78,10 +77,8 @@ export default function OtpVerification() {
   
       // Navigate based on case type
       if (Usercase === "signup") {
-        console.log("Navigating to signup flow...");
         setTimeout(() => navigate("/signup/venue"), 2000);
       } else {
-        console.log("Navigating to login flow...");
         toast.success("Email verified successfully!", { position: "top-right" });
   
         const role = storedUserDetails?.role || "";
@@ -109,14 +106,11 @@ export default function OtpVerification() {
 const body = {email}
     try {
     const response =  await axios.post(`${import.meta.env.VITE_API_URL}auth/send-otp`,body);
-    console.log(response.data)
       toast.success("New OTP sent successfully!", { position: "top-right" });
 
       setTimeLeft(90);
       localStorage.setItem("otpTimer", 90);
     } catch (error) {
-      console.log(error)
-      console.log(error.response.data.message[0])
       toast.error("Failed to resend OTP. Please try again later.", {
         position: "top-center",
       });
@@ -170,3 +164,5 @@ const body = {email}
     </>
   );
 }
+
+

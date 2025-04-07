@@ -42,10 +42,8 @@ export default function ResetPassword() {
             token: token,
             newPassword: formData.password
         }
-        console.log(body)
         try {
             const response = await axios.post(`${import.meta.env.VITE_API_URL}auth/reset-password`, body);
-            console.log(response)
             toast.success("Password reset successfully!", { position: "top-center" });
             // setTimeout(() => {
             //     navigate(`/login`);

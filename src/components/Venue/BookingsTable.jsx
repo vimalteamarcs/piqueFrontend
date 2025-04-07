@@ -24,8 +24,9 @@ export default function BookingsTable({
             <table className="table">
               <thead>
                 <tr className="profile-font">
-                  <th>Sr.No.</th>
+                  <th>SNo</th>
                   <th>Entertainer</th>
+                  <th>Event Title</th>
                   <th>Status</th>
                   <th>Date</th>
                   <th>Time</th>
@@ -38,6 +39,7 @@ export default function BookingsTable({
                   <tr key={booking.id}>
                     <td>{index + 1}</td>
                     <td>{booking.name}</td>
+                    <td>{booking.event_title}</td>
                     <td>
                       <span
                         className={`status-badge status-${booking.status
@@ -61,7 +63,7 @@ export default function BookingsTable({
                       })}
                     </td>
 
-                    <td>{booking.pricePerEvent}</td>
+                    <td>${booking.pricePerEvent}</td>
                     <td>
                       <Button
                         type="button"

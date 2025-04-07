@@ -14,7 +14,6 @@ export default function EntertainerDetails() {
   const location = useLocation();
   const navigate = useNavigate();
   const entertainerId = location.state?.entertainerId;
-  console.log("Received entertainerId:", entertainerId);
   const [entertainer, setEntertainer] = useState({});
   const [loading, setLoading] = useState(true);
   const [showTime, setShowTime] = useState("");
@@ -22,7 +21,7 @@ export default function EntertainerDetails() {
   const [specialNotes, setSpecialNotes] = useState("");
   const [events, setEvents] = useState([]);
   const [selectedEvent, setSelectedEvent] = useState("");
-
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     const fetchEntertainerDetails = async () => {
@@ -34,7 +33,6 @@ export default function EntertainerDetails() {
       const token = localStorage.getItem("token");
       const apiUrl = `${import.meta.env.VITE_API_URL}venues/entertainer-profile/${entertainerId}`;
 
-      console.log("Fetching entertainer from:", apiUrl); // Debugging log
 
       try {
         const response = await axios.get(apiUrl, {
@@ -43,7 +41,6 @@ export default function EntertainerDetails() {
             "Content-Type": "application/json",
           },
         });
-        console.log("Fetched entertainer:", response.data);
         setEntertainer(response.data?.data || {});
       } catch (error) {
         console.error("Error fetching entertainer details:", error);
@@ -55,6 +52,21 @@ export default function EntertainerDetails() {
 
     fetchEntertainerDetails();
   }, [entertainerId]);
+
+  useEffect(() => {
+    const now = new Date();
+
+    // Set time in hh:mm format
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    setShowTime(`${hours}:${minutes}`);
+
+    // Set date in yyyy-mm-dd format
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0"); // Months are 0-based
+    const day = String(now.getDate()).padStart(2, "0");
+    setShowDate(`${year}-${month}-${day}`);
+  }, []);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -69,7 +81,6 @@ export default function EntertainerDetails() {
             },
           }
         );
-        console.log("Fetched events:", response.data);
         setEvents(response.data.data || []);
       } catch (error) {
         console.error("Error fetching events:", error);
@@ -79,15 +90,31 @@ export default function EntertainerDetails() {
     fetchEvents();
   }, []);
 
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!showTime) newErrors.showTime = "Time is required";
+    if (!showDate) newErrors.showDate = "Date is required";
+    if (!specialNotes) newErrors.specialNotes = "Special note is required";
+    if (!selectedEvent) newErrors.selectedEvent = "Event selection is required";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+
   const handleBookingSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
 
     const token = localStorage.getItem("token");
     const venueId = localStorage.getItem("userId");
     // const entertainerId = localStorage.getItem("entertainerId");
     const entertainerId = location.state?.entertainerId || entertainer.id;
 
-    console.log("entid", entertainerId)
     const formData = new FormData(e.target);
     const showTime = formData.get("showTime");
     const showDate = formData.get("showDate");
@@ -107,7 +134,6 @@ export default function EntertainerDetails() {
       specialNotes: specialNotes,
       eventId: Number(selectedEvent),
     };
-    console.log("booking data", bookingData);
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}venues/createbooking`,
@@ -119,7 +145,6 @@ export default function EntertainerDetails() {
           },
         }
       );
-      console.log(response);
       if (response.status === 201) {
         toast.success("Booking request sent successfully!", { autoClose: 1000 });
         setTimeout(() => {
@@ -129,7 +154,6 @@ export default function EntertainerDetails() {
         toast.error("Failed to send booking request.");
       }
     } catch (error) {
-      console.log("Error creating booking:", error);
       toast.error("An error occurred while booking.");
     }
   };
@@ -153,18 +177,17 @@ export default function EntertainerDetails() {
             onClick={() => navigate(-1)}
             style={{ cursor: "pointer" }}
           >
-            <i className="fa-solid fa-angle-left me-2"></i>Back to Entertainers
-            Search
+            <i className="fa-solid fa-angle-left me-2"></i>Back
           </p>
 
           <div className="d-flex justify-content-between align-items-center mb-0">
             <h4 className="fw-semibold mt-3">{entertainer.specific_category_name}</h4>
-            <div className="div">
+            {/* <div className="div">
               <i className="fa-solid fa-arrow-up-from-bracket me-1 profile-font"></i>
               <span className="profile-font">Share</span>
               <i className="fa-solid fa-heart ms-3 me-1 profile-font"></i>
               <span className="profile-font">Wishlist</span>
-            </div>
+            </div> */}
           </div>
 
           <div className="row d-flex justify-content-between column-gap-5">
@@ -351,7 +374,7 @@ export default function EntertainerDetails() {
                     <div className="row">
                       <div className="col-md-6">
                         <label className="icon-font fw-semibold">
-                          Duration
+                          Duration<span style={{ color: "red", display: "inline" }}>*</span>
                         </label>
                         <Input
                           type="time"
@@ -360,10 +383,11 @@ export default function EntertainerDetails() {
                           value={showTime}
                           onChange={(e) => setShowTime(e.target.value)}
                         />
+                        {errors.showTime && <small className="text-danger">{errors.showTime}</small>}
                       </div>
                       <div className="col-md-6">
                         <label className="icon-font fw-semibold">
-                          Date of Event
+                          Date of Event<span style={{ color: "red", display: "inline" }}>*</span>
                         </label>
                         <Input
                           type="date"
@@ -372,6 +396,7 @@ export default function EntertainerDetails() {
                           value={showDate}
                           onChange={(e) => setShowDate(e.target.value)}
                         />
+                        {errors.showDate && <small className="text-danger">{errors.showDate}</small>}
                       </div>
                     </div>
                     <hr />
@@ -382,6 +407,7 @@ export default function EntertainerDetails() {
                       <select
                         className="form-select profile-font rounded-3"
                         aria-label="Default select example"
+                      // value={performanceRole}
                       >
                         <option value="default">Soloist</option>
                         <option value="1">Duo</option>
@@ -390,7 +416,7 @@ export default function EntertainerDetails() {
                     </div>
                     <hr />
                     <p className="mt-2 icon-font mb-1 fw-semibold">
-                      Special Notes
+                      Special Notes<span style={{ color: "red", display: "inline" }}>*</span>
                     </p>
                     <textarea
                       className="form-control profile-font"
@@ -399,10 +425,13 @@ export default function EntertainerDetails() {
                       value={specialNotes}
                       name="specialNotes"
                       onChange={(e) => setSpecialNotes(e.target.value)}
-                    ></textarea>
+                    />
+                    {errors.specialNotes && <small className="text-danger">{errors.specialNotes}</small>}
+
+
                     <hr />
                     <p className="mt-2 icon-font mb-1 fw-semibold">
-                      Choose Event
+                      Choose Event<span style={{ color: "red", display: "inline" }}>*</span>
                     </p>
                     <select
                       name="eventId"
@@ -410,17 +439,17 @@ export default function EntertainerDetails() {
                       onChange={(e) => setSelectedEvent(e.target.value)}
                       className="form-control profile-font"
                     >
-                      <option value="" className="profile-font">--Select Event--</option>
-                      {events.length > 0 ? (
-                        events.map((event) => (
-                          <option key={event.id} value={event.id} className="profile-font">
-                            {event.title}
-                          </option>
-                        ))
-                      ) : (
-                        <option disabled>Loading events...</option>
-                      )}
+                      <option value="">--Select Event--</option>
+                      {events.map((event) => (
+                        <option key={event.id} value={event.id}>
+                          {event.title}
+                        </option>
+                      ))}
                     </select>
+                    {errors.selectedEvent && (
+                      <small className="text-danger">{errors.selectedEvent}</small>
+                    )}
+
 
                     <Button
                       className="btn venue-btn w-100 mt-2 profile-font rounded-3 w-100 mt-3 text-white"

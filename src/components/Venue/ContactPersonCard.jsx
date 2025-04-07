@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Input from "../Input";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function ContactPersonCard() {
+  const [userId, setUserId] = useState(null);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [contactPerson, setContactPerson] = useState({
     name: "",
     phone: "",
@@ -18,36 +21,64 @@ export default function ContactPersonCard() {
   
 
   useEffect(() => {
-    const fetchProfile = async () => {
-        const token = localStorage.getItem('token')
-        try {
-            const response = await axios.post(
-              `${import.meta.env.VITE_API_URL}auth/profile`, 
-              {},
-              {
-                headers: { Authorization: `Bearer ${token}` }
-              }
-            );
-      
-            console.log(response.data);
-        setContactPerson({
-        //   name: response.data.user.name || "",
-          phone: response.data.user.phone || "",
-          email: response.data.user.email || "",
-        });
-      } catch (error) {
-        console.error("Error fetching contact person:", error);
-      }
-    };
-
     fetchProfile();
   }, []);
+  
+  const fetchProfile = async () => {
+    const token = localStorage.getItem("token");
+    const userid = localStorage.getItem("userId")
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}users/${localStorage.getItem("userId")}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+console.log(response.data)
+      const user = response.data;
+      setUserId(user.id);
+
+      setContactPerson({
+        name: user.name || localStorage.getItem("userName") || "",
+        phone: user.phone || localStorage.getItem("phone") || "",
+        email: user.email || "",
+      });
+    } catch (error) {
+      console.error("Error fetching contact person:", error);
+    }
+  };
+
+  const updateUser = async () => {
+    const token = localStorage.getItem("token");
+    if (!userId) return;
+
+    setIsUpdating(true);
+
+    try {
+      await axios.put(
+        `${import.meta.env.VITE_API_URL}users/${userId}`,
+        contactPerson,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      toast.success("User updated successfully!", {position:'top-right'});
+      fetchProfile();
+    } catch (error) {
+      console.error("Error updating user:", error);
+      toast.error("Failed to update user.", {position: 'top-right'});
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   return (
     <>
+    <ToastContainer/>
       <div className="d-flex justify-content-between align-items-center mb-0">
         <p className="fw-bold mb-0">CONTACT PERSON</p>
-        <button type="button" className="btn venue-btn profile-font mb-0">
+        <button type="button" className="btn venue-btn profile-font mb-0" onClick={updateUser}>
           Update
         </button>
       </div>
@@ -66,7 +97,7 @@ export default function ContactPersonCard() {
               className="form-control profile-font text-muted"
               name="name"
               onChange={handleChange}
-              value={localStorage.getItem('userName')}
+              value={contactPerson.name}
               placeholder="Enter your venue Name"
             //   disabled
             />
@@ -79,7 +110,7 @@ export default function ContactPersonCard() {
               className="form-control profile-font text-muted"
               name="phone"
               onChange={handleChange}
-              value={localStorage.getItem('phone')}
+              value={contactPerson.phone}
               placeholder="Enter your phone Number"
             //   disabled
             />

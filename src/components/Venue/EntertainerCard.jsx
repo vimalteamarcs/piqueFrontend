@@ -54,7 +54,7 @@ const EntertainerCard = ({ entertainer, isWishlisted, isProcessing, onRemoveFrom
     setIsFavorited(!!isWishlisted); // Convert truthy/falsy values to boolean
   }, [isWishlisted]);
 
-  const toggleFavorite = async (e) => {
+  const toggleFavorite = async (e) => {-
     e.stopPropagation();
     if (isLoading) return;
     setIsLoading(true);
@@ -151,7 +151,7 @@ const EntertainerCard = ({ entertainer, isWishlisted, isProcessing, onRemoveFrom
           />
           <div className="d-flex justify-content-between mt-2">
             <p className="icon-font fw-semibold mb-0">
-              {entertainer.specific_category_name}
+              {entertainer.name}
             </p>
             <p className="icon-font mb-0">{entertainer.ratings}</p>
           </div>

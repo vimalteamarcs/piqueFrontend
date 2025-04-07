@@ -78,7 +78,7 @@ export default function FilterModal({
               </div>
               <div className="modal-body">
                 <div className="row mb-3">
-                  <p>Date Range</p>
+                  {/* <p>Date Range</p>
                   <p className="modal-font">Select Date Range for your event</p>
                   <div className="d-flex gap-3">
                     <div className="col-md-3">
@@ -115,7 +115,7 @@ export default function FilterModal({
                       />
                     </div>
                   </div>
-                  <hr />
+                  <hr /> */}
 
                   <div className="row mb-3">
                     <p>Entertainer Type</p>

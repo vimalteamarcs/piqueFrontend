@@ -6,7 +6,10 @@ import { toast } from "react-toastify";
 
 export default function UpdateBookingModal({ booking, onClose, refreshBookings }) {
   const [newShowDate, setNewShowDate] = useState(moment.utc(booking.showDate).format("YYYY-MM-DD"));
-  const [newShowTime, setNewShowTime] = useState(moment.utc(booking.showDate).format("HH:mm"));
+  const [newShowTime, setNewShowTime] = useState(
+    moment(booking.showTime, "HH:mm:ss").format("HH:mm")
+  );
+  
 
   const handleUpdateBooking = async () => {
     const updatedBookingData = {
@@ -30,7 +33,7 @@ export default function UpdateBookingModal({ booking, onClose, refreshBookings }
       console.log("req response:", response);
   
       if (response.status === 201) {
-        toast.success("Your Request for Time and Date has been registered successfully.");
+        toast.success("Your Request has been registered successfully.");
         onClose();
         refreshBookings();
       } else {
@@ -79,10 +82,10 @@ export default function UpdateBookingModal({ booking, onClose, refreshBookings }
             </div>
           </div>
           <div className="modal-footer">
-            <button type="button" className="btn btn-danger btn-sm rounded-3" onClick={onClose}>
+            <button type="button" className="btn btn-danger" onClick={onClose}>
               Close
             </button>
-            <button type="button" className="btn venue-btn btn-sm" onClick={handleUpdateBooking}>
+            <button type="button" className="btn btn-dark" onClick={handleUpdateBooking}>
               Save Changes
             </button>
           </div>

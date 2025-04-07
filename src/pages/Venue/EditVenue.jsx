@@ -37,7 +37,6 @@ export default function EditVenue() {
 
   useEffect(() => {
     if (venueData) {
-      console.log("fetched", venueData);
       localStorage.setItem("venueId", venueData.id);
       setFormData(venueData);
       if (venueData.country) {
@@ -59,7 +58,6 @@ export default function EditVenue() {
         `${import.meta.env.VITE_API_URL}location/countries`
       );
 
-      console.log("API Response:", response.data); // Debugging line
 
       if (Array.isArray(response.data)) {
         setCountries(
@@ -84,7 +82,6 @@ export default function EditVenue() {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}location/states?countryId=${countryId}`
       );
-      console.log("States API Response:", response.data);
 
       if (Array.isArray(response.data)) {
         setStates(response.data.map((s) => ({ label: s.name, value: s.id })));
@@ -109,7 +106,6 @@ export default function EditVenue() {
       const response = await axios.get(
         `${import.meta.env.VITE_API_URL}location/cities?stateId=${stateId}`
       );
-      console.log("Cities API Response:", response.data);
 
       if (Array.isArray(response.data)) {
         setCities(response.data.map((c) => ({ label: c.name, value: c.id })));
@@ -166,7 +162,6 @@ export default function EditVenue() {
       venueId: Number(localStorage.getItem("venueId")),
     };
 
-    console.log("data to send", updatedVenueData);
 
     try {
       const response = await axios.put(
@@ -179,7 +174,6 @@ export default function EditVenue() {
           },
         }
       );
-      console.log("Venue updated successfully:", response.data);
       toast.success("Venue updated successfully!");
       setTimeout(() => {
         navigate("/venue/venues");

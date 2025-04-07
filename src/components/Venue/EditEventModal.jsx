@@ -106,13 +106,13 @@ export default function EditEventModal({ event, onClose, fetchEvents }) {
   };
 
   const handleSave = async () => {
-    if (!validateForm()) {
-      return; 
-    }
+    // if (!validateForm()) {
+    //   return; 
+    // }
     const token = localStorage.getItem("token");
     console.log("data:", formData)
     try {
-      await axios.patch(
+   const response =   await axios.patch(
         `${import.meta.env.VITE_API_URL}event`,
         formData,
         {
@@ -122,6 +122,7 @@ export default function EditEventModal({ event, onClose, fetchEvents }) {
           },
         }
       );
+      console.log(response.data)
       fetchEvents();
       onClose();
     } catch (error) {
@@ -212,9 +213,10 @@ export default function EditEventModal({ event, onClose, fetchEvents }) {
                 className={`form-control profile-font ${errors.status ? "is-invalid" : ""}`}
                 onChange={handleChange}
                 options={[
-                  { value: "pending", label: "Pending" },
-                  { value: "confirmed", label: "Confirmed" },
+                  { value: "unpublished", label: "Unpublished" },
+                  { value: "scheduled", label: "Scheduled" },
                   { value: "cancelled", label: "Cancelled" },
+                  { value: "confirmed", label: "Confirmed" },
                   { value: "completed", label: "Completed" },
                 ]}
                 defaultOption="--Select Status--"

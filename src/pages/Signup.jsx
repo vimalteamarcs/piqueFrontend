@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Input from "../components/Input";
 import { toast, ToastContainer } from "react-toastify";
+import OtpVerifyModal from "../components/Venue/OtpVerifyModal";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -14,17 +15,23 @@ const Signup = () => {
     cpassword: "",
     phoneNumber: "",
     role: "venue",
-    emailVerified: false
+    emailVerified: localStorage.getItem("status") === "verified",
   });
 
+  const [showOtpModal, setShowOtpModal] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showCPassword, setShowCPassword] = useState(false);
   const [countries, setCountries] = useState([]);
   const [selectedCode, setSelectedCode] = useState("");
   const [loading, setLoading] = useState(true);
-  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  // const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const [isEmailVerified, setIsEmailVerified] = useState(() => {
+    return localStorage.getItem("status") === "verified";
+  });
+
+
 
   useEffect(() => {
     fetchCountryCodes();
@@ -67,14 +74,12 @@ const Signup = () => {
       const data = await response.json();
       const userCountry = data.country_code; // e.g., "IN"
 
-      console.log("Detected Country Code:", userCountry);
 
       const foundCountry = countries.find(
         (country) => country.cca2 === userCountry
       );
       if (foundCountry) {
         setSelectedCode(foundCountry.code);
-        console.log("Selected ISD Code:", foundCountry.code);
       } else {
         console.warn("Country not found in the list.");
       }
@@ -88,9 +93,33 @@ const Signup = () => {
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem("userDetails"));
     if (storedData) {
-      setFormData(storedData);
+      setFormData((prev) => ({
+        ...prev,
+        ...storedData, // Merge saved values (name, phoneNumber, emailVerified, etc.)
+      }));
+
+      if (storedData.emailVerified) {
+        setIsEmailVerified(true);
+      }
     }
   }, []);
+
+  useEffect(() => {
+    const status = localStorage.getItem("status");
+    if (status === "verified") {
+      setIsEmailVerified(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    const verified = localStorage.getItem("status") === "verified";
+    setIsEmailVerified(verified);
+    setFormData((prev) => ({
+      ...prev,
+      emailVerified: verified,
+    }));
+  }, []);
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -132,64 +161,96 @@ const Signup = () => {
       [name]: value,
     }));
 
-    let error = "";
-    if (name === "name" && !value) {
-      error = "Name is required.";
-    } else if (
-      name === "email" &&
-      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)
-    ) {
-      error = "Please enter a valid email address.";
-    } else if (name === "password" && value.length < 6) {
-      error = "Password must be at least 6 characters long.";
-    } else if (name === "cpassword" && value !== formData.password) {
-      error = "Password do not match.";
-    } else if (name === "phoneNumber" && !/^[0-9]{10}$/.test(value)) {
-      error = "Please enter a valid contact number.";
-    }
+    // let error = "";
+    // if (name === "name" && !value) {
+    //   error = "Name is required.";
+    // } else if (
+    //   name === "email" &&
+    //   !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)
+    // ) {
+    //   error = "Please enter a valid email address.";
+    // } else if (name === "password" && value.length < 6) {
+    //   error = "Password must be at least 6 characters long.";
+    // } else if (name === "cpassword" && value !== formData.password) {
+    //   error = "Password do not match.";
+    // } else if (name === "phoneNumber" && !/^[0-9]{10}$/.test(value)) {
+    //   error = "Please enter a valid contact number.";
+    // }
 
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: error,
-    }));
+    // setErrors((prevErrors) => ({
+    //   ...prevErrors,
+    //   [name]: error,
+    // }));
   };
 
-  const handleVerification = async (e) => {
-    e.preventDefault();
-    if (!formData.email) {
-      toast.error("Please enter an email.");
-      return;
-    }
-    if (!formData.name) {
-      toast.error("Please enter your name")
-    }
-    if (!formData.phoneNumber) {
-      toast.error("Please enter your phone number")
-    }
-    localStorage.setItem("userDetails", JSON.stringify(formData));
-    navigate("/otpverification", {
-      state: { email: formData.email, source: "register" },
-    });
-    const body = { email: formData.email };
+  // const handleVerification = async (e) => {
+  //   e.preventDefault();
+  //   if (!formData.email) {
+  //     toast.error("Please enter an email.");
+  //     return;
+  //   }
+  //   if (!formData.name) {
+  //     toast.error("Please enter your name")
+  //   }
+  //   if (!formData.phoneNumber) {
+  //     toast.error("Please enter your phone number")
+  //   }
+  //   localStorage.setItem("userDetails", JSON.stringify(formData));
+  //   navigate("/otpverification", {
+  //     state: { email: formData.email, source: "register" },
+  //   });
+  //   const body = { email: formData.email };
+
+  //   try {
+  //     const response = await axios.post(
+  //       `${import.meta.env.VITE_API_URL}auth/send-otp`,
+  //       body
+  //     );
+  //     toast.success("OTP sent successfully to your mail!", { position: "top-right" });
+  //     localStorage.setItem("case", "signup")
+  //     navigate("/otpverification", { state: { email: formData.email } });
+  //     // setShowOtpModal(true);
+  //   } catch (error) {
+  //     toast.error("Failed to send OTP, Please try again later", {
+  //       position: "top-center",
+  //     });
+  //   }
+  //   setTimeout(() => {
+  //     setIsEmailVerified(true);
+  //   }, 1000);
+  // };
+
+  const handleVerification = async () => {
+    const userDetails = {
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phoneNumber,
+    };
+
+    // Store user details in localStorage
+    localStorage.setItem("userDetails", JSON.stringify(userDetails));
+    localStorage.setItem("case", "signup");
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}auth/send-otp`,
-        body
-      );
-      console.log(response.data);
-      toast.success("OTP sent successfully to your mail!", { position: "top-right" });
-      localStorage.setItem("case", "signup")
-      navigate("/otpverification", { state: { email: formData.email } });
-    } catch (error) {
-      console.log(error)
-      toast.error("Failed to send OTP, Please try again later", {
-        position: "top-center",
+      const body = { email: formData.email };
+      await axios.post(`${import.meta.env.VITE_API_URL}auth/send-otp`, body);
+      setShowOtpModal(true);
+      toast.success("OTP sent successfully to your mail!", {
+        position: "top-right",
       });
+    } catch (err) {
+      toast.error("Something went wrong");
     }
-    setTimeout(() => {
-      setIsEmailVerified(true);
-    }, 1000);
+  };
+
+  const handleEmailVerified = () => {
+    setIsEmailVerified(true);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      emailVerified: true,
+    }));
+    localStorage.setItem("status", "verified");
+    setShowOtpModal(false); // Close modal after success
   };
 
 
@@ -211,11 +272,13 @@ const Signup = () => {
       cpassword:
         formData.password === formData.cpassword
           ? ""
-          : "Password do not match.",
+          : "Passwords do not match.",
       phoneNumber: /^[0-9]{10}$/.test(formData.phoneNumber)
         ? ""
         : "Phone number must be exactly 10 digits.",
+      termsAndServices: isChecked ? "" : "You must agree to the Terms and Conditions.",
     };
+
 
     setErrors(newErrors);
 
@@ -238,9 +301,8 @@ const Signup = () => {
         `${import.meta.env.VITE_API_URL}auth/register`,
         data
       );
-      console.log("Registration Successful", response.data);
       // localStorage.removeItem("userDetails");
-      toast.success("Registration Successful!", { position: "top-right" });
+      // toast.success("Registration Successful!", { position: "top-right" });
       const token = response.data.token;
       const role = response.data.data.role;
       const userId = response.data.data.id;
@@ -326,6 +388,7 @@ const Signup = () => {
                           }`}
                       ></div>
                       <button
+                      type="button"
                         className={`role-btn ${formData.role === "venue" ? "active" : ""
                           }`}
                         onClick={() => handleRoleSelection("venue")}
@@ -335,6 +398,7 @@ const Signup = () => {
                         </p>
                       </button>
                       <button
+                      type="button"
                         className={`role-btn ${formData.role === "entertainer" ? "active" : ""
                           }`}
                         onClick={() => handleRoleSelection("entertainer")}
@@ -438,7 +502,7 @@ const Signup = () => {
                         </p>
                       )}
                     </div>
-                    <div className="col-md-3">
+                    {/* <div className="col-md-3">
                       {formData.emailVerified ? (
                         // <span className="btn ms-2 mt-2 text-success fw-bold" style={{cursor:"default"}}>
                         //   ✅ Verified
@@ -456,7 +520,34 @@ const Signup = () => {
                           Verify Email
                         </button>
                       )}
+                    </div> */}
+
+                    <div className="col-md-3">
+                      {isEmailVerified ? (
+                        <div className="d-flex">
+                          <p className="mt-4 me-2 fs-6 fw-bold text-primary">Verified</p>
+                          <img src="./../assets/pique/image/verifiedTag.avif" height="30px" className="mt-4" />
+                        </div>
+                      ) : (
+                        <button
+                          type="button"
+                          className="btn btn-outline-danger mt-4 rounded-3 btn-sm profile-font"
+                          onClick={handleVerification}
+                        >
+                          Verify Email
+                        </button>
+                      )}
+
+                      {/* OTP Modal */}
+                      {showOtpModal && (
+                        <OtpVerifyModal
+                          email={formData.email}
+                          onSuccess={handleEmailVerified}
+                          onClose={() => setShowOtpModal(false)}
+                        />
+                      )}
                     </div>
+
                   </div>
 
                   <div className="row mb-2">
@@ -476,7 +567,7 @@ const Signup = () => {
                       }
                       showPassword={showPassword}
                       togglePasswordVisibility={togglePasswordVisibility}
-                      disabled={!formData.emailVerified}
+                      disabled={!formData?.emailVerified}
                     />
                     {errors.password && (
                       <p className="text-danger profile-font text-start">
@@ -502,7 +593,7 @@ const Signup = () => {
                       }
                       showPassword={showCPassword}
                       togglePasswordVisibility={toggleCPasswordVisibility}
-                      disabled={!formData.emailVerified}
+                      disabled={!formData?.emailVerified}
                     />
                     {errors.cpassword && (
                       <p className="text-danger profile-font text-start">
@@ -524,12 +615,25 @@ const Signup = () => {
                       </div>
                       <div className="col-11">
                         <label htmlFor="terms&Services" className="fw-light">
-                          <p className="termsServices">
+                          {/* <p className="termsServices">
                             By entering your information here, you affirm you
                             have read and agree to our
                             <Link to="">Terms of Services</Link>and{" "}
                             <Link to="">Privacy Policy</Link>
+                          </p> */}
+                          <p className="termsServices">
+                            By entering your information here, you affirm you
+                            have read and agree to our
+                            <Link to="/terms-and-conditions">
+                              Terms of Services
+                            </Link>
+                            and <Link to="/privacy-policy">Privacy Policy</Link>
                           </p>
+                          {errors.termsAndServices && (
+                            <p className="text-danger profile-font text-start">
+                              {errors.termsAndServices}
+                            </p>
+                          )}
                         </label>
                       </div>
 
@@ -539,7 +643,7 @@ const Signup = () => {
                     type="submit"
                     className=" btn-primary text-white w-100 sign-in-btn"
                     label="Signup"
-                    disabled={!formData.emailVerified}
+                    disabled={!formData?.emailVerified}
                   >
                     Signup
                   </button>

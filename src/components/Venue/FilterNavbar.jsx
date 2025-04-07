@@ -5,7 +5,13 @@ import axios from "axios";
 
 export default function FilterNavbar() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [selectedCategory, setSelectedCategory] = useState(searchParams.get("category") || "");
+  // const [selectedCategory, setSelectedCategory] = useState(searchParams.get("category") || "");
+  const [selectedCategory, setSelectedCategory] = useState(() => {
+    const cat = searchParams.get("category");
+    return cat ? Number(cat) : "";
+  });
+  
+
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState([]);
   const [selectedSort, setSelectedSort] = useState("Best Match");
@@ -26,6 +32,14 @@ export default function FilterNavbar() {
     { name: "Magic Shows", icon: "fa-hat-wizard" },
     { name: "Unique & Specialty", icon: "fa-bullhorn" },
   ];
+
+  useEffect(() => {
+    const categoryFromURL = searchParams.get("category");
+    setSelectedCategory(categoryFromURL ? Number(categoryFromURL) : "");
+  }, [searchParams]);
+  
+  
+  
 
   useEffect(() => {
     const fetchFilters = async () => {

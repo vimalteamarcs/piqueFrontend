@@ -16,6 +16,7 @@ export default function AllEntertainer() {
   const searchQuery = searchParams.get("search") || "";
   const availability = searchParams.get("availability") || "";
   const category = searchParams.get("category") || "";
+  const date = searchParams.get("date") || "";
   const pageIndex = Number(searchParams.get("page")) || 1;
   const pageSize = Number(searchParams.get("pageSize")) || 10;
 
@@ -44,10 +45,11 @@ export default function AllEntertainer() {
               category: category || null,
               page: pageIndex,
               pageSize: pageSize,
+              date:date
             },
           }
         );
-       console.log(response.data)
+        console.log(response.data)
         setEntertainers(response.data.entertainers || []);
         setTotalCount(response.data.totalCount || 0);
       } catch (err) {
@@ -58,7 +60,7 @@ export default function AllEntertainer() {
     };
 
     fetchEntertainers();
-  }, [searchQuery, availability, category, pageIndex, pageSize]);
+  }, [searchQuery, availability, category, pageIndex, pageSize,date]);
 
   const updateFilters = (newFilters) => {
     const updatedParams = new URLSearchParams(searchParams);
