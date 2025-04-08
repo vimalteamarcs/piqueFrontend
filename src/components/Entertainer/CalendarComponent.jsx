@@ -43,7 +43,7 @@
 //         }
 //       );
 //       console.log("kjnbasdkjhb", response.data);
-      
+
 //       const formattedEvents = response.data.map((event, index) => {
 //         const statusKey = event.status?.toLowerCase();
 //         return {
@@ -131,7 +131,7 @@
 //         }}
 //         events={events}
 //         selectable={true}
-        
+
 //         editable={true}
 //         height="auto"
 //         eventClick={handleEventClick}
@@ -231,11 +231,7 @@
 //   );
 // };
 
-  // export default CalendarComponent;
-  
-
-
-
+// export default CalendarComponent;
 
 // import React, { useEffect, useState, useCallback, useRef } from "react";
 // import FullCalendar from "@fullcalendar/react";
@@ -370,7 +366,6 @@
 //    }
 //  };
 
-
 //   return (
 //     <div className="taskCalendar my-1">
 //       <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap1">
@@ -492,8 +487,6 @@
 
 // export default CalendarComponent;
 
-
-
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -520,6 +513,7 @@ const CalendarComponent = () => {
   const [currentMonth, setCurrentMonth] = useState(null);
   const [dailyEvents, setDailyEvents] = useState([]);
   const [showDailyModal, setShowDailyModal] = useState(false);
+
 
   const lastFetchedMonth = useRef(null);
 
@@ -616,8 +610,29 @@ const CalendarComponent = () => {
     }
   };
 
+  const [selectedDate, setselectedDate] = useState(null);
+  const [popupPosition, setPopupPosition] = useState({
+    top: "50%",
+    left: "50%",
+  });
   const handleMoreLinkClick = (info) => {
     const clickedDate = info.date;
+    setselectedDate(clickedDate);
+
+    // Get position from event target
+    const rect = info.jsEvent?.target?.getBoundingClientRect?.();
+    if (rect) {
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
+      const scrollLeft =
+        window.pageXOffset || document.documentElement.scrollLeft;
+
+      setPopupPosition({
+        top: `${rect.top + scrollTop + 5}px`,
+        left: `${rect.left + scrollLeft}px`,
+      });
+    }
+
     const eventsForDay = allEvents.filter((e) => {
       const eventDate = new Date(e.start).toDateString();
       return eventDate === clickedDate.toDateString();
@@ -651,24 +666,6 @@ const CalendarComponent = () => {
           ))}
         </Form.Select>
       </div>
-
-      {/* <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
-        headerToolbar={{
-          start: "today prev,next",
-          center: "title",
-          end: "dayGridMonth,timeGridWeek,timeGridDay,listMonth",
-        }}
-        events={events}
-        selectable
-        editable
-        height="auto"
-        eventClick={handleEventClick}
-        datesSet={handleDatesSet}
-        dayMaxEvents={2}
-        moreLinkClick={handleMoreLinkClick}
-      /> */}
 
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin]}
@@ -708,53 +705,72 @@ const CalendarComponent = () => {
       />
 
       {/* Daily Modal */}
+      
       <Modal
         show={showDailyModal}
         onHide={() => setShowDailyModal(false)}
-        centered
-        size="lg"
+        size="sm"
+        className="custom-popup-modal"
+        backdrop={false}
+        style={{
+          top: popupPosition.top,
+          left: popupPosition.left,
+          position: "absolute",
+        }}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Events for Selected Day</Modal.Title>
+          <div className="d-flex align-items-center gap-3 w-100">
+            <div className="popup-date-circle">
+              {selectedDate?.getDate()?.toString().padStart(2, "0") || "?"}
+            </div>
+            
+          </div>
         </Modal.Header>
-        <Modal.Body>
+
+        <Modal.Body className="p-3 custom-popup-body">
           {dailyEvents.length > 0 ? (
-            <ul className="list-group">
+            <div className="d-flex flex-column gap-3">
               {dailyEvents.map((event) => (
-                <li
+                <div
                   key={event.id}
-                  className="list-group-item d-flex justify-content-between align-items-center"
+                  className="event-card p-3 rounded shadow-sm"
                 >
-                  <div>
-                    <strong>{event.title}</strong> <br />
-                    <small>
-                      {new Date(event.start).toLocaleString()} -{" "}
-                      {new Date(event.end).toLocaleTimeString()}
-                    </small>
+                  <div className="d-flex align-items-center gap-2 mb-2">
+                    <div className="status-dot bg-success rounded-circle d-flex align-items-center justify-content-center">
+                      <i
+                        className="fas fa-check text-white"
+                        style={{ fontSize: "10px" }}
+                      ></i>
+                    </div>
+                    <div className="event-time fw-semibold">
+                      {new Date(event.start).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </div>
                   </div>
+
+                  <div className="event-title mb-2">"{event.title}"</div>
+
                   <Button
-                    variant="primary"
+                    variant="success"
                     size="sm"
+                    className="px-3 py-1 view-btn"
                     onClick={() => {
                       setSelectedEvent(event);
                       setShowModal(true);
                       setShowDailyModal(false);
                     }}
                   >
-                    View
+                    View Event
                   </Button>
-                </li>
+                </div>
               ))}
-            </ul>
+            </div>
           ) : (
-            <p>No events available.</p>
+            <p className="text-center">No events available.</p>
           )}
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowDailyModal(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
       </Modal>
 
       {/* Main Event Modal */}

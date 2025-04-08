@@ -3117,3 +3117,65 @@ button:disabled {
   background-color: #979797;
 }
 
+
+
+/* Modal floated styling */
+.custom-popup-modal {
+  position: absolute;
+  width: 250px;
+  border-radius: 15px;
+  z-index: 1055;
+}
+
+/* Keep the rest as-is */
+.custom-popup-body {
+  background: #fff;
+  border-radius: 15px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Top Date Circle */
+.popup-date-circle {
+  width: 35px;
+  height: 35px;
+  background-color: #262626;
+  color: white;
+  border-radius: 50%;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.event-card {
+  background-color: #e8f8e8;
+  border-left: 5px solid #66bb6a;
+}
+
+.status-dot {
+  width: 12px;
+  height: 12px;
+  background-color: #4caf50;
+}
+
+.event-time {
+  font-size: 1rem;
+}
+
+.event-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.view-btn {
+  background-color: #6cbf3d;
+  border: none;
+  font-size: 0.8rem;
+  border-radius: 15px;
+}
+
+.view-btn:hover {
+  background-color: #5fa934;
+}
