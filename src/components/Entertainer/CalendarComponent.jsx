@@ -525,8 +525,7 @@ const CalendarComponent = () => {
       const token = localStorage.getItem("token");
 
       const { data } = await axios.get(
-        `${
-          import.meta.env.VITE_API_URL
+        `${import.meta.env.VITE_API_URL
         }entertainers/calendar/events?date=${monthStr}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -594,8 +593,8 @@ const CalendarComponent = () => {
       value === "All"
         ? allEvents
         : allEvents.filter(
-            (event) => event.status?.toLowerCase() === value.toLowerCase()
-          )
+          (event) => event.status?.toLowerCase() === value.toLowerCase()
+        )
     );
   };
 
@@ -705,7 +704,7 @@ const CalendarComponent = () => {
       />
 
       {/* Daily Modal */}
-      
+
       <Modal
         show={showDailyModal}
         onHide={() => setShowDailyModal(false)}
@@ -723,7 +722,7 @@ const CalendarComponent = () => {
             <div className="popup-date-circle">
               {selectedDate?.getDate()?.toString().padStart(2, "0") || "?"}
             </div>
-            
+
           </div>
         </Modal.Header>
 
@@ -733,9 +732,9 @@ const CalendarComponent = () => {
               {dailyEvents.map((event) => (
                 <div
                   key={event.id}
-                  className="event-card p-3 rounded shadow-sm"
+                  className="event-card p-2 rounded shadow-sm"
                 >
-                  <div className="d-flex align-items-center gap-2 mb-2">
+                  <div className="d-flex align-items-center gap-2">
                     <div className="status-dot bg-success rounded-circle d-flex align-items-center justify-content-center">
                       <i
                         className="fas fa-check text-white"
@@ -750,12 +749,12 @@ const CalendarComponent = () => {
                     </div>
                   </div>
 
-                  <div className="event-title mb-2">"{event.title}"</div>
+                  <div className="event-title">"{event.title}"</div>
 
                   <Button
                     variant="success"
                     size="sm"
-                    className="px-3 py-1 view-btn"
+                    className="btn view-btn"
                     onClick={() => {
                       setSelectedEvent(event);
                       setShowModal(true);
@@ -816,8 +815,8 @@ const CalendarComponent = () => {
                       selectedEvent.status?.toLowerCase() === "confirmed"
                         ? "success"
                         : selectedEvent.status?.toLowerCase() === "pending"
-                        ? "warning"
-                        : "secondary"
+                          ? "warning"
+                          : "secondary"
                     }
                     text={
                       selectedEvent.status?.toLowerCase() === "pending"

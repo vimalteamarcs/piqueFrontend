@@ -3139,12 +3139,12 @@ button:disabled {
 
 /* Top Date Circle */
 .popup-date-circle {
-  width: 35px;
-  height: 35px;
+  width: 25px;
+  height: 25px;
   background-color: #262626;
   color: white;
   border-radius: 50%;
-  font-size: 14px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3152,7 +3152,7 @@ button:disabled {
 
 .event-card {
   background-color: #e8f8e8;
-  border-left: 5px solid #66bb6a;
+  border-left: 5px solid #66bb6a;font-size: 12px;
 }
 
 .status-dot {
@@ -3162,22 +3162,22 @@ button:disabled {
 }
 
 .event-time {
-  font-size: 1rem;
+  font-size: 11px;
 }
 
 .event-title {
-  font-size: 0.95rem;
+  font-size: 11px;
   font-weight: 500;
   color: #333;
 }
 
-.view-btn {
+.btn.view-btn {
   background-color: #6cbf3d;
   border: none;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
   border-radius: 15px;
 }
 
-.view-btn:hover {
+.btn.view-btn:hover {
   background-color: #5fa934;
 }
