@@ -95,23 +95,37 @@ export default function Profile() {
           `${import.meta.env.VITE_API_URL}entertainers`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
-      console.log("entertainer profile",response.data)
-        const entertainer = response.data?.entertainers?.[0];
-
+    
+        console.log("entertainer profile", response.data);
+        const entertainer = response.data?.data; // updated: response.data.data, not entertainers[0]
+    
         if (entertainer) {
-          localStorage.setItem("entertainerId", entertainer.id);
-
+          localStorage.setItem("entertainerId", entertainer.uid);
+    
           setFormData({
-            ...entertainer,
-            category: Number(entertainer.category) || "",
-            specific_category: Number(entertainer.specific_category) || "",
+            name: entertainer.name || "",
+            bio: entertainer.bio || "",
+            phone1: entertainer.phoneNumber || "",
+            phone2: "", // assuming you don't get a second phone from API
+            category: categories.find(cat => cat.label === entertainer.category)?.value || "",
+            specific_category:
+              subcategories.find(sub => sub.label === entertainer.specific_category)?.value || "",
+            availability: entertainer.availability || "",
+            vaccinated: entertainer.vaccinated || "",
+            performanceRole: entertainer.role || "",
+            pricePerEvent: entertainer.pricePerEvent || "",
+            country: entertainer.country || "",
+            state: entertainer.state || "",
+            city: entertainer.city || "",
+            socialLinks: entertainer.stageName || "", // using stageName for "socialLinks"
           });
-
+    
+          setHeadshot(entertainer.headshotUrl || "");
           setIsEditing(true);
-
-          // Fetch subcategories if a category exists
+    
           if (entertainer.category) {
-            fetchSubcategories(entertainer.category);
+            const categoryId = categories.find(cat => cat.label === entertainer.category)?.value;
+            if (categoryId) fetchSubcategories(categoryId);
           }
         }
       } catch (error) {
@@ -119,6 +133,7 @@ export default function Profile() {
         toast.error("Failed to fetch entertainer data.");
       }
     };
+    
 
     const fetchSubcategories = async (categoryId) => {
       try {

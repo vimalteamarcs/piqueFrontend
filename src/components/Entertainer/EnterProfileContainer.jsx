@@ -181,20 +181,6 @@ export default function EnterProfileContainer({
           <div className="row mb-2">
             <div className="col-md-6 dash-font">
               <label className="dash-font fw-semibold">Availability</label>
-              {/* <RadioButton
-                name="availability"
-                options={options}
-                value={formData.availability || ""}
-                onChange={(selectedValue) =>
-                  handleInputChange({
-                    target: {
-                      name: "availability",
-                      value: selectedValue,
-                    },
-                  })
-                }
-                className="form-control dash-font"
-              /> */}
               <RadioButton
                 name="availability"
                 options={options}
@@ -205,20 +191,7 @@ export default function EnterProfileContainer({
             </div>
             <div className="col-md-6 dash-font">
               <label className="dash-font fw-semibold">Vaccinated?</label>
-              {/* <RadioButton
-                name="vaccinated"
-                className="form-control dash-font"
-                options={options}
-                value={formData.vaccinated || ""}
-                onChange={(selectedValue) =>
-                  handleInputChange({
-                    target: {
-                      name: "vaccinated",
-                      value: selectedValue,
-                    },
-                  })
-                }
-              /> */}
+
               <RadioButton
                 name="vaccinated"
                 options={options}
