@@ -201,7 +201,7 @@ export default function EditVenue() {
             </div>
             <div className="profile-container">
               <div className="d-flex justify-content-between mb-0">
-                <p className="profile-font fw-bold mb-0 mt-2">EDIT VENUE</p>
+                <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center mt-2">EDIT VENUE</p>
                 {/* <Button
                   className="btn-danger btn-sm mb-0 rounded-3 profile-font"
                   type="button"
@@ -210,7 +210,7 @@ export default function EditVenue() {
                 /> */}
               </div>
 
-              <hr />
+              <hr className="mt-0" />
               <p
                 className="profile-font text-secondary"
                 style={{ cursor: "pointer" }}

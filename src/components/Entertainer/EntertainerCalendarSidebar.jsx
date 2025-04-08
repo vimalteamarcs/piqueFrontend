@@ -26,7 +26,7 @@ export default function EntertainerCalendarSidebar() {
   return (
     <>
       <div className="custom-entertainer-sidebar">
-        <div className="p-2 profile-font">
+        <div className="profile-font">
           <p className="fs-5 fw-medium mb-1">
             <i className="fa-solid fa-chevron-left fs-6 me-2"></i>Calendar
           </p>
@@ -43,11 +43,11 @@ export default function EntertainerCalendarSidebar() {
                 key={idx}
                 to={item.to}
                 className={({ isActive }) =>
-                  `nav-link py-2 px-3 d-flex align-items-center position-relative sidebar-link mb-3 ${isActive ? 'enter-active-link' : ''
+                  `nav-link py-2 px-3 d-flex align-items-center position-relative sidebar-link mb-2 ${isActive ? 'enter-active-link' : ''
                   }`
                 }
               >
-                <i className={`fa-regular ${item.icon} fs-5 icon-transition me-3`}></i>
+                <i className={`fa-regular ${item.icon} icon-transition`}></i>
                 <span className="text-dark">{item.label}</span>
               </NavLink>
             ))}
@@ -55,7 +55,7 @@ export default function EntertainerCalendarSidebar() {
 
           {/* Show Upcoming Events ONLY on the calendar page */}
           {isCalendarPage && (
-            <div className="mt-2"><hr/>
+            <div className="mt-2"><hr />
               <h6 className="fw-medium mb-3">Upcoming Events</h6>
               {upcomingEvents.map((event, index) => (
                 <div key={index} className="mb-3 p-2 rounded bg-light border">

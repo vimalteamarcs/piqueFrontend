@@ -1354,6 +1354,7 @@ body {
   background-color: #f8f9fa;
   color: #343a40;
 }
+.sidebar-link .icon-transition {font-size: 15px;}
 
 .active-link {
   background-color: #f1f1f1 !important;
@@ -1485,8 +1486,8 @@ body {
 
 .entertainer-profile-container {
   flex: 1;
-  padding-right: 30px !important;
-  padding-left: 30px !important;
+  padding-right: 15px !important;
+  padding-left: 15px !important;
   border: 1px solid #EBEBEB;
   border-radius: 10px;
   margin-top: 24px;
@@ -1823,13 +1824,13 @@ body {
   display: flex !important;
   align-items: center !important;
   gap: 4px !important;
-  padding: 5px 12px !important;
+  padding: 5px 12px !important;border: none;
 }
 
 .btn-nav-enter:hover,
 .btn-nav-enter:focus,
 .btn-nav-enter:active {
-  background-color: #C5EAFF !important;
+  background-color: #e3eef5 !important;
   color: inherit !important;
   border: none !important;
   box-shadow: none !important;
@@ -2107,7 +2108,8 @@ body {
   /* Adjust width as needed */
   min-height: 100vh;
   /* Full height */
-  padding: 15px;
+  padding: 0px;
+  padding-right: 20px;
   margin-top: 13px;
   background: #ffffff;
   /* Optional background */
@@ -2473,7 +2475,7 @@ body {
 }
 
 .dash-navbar-font {
-  font-size: 9px;
+  font-size: 10px;margin-bottom: 0;
 }
 
 .dash-font {
@@ -2513,10 +2515,10 @@ body {
 .upcoming-events {
   border: 1px solid #C2CCD666;
   border-radius: 5px;
-  padding: 4px;
-  padding-top: 6px;
+  padding: 5px 10px;
+  padding-top: 10px;
 }
-
+.dbIconE {height: 16px;}
 .booking-table {
   border: 1px solid #EBEBEB;
   padding: 12px;

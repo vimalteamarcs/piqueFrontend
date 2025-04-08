@@ -40,7 +40,7 @@ export default function EnterDashNavbar() {
 
   return (
     <>
-      <div className="container-fluid" style={{boxShadow:"0px 3px 6px #00000029"}}>
+      <div className="container-fluid" style={{ boxShadow: "0px 3px 6px #00000029" }}>
         <nav className="navbar navbar-expand-lg mb-0">
           <div className="container">
             {/* <!-- Logo Section --> */}
@@ -70,125 +70,125 @@ export default function EnterDashNavbar() {
 
             {/* <!-- Navbar Links --> */}
             <div className="collapse navbar-collapse" id="navbarContent">
-                {/* <ul className="navbar-nav mx-auto mb-2 mb-lg-0 ">
+              {/* <ul className="navbar-nav mx-auto mb-2 mb-lg-0 ">
                   <p className="fw-semibold fs-6 nav-font mt-3">
                     Entertainment | Education | Engagement
                   </p>
                 </ul> */}
-          <div className="row navbar-nav mx-auto mb-2 mb-lg-0 gx-5">
-            <div className="col-md-4 mt-3">
-              <NavLink
-                to="/entertainer"
-                className={({ isActive }) =>
-                  `text-decoration-none text-black dash-link ${isActive ? "active-dash" : ""}`
-                }
-              >
-                <img src={`${imagePath}entdashIcon.svg`} alt="Dashboard" className="ms-3"/>
-                <p className="dash-navbar-font fw-semibold mt-1">Dashboard</p>
-              </NavLink>
-            </div>
-            <div className="col-md-4 mt-3">
-              <NavLink
-                to="/entertainer/calendar"
-                className={({ isActive }) =>
-                  `text-decoration-none text-black dash-link ${isActive ? "active-dash" : ""}`
-                }
-              >
-                <img src={`${imagePath}Icon akar-calendar.svg`} alt="Calendar" className="ms-2"/>
-                <p className="dash-navbar-font fw-semibold mt-1">Calendar</p>
-              </NavLink>
-            </div>
-            <div className="col-md-4 mt-3">
-              <NavLink
-                to="/entertainer/messages"
-                className={({ isActive }) =>
-                  `text-decoration-none text-black dash-link ${isActive ? "active-dash" : ""}`
-                }
-              >
-                <img src={`${imagePath}Icon feather-message-square.svg`} height="19px" alt="Messages" className="ms-3"/>
-                <p className="dash-navbar-font fw-semibold mt-1">Messages</p>
-              </NavLink>
-            </div>
-          </div>
-               
-
-                <div className="d-flex align-items-center">
-                <p className="profile-font mt-1 fw-medium">Manage Bookings</p>
-                  <NavLink className="nav-btn ms-2" to="/entertainer">
-                    <img src={`${imagePath}userIcon.svg`} />
+              <div className="row navbar-nav mx-auto mb-2 mb-lg-0 gx-5">
+                <div className="col-md-4 text-center mt-1">
+                  <NavLink
+                    to="/entertainer"
+                    className={({ isActive }) =>
+                      `text-decoration-none text-black dash-link ${isActive ? "active-dash" : ""}`
+                    }
+                  >
+                    <img src={`${imagePath}entdashIcon.svg`} alt="Dashboard" className="" />
+                    <p className="dash-navbar-font mt-1">Dashboard</p>
                   </NavLink>
-
-                  <div className="dropdown ms-2">
-                    <button
-                      className="btn btn-nav-enter dropdown-toggle d-flex align-items-center"
-                      type="button"
-                      id="venueDropdown"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <img src={`${imagePath}Ellipse 80@2x.png`} height="30px"/>
-                            <div className="enter-bars ms-2">
-                                <img src={`${imagePath}Icon ion-menu2.svg`}/>
-                            </div>
-                    </button>
-
-                    <ul
-                      className="dropdown-menu custom-drop-menu dropdown-menu-end"
-                      aria-labelledby="enterDropdown"
-                    >
-                      <li>
-                        <NavLink
-                           className={({ isActive }) =>
-                            `custom-drop-item ${isActive ? 'active' : ''}`
-                          }
-                          to="/entertainer/profile"
-                        >
-                          Account
-                        </NavLink>
-                      </li>
-                      <li>
-                        <NavLink
-                           className={({ isActive }) =>
-                            `custom-drop-item ${isActive ? 'active' : ''}`
-                          }
-                          to="/entertainer/events"
-                        >
-                          Events
-                        </NavLink>
-                      </li>
-                      <li>
-                        <NavLink
-                           className={({ isActive }) =>
-                            `custom-drop-item ${isActive ? 'active' : ''}`
-                          }
-                          to="/entertainer/notifications"
-                        >
-                          Notifications & Reminders
-                        </NavLink>
-                      </li>
-                      <li>
-                        <NavLink
-                           className={({ isActive }) =>
-                            `custom-drop-item ${isActive ? 'active' : ''}`
-                          }
-                          to="/entertainer/helpandsupport"
-                        >
-                          Help & Support
-                        </NavLink>
-                      </li>
-                      <li>
-                        <button
-                          className="dropdown-item custom-drop-item text-dark"
-                          data-bs-toggle="modal"
-                          data-bs-target="#logoutModal"
-                        >
-                          Log Out
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
+                </div>
+                <div className="col-md-4 text-center mt-1">
+                  <NavLink
+                    to="/entertainer/calendar"
+                    className={({ isActive }) =>
+                      `text-decoration-none text-black dash-link ${isActive ? "active-dash" : ""}`
+                    }
+                  >
+                    <img src={`${imagePath}Icon akar-calendar.svg`} alt="Calendar" className="" />
+                    <p className="dash-navbar-font mt-1">Calendar</p>
+                  </NavLink>
+                </div>
+                <div className="col-md-4 text-center mt-1">
+                  <NavLink
+                    to="/entertainer/messages"
+                    className={({ isActive }) =>
+                      `text-decoration-none text-black dash-link ${isActive ? "active-dash" : ""}`
+                    }
+                  >
+                    <img src={`${imagePath}Icon feather-message-square.svg`} height="19px" alt="Messages" className="" />
+                    <p className="dash-navbar-font mt-1">Messages</p>
+                  </NavLink>
                 </div>
               </div>
+
+
+              <div className="d-flex align-items-center">
+                <p className="profile-font mt-1 fw-medium">Manage Bookings</p>
+                <NavLink className="nav-btn ms-2" to="/entertainer">
+                  <img src={`${imagePath}userIcon.svg`} />
+                </NavLink>
+
+                <div className="dropdown ms-2">
+                  <button
+                    className="btn btn-nav-enter dropdown-toggle d-flex align-items-center"
+                    type="button"
+                    id="venueDropdown"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <img src={`${imagePath}Ellipse 80@2x.png`} height="30px" />
+                    <div className="enter-bars ms-2">
+                      <img src={`${imagePath}Icon ion-menu2.svg`} />
+                    </div>
+                  </button>
+
+                  <ul
+                    className="dropdown-menu custom-drop-menu dropdown-menu-end"
+                    aria-labelledby="enterDropdown"
+                  >
+                    <li>
+                      <NavLink
+                        className={({ isActive }) =>
+                          `custom-drop-item ${isActive ? 'active' : ''}`
+                        }
+                        to="/entertainer/profile"
+                      >
+                        Account
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className={({ isActive }) =>
+                          `custom-drop-item ${isActive ? 'active' : ''}`
+                        }
+                        to="/entertainer/events"
+                      >
+                        Events
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className={({ isActive }) =>
+                          `custom-drop-item ${isActive ? 'active' : ''}`
+                        }
+                        to="/entertainer/notifications"
+                      >
+                        Notifications & Reminders
+                      </NavLink>
+                    </li>
+                    <li>
+                      <NavLink
+                        className={({ isActive }) =>
+                          `custom-drop-item ${isActive ? 'active' : ''}`
+                        }
+                        to="/entertainer/helpandsupport"
+                      >
+                        Help & Support
+                      </NavLink>
+                    </li>
+                    <li>
+                      <button
+                        className="dropdown-item custom-drop-item text-dark"
+                        data-bs-toggle="modal"
+                        data-bs-target="#logoutModal"
+                      >
+                        Log Out
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </nav>
       </div>

@@ -25,7 +25,7 @@ export default function BookingDataContainer({
     {
       title: "Type of Performance",
       dataIndex: "performanceRole",
-      key : "performanceRole",
+      key: "performanceRole",
       width: 90,
       render: (text) => text || "N/A",
     },
@@ -38,30 +38,29 @@ export default function BookingDataContainer({
         const duration = moment.duration(end.diff(start));
         const hours = duration.hours();
         const minutes = duration.minutes();
-    
+
         let result = '';
         if (hours) result += `${hours}hr `;
         if (minutes) result += `${minutes}m`;
-    
+
         return result.trim() || '0m'; // fallback in case both are 0
       },
     },
-    
-    
+
+
     {
       title: "Status",
       dataIndex: "status",
       key: "status",
-      width:80,
+      width: 80,
       render: (status) => (
         <span
-          className={`badge ${
-            status === "confirmed"
-              ? "badge-confirmed"
-              : status === "pending"
+          className={`badge ${status === "confirmed"
+            ? "badge-confirmed"
+            : status === "pending"
               ? "badge-pending"
               : "badge-declined"
-          }`}
+            }`}
         >
           {status || "N/A"}
         </span>
@@ -70,18 +69,18 @@ export default function BookingDataContainer({
     {
       title: "Action",
       key: "action",
-      width:120,
+      width: 120,
       render: (_, record) => (
         <div className="d-flex">
-        <a href="#" className="btn btn-outline-success btn-sm me-2 rounded-3">
-          {/* <i className="fa-solid fa-check"></i> */}
-          Approve
-        </a>
-        <a href="#" className="btn btn-outline-danger btn-sm rounded-3">
-        {/* <i className="fa-solid fa-xmark"></i> */}
-        Reject
-      </a>
-      </div>
+          <a href="#" className="badge rounded-pill text-bg-success me-2">
+            {/* <i className="fa-solid fa-check"></i> */}
+            Approve
+          </a>
+          <a href="#" className="badge rounded-pill text-bg-danger">
+            {/* <i className="fa-solid fa-xmark"></i> */}
+            Reject
+          </a>
+        </div>
       ),
     },
   ];
@@ -92,8 +91,8 @@ export default function BookingDataContainer({
 
   return (
     <div className="entertainer-profile-container">
-      <p className="fw-bold mb-0">BOOKINGS</p>
-      <hr />
+      <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">BOOKINGS</p>
+      <hr className="mt-0" />
       <CustomTable
         data={filteredData}
         columns={columns}

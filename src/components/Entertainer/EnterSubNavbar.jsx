@@ -9,7 +9,7 @@ export default function EnterSubNavbar() {
       <div className="container d-flex justify-content-center p-3">
         <div className="div text-center dash-navbar shadow">
           <div className="row">
-            <div className="col-md-4">
+            <div className="col-md-4 text-center">
               <NavLink
                 to="/entertainer"
                 className={({ isActive }) =>
@@ -17,10 +17,10 @@ export default function EnterSubNavbar() {
                 }
               >
                 <img src={`${imagePath}Icon material-outline-dashboard.svg`} alt="Dashboard" />
-                <p className="dash-navbar-font fw-semibold mt-1">Dashboard</p>
+                <p className="dash-navbar-font mt-1">Dashboard</p>
               </NavLink>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-4 text-center">
               <NavLink
                 to="/entertainer/calendar"
                 className={({ isActive }) =>
@@ -28,10 +28,10 @@ export default function EnterSubNavbar() {
                 }
               >
                 <img src={`${imagePath}Icon akar-calendar.svg`} alt="Calendar" />
-                <p className="dash-navbar-font fw-semibold mt-1">Calendar</p>
+                <p className="dash-navbar-font mt-1">Calendar</p>
               </NavLink>
             </div>
-            <div className="col-md-4">
+            <div className="col-md-4 text-center">
               <NavLink
                 to="/entertainer/messages"
                 className={({ isActive }) =>
@@ -39,7 +39,7 @@ export default function EnterSubNavbar() {
                 }
               >
                 <img src={`${imagePath}Icon feather-message-square.svg`} alt="Messages" />
-                <p className="dash-navbar-font fw-semibold mt-1">Messages</p>
+                <p className="dash-navbar-font mt-1">Messages</p>
               </NavLink>
             </div>
           </div>

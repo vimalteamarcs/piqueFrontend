@@ -63,8 +63,8 @@ export default function EnterProfileContainer({
   return (
     <>
       <div className="entertainer-profile-container">
-        <p className="fw-bold mb-0">PROFILE</p>
-        <hr />
+        <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">PROFILE</p>
+        <hr className="mt-0" />
         <p className="dash-font text-muted">
           The contact information provided below is for Pique Entertainment's
           records only.

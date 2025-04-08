@@ -11,11 +11,11 @@ export default function EntertainerUpcomingEvents({ events = [], loading }) {
       render: (text) => text || "N/A",
     },
     {
-        title: "Location",
-        dataIndex: "location",
-        key: "location",
-        render: (text) => text || "N/A",
-      },
+      title: "Location",
+      dataIndex: "location",
+      key: "location",
+      render: (text) => text || "N/A",
+    },
 
     {
       title: "Date",
@@ -24,56 +24,55 @@ export default function EntertainerUpcomingEvents({ events = [], loading }) {
       render: (date) => moment(date).format("DD-MMM-YYYY"),
     },
     {
-        title: "Duration",
-        key: "duration",
-        render: (_, record) => {
-          const start = moment(record.startTime);
-          const end = moment(record.endTime);
-          const duration = moment.duration(end.diff(start));
-      
-          const days = Math.floor(duration.asDays());
-      
-          if (days >= 1) {
-            return `${days}d`;
-          } else {
-            const hours = duration.hours();
-            const minutes = duration.minutes();
-            let result = "";
-      
-            if (hours > 0) result += `${hours}hr `;
-            if (minutes > 0) result += `${minutes}min`;
-      
-            return result.trim() || "0min";
-          }
-        },
+      title: "Duration",
+      key: "duration",
+      render: (_, record) => {
+        const start = moment(record.startTime);
+        const end = moment(record.endTime);
+        const duration = moment.duration(end.diff(start));
+
+        const days = Math.floor(duration.asDays());
+
+        if (days >= 1) {
+          return `${days}d`;
+        } else {
+          const hours = duration.hours();
+          const minutes = duration.minutes();
+          let result = "";
+
+          if (hours > 0) result += `${hours}hr `;
+          if (minutes > 0) result += `${minutes}min`;
+
+          return result.trim() || "0min";
+        }
       },
-      {
-        title: "Recurring",
-        dataIndex: "recurring",
-        key: "recurring",
-        render: (text) => text || "N/A",
-      },
-      
+    },
+    {
+      title: "Recurring",
+      dataIndex: "recurring",
+      key: "recurring",
+      render: (text) => text || "N/A",
+    },
+
 
     {
-        title: "Status",
-        dataIndex: "status",
-        key: "status",
-        width: 80,
-        render: (status) => (
-          <span
-            className={`badge ${
-              status === "confirmed"
-                ? "badge-confirmed"
-                : status === "pending"
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      width: 80,
+      render: (status) => (
+        <span
+          className={`badge ${status === "confirmed"
+              ? "badge-confirmed"
+              : status === "pending"
                 ? "badge-pending"
                 : "badge-declined"
             }`}
-          >
-            {status}
-          </span>
-        ),
-      },
+        >
+          {status}
+        </span>
+      ),
+    },
     {
       title: "Action",
       key: "action",
@@ -87,8 +86,8 @@ export default function EntertainerUpcomingEvents({ events = [], loading }) {
 
   return (
     <div className="entertainer-profile-container w-100">
-      <p className="fw-bold mb-0">UPCOMING EVENTS</p>
-      <hr />
+      <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">UPCOMING EVENTS</p>
+      <hr className="mt-0" />
       <CustomTable
         data={events}
         columns={columns}

@@ -18,12 +18,12 @@ export default function ContactPersonCard() {
       [e.target.name]: e.target.value,
     });
   };
-  
+
 
   useEffect(() => {
     fetchProfile();
   }, []);
-  
+
   const fetchProfile = async () => {
     const token = localStorage.getItem("token");
     const userid = localStorage.getItem("userId")
@@ -35,7 +35,7 @@ export default function ContactPersonCard() {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-console.log(response.data)
+      console.log(response.data)
       const user = response.data;
       setUserId(user.id);
 
@@ -63,11 +63,11 @@ console.log(response.data)
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      toast.success("User updated successfully!", {position:'top-right'});
+      toast.success("User updated successfully!", { position: 'top-right' });
       fetchProfile();
     } catch (error) {
       console.error("Error updating user:", error);
-      toast.error("Failed to update user.", {position: 'top-right'});
+      toast.error("Failed to update user.", { position: 'top-right' });
     } finally {
       setIsUpdating(false);
     }
@@ -75,9 +75,9 @@ console.log(response.data)
 
   return (
     <>
-    <ToastContainer/>
+      <ToastContainer />
       <div className="d-flex justify-content-between align-items-center mb-0">
-        <p className="fw-bold mb-0">CONTACT PERSON</p>
+        <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">CONTACT PERSON</p>
         <button type="button" className="btn venue-btn profile-font mb-0" onClick={updateUser}>
           Update
         </button>

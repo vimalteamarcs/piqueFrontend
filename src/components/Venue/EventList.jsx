@@ -56,7 +56,7 @@ export default function EventList() {
     <>
       <div className="d-flex justify-content-between align-items-center mb-0">
         <div className="div">
-          <p className="fw-bold mb-0">EVENTS</p>
+          <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">EVENTS</p>
         </div>
         <div className="div">
           <Button
@@ -70,10 +70,10 @@ export default function EventList() {
 
       {loading ? (
         <div className="d-flex justify-content-center my-5">
-        <div className="spinner-grow text-dark" role="status">
-          <span className="visually-hidden">Loading...</span>
+          <div className="spinner-grow text-dark" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
         </div>
-      </div>
       ) : events.length > 0 ? (
         <div className="table">
           <table className="table table-responsive">
@@ -101,12 +101,11 @@ export default function EventList() {
                   <td>
                     {" "}
                     <span
-                      className={`badge ${
-                        event.status === "confirmed"
+                      className={`badge ${event.status === "confirmed"
                           ? "bg-success text-white"
                           : "bg-secondary text-white"
-                      }`}
-                      style={{  borderRadius: "10px" }}
+                        }`}
+                      style={{ borderRadius: "10px" }}
                     >
                       {event.status}
                     </span>
@@ -127,7 +126,7 @@ export default function EventList() {
         <p>No events found.</p>
       )}
 
-{showModal && selectedEvent && (
+      {showModal && selectedEvent && (
         <EditEventModal event={selectedEvent} onClose={closeModal} fetchEvents={fetchEvents} />
       )}
     </>

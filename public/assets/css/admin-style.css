@@ -39,7 +39,7 @@ input[type="datetime-local"]::-ms-clear,input[type="datetime-local"]::-ms-reveal
 .table tbody, table tbody {}
 .table tbody tr, table tbody tr {}
 .table tbody tr td, table tbody tr td {vertical-align: middle;padding: .3rem .5rem;}
-.table tbody tr td .badge, table tbody tr td .badge {font-weight: 500;padding: 0.35rem .5rem;border-radius: 20px;letter-spacing: 0.5px;}
+.table tbody tr td .badge, table tbody tr td .badge {font-weight: 500;padding: 0.35rem .5rem;border-radius: 20px;letter-spacing: 0.5px;text-decoration: none;}
 .table tbody tr td .btn-group, table tbody tr td .btn-group  {}
 .table tbody tr td .btn-group .btn-outline-primary, table tbody tr td .btn-group .btn-outline-primary  {background-color: #F8F8F8;color: #333;border-color: #D1D1D1; padding: .8rem .8rem;font-size: 0.8rem;min-width: 25px;display: inline-flex;}
 

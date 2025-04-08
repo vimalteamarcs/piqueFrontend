@@ -79,9 +79,9 @@ export default function EnterAccountSidebar() {
   const location = useLocation();
 
   const isEventSubRoute = location.pathname.startsWith('/entertainer/bookingrequest') ||
-  location.pathname.startsWith('/entertainer/events');
+    location.pathname.startsWith('/entertainer/events');
 
-const [isEventDropdownOpen, setIsEventDropdownOpen] = useState(isEventSubRoute);
+  const [isEventDropdownOpen, setIsEventDropdownOpen] = useState(isEventSubRoute);
 
   const toggleEventDropdown = () => {
     setIsEventDropdownOpen(!isEventDropdownOpen);
@@ -91,7 +91,7 @@ const [isEventDropdownOpen, setIsEventDropdownOpen] = useState(isEventSubRoute);
 
   return (
     <div className="custom-entertainer-sidebar">
-      <div className="p-2 profile-font">
+      <div className="profile-font">
         <p className="fs-5 fw-medium mb-1">Account</p>
         <p className="profile-font">Olivia Andrews, California, USA</p>
 
@@ -105,39 +105,37 @@ const [isEventDropdownOpen, setIsEventDropdownOpen] = useState(isEventSubRoute);
               style={{ cursor: 'pointer', borderRadius: '6px' }}
             >
               <div className="d-flex align-items-center">
-                <i className="fa-regular fa-bookmark fs-5 icon-transition me-3"></i>
+                <i className="fa-regular fa-bookmark icon-transition me-3"></i>
                 <span className="text-dark">EVENTS</span>
               </div>
               <i className={`fa-solid fa-chevron-${isEventDropdownOpen ? 'up' : 'down'}`}></i>
             </div>
 
             {isEventDropdownOpen && (
-  <div className="dropdown-menu-sub ps-4 pt-2">
-    <NavLink
-      to="/entertainer/bookingrequest"
-      className={({ isActive }) =>
-        `nav-link py-1 sidebar-sub-link d-flex align-items-center ${
-          isActive ? 'active-sub' : 'inactive-sub'
-        }`
-      }
-    >
-      <span className={`dot-indicator me-3 ${location.pathname === '/entertainer/bookingrequest' ? 'dot-blue' : 'dot-grey'}`}></span>
-      Bookings
-    </NavLink>
+              <div className="dropdown-menu-sub ps-4 pt-2">
+                <NavLink
+                  to="/entertainer/bookingrequest"
+                  className={({ isActive }) =>
+                    `nav-link py-1 sidebar-sub-link d-flex align-items-center ${isActive ? 'active-sub' : 'inactive-sub'
+                    }`
+                  }
+                >
+                  <span className={`dot-indicator me-3 ${location.pathname === '/entertainer/bookingrequest' ? 'dot-blue' : 'dot-grey'}`}></span>
+                  Bookings
+                </NavLink>
 
-    <NavLink
-      to="/entertainer/events"
-      className={({ isActive }) =>
-        `nav-link py-1 sidebar-sub-link d-flex align-items-center ${
-          isActive ? 'active-sub' : 'inactive-sub'
-        }`
-      }
-    >
-      <span className={`dot-indicator me-3 ${location.pathname === '/entertainer/events' ? 'dot-blue' : 'dot-grey'}`}></span>
-      Events List
-    </NavLink>
-  </div>
-)}
+                <NavLink
+                  to="/entertainer/events"
+                  className={({ isActive }) =>
+                    `nav-link py-1 sidebar-sub-link d-flex align-items-center ${isActive ? 'active-sub' : 'inactive-sub'
+                    }`
+                  }
+                >
+                  <span className={`dot-indicator me-3 ${location.pathname === '/entertainer/events' ? 'dot-blue' : 'dot-grey'}`}></span>
+                  Events List
+                </NavLink>
+              </div>
+            )}
 
           </div>
 
@@ -153,11 +151,11 @@ const [isEventDropdownOpen, setIsEventDropdownOpen] = useState(isEventSubRoute);
               key={idx}
               to={item.to}
               className={({ isActive }) =>
-                `nav-link py-2 px-3 d-flex align-items-center position-relative sidebar-link mb-3 ${isActive ? 'enter-active-link' : ''
+                `nav-link py-2 px-3 d-flex align-items-center position-relative sidebar-link mb-2 ${isActive ? 'enter-active-link' : ''
                 }`
               }
             >
-              <i className={`fa-regular ${item.icon} fs-5 icon-transition me-3`}></i>
+              <i className={`fa-regular ${item.icon} icon-transition me-3`}></i>
               <span className="text-dark">{item.label}</span>
             </NavLink>
           ))}
