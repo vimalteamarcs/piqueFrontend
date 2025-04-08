@@ -5,52 +5,60 @@ import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Modal, Button, Badge, Form } from 'react-bootstrap';
 import axios from 'axios';
 
 
 const CalendarComponent = () => {
- const initialEventList = [
-  {
-    id: 1,
-    title: 'Birthday Bash',
-    start: '2025-04-10',
-    end: '2025-04-10',
-    status: 'upcoming',
-  },
-  {
-    id: 2,
-    title: 'Wedding Gala',
-    start: '2025-04-12',
-    end: '2025-04-12',
-    status: 'confirmed',
-  },
-  {
-    id: 3,
-    title: 'Corporate Show',
-    start: '2025-04-15',
-    end: '2025-04-15',
-    status: 'pending',
-  },
-  {
-    id: 4,
-    title: 'Charity Concert',
-    start: '2025-04-18',
-    end: '2025-04-18',
-    status: 'confirmed',
-  },
-  {
-    id: 5,
-    title: 'Community Fair',
-    start: '2025-04-20',
-    end: '2025-04-20',
-    status: 'upcoming',
-  },
-];
+  const initialEventList = [
+    {
+      id: 1,
+      title: 'Birthday Bash',
+      start: '2025-04-10',
+      end: '2025-04-10',
+      status: 'completed',
+      className: 'fc-completed',
 
-const [allEvents, setAllEvents] = useState(initialEventList);
-const [events, setEvents] = useState(initialEventList);
+    },
+    {
+      id: 2,
+      title: 'Wedding Gala',
+      start: '2025-04-12',
+      end: '2025-04-12',
+      status: 'cancelled',
+      className: 'fc-cancelled',
+    },
+    {
+      id: 3,
+      title: 'Corporate Show',
+      start: '2025-04-15',
+      end: '2025-04-15',
+      status: 'unpublished',
+      className: 'fc-unpublished',
+    },
+    {
+      id: 4,
+      title: 'Charity Concert',
+      start: '2025-04-18',
+      end: '2025-04-18',
+      status: 'confirmed',
+      className: 'fc-confirmed',
+    },
+    {
+      id: 5,
+      title: 'Community Fair',
+      start: '2025-04-20',
+      end: '2025-04-20',
+      status: 'scheduled',
+      className: 'fc-scheduled',
+    },
+
+  ];
+
+  const [allEvents, setAllEvents] = useState(initialEventList);
+  const [events, setEvents] = useState(initialEventList);
 
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -110,29 +118,48 @@ const [events, setEvents] = useState(initialEventList);
   };
 
   return (
-    <div className="container my-4">
-      <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap">
-        <h3 className="mb-2 text-center">Event Calendar</h3>
+    <div className="taskCalendar my-1">
+      <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap1">
+        <h4 className="mb-2 text-center">Event Calendar</h4>
         <Form.Select
           value={filter}
           onChange={handleFilterChange}
           className="w-auto calendar-filter-dropdown"
+          style={{ minWidth: "140px" }}
         >
           <option value="All">All</option>
           <option value="Confirmed">Confirmed</option>
-          <option value="Pending">Pending</option>
-          <option value="Upcoming">Upcoming</option>
+          <option value="unpublished">Unpublished</option>
+          <option value="scheduled">Scheduled</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="completed">Completed</option>
         </Form.Select>
       </div>
 
+
       <FullCalendar
+        plugins={[dayGridPlugin, timeGridPlugin, listPlugin, interactionPlugin]}
+        initialView="dayGridMonth"
+        headerToolbar={{
+          start: 'today prev,next',
+          center: 'title',
+          end: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+        }}
+        events={events}
+        selectable={true}
+        editable={true}
+        height="auto"
+        eventClick={handleEventClick}
+      />
+
+      {/* <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         events={events}
         eventClick={handleEventClick}
         height="auto"
         dayMaxEvents={2}
-      />
+      /> */}
 
       {/* Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered size="lg">
@@ -174,8 +201,8 @@ const [events, setEvents] = useState(initialEventList);
                     selectedEvent?.status === 'Confirmed'
                       ? 'success'
                       : selectedEvent?.status === 'Pending'
-                      ? 'warning'
-                      : 'secondary'
+                        ? 'warning'
+                        : 'secondary'
                   }
                   text={selectedEvent?.status === 'Pending' ? 'dark' : 'white'}
                 >

@@ -20,17 +20,17 @@ export default function BookingCalendar() {
         description="View your all bookings in the calendar"
       >
         <div className="container d-flex">
-                  <EntertainerCalendarSidebar/>
-        <div className="entertainer-profile-container">
+          <EntertainerCalendarSidebar />
+          <div className="entertainer-profile-container">
 
-        <div className="row">
+            <div className="row">
 
-          <div className="col-md-12">
-         
-            <CalendarComponent/>
+              <div className="col-md-12">
+
+                <CalendarComponent />
+              </div>
+            </div>
           </div>
-        </div>
-        </div>
         </div>
         {/* <PiqueFooter/> */}
       </DashLayoutEnter>
