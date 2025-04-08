@@ -79,7 +79,7 @@ export default function EnterAccountSidebar() {
   const location = useLocation();
 
   const isEventSubRoute = location.pathname.startsWith('/entertainer/bookingrequest') ||
-  location.pathname.startsWith('/entertainer/events-list');
+  location.pathname.startsWith('/entertainer/events');
 
 const [isEventDropdownOpen, setIsEventDropdownOpen] = useState(isEventSubRoute);
 

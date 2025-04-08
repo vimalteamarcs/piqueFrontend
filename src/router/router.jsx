@@ -70,6 +70,8 @@ import PrivacyPolicy from "../pages/PrivacyPolicy";
 import TermsAndCondition from "../pages/TermsAndCondition";
 import AddLocationVenue from "../pages/Venue/AddLocationVenue";
 import EntertainerInvoice from "../pages/Entertainer/EntertainerInvoice";
+import EntertainerEvents from "../pages/Entertainer/EntertainerEvents";
+import EntertainerAvailability from "../pages/Entertainer/EntertainerAvailability";
 const basename = import.meta.env.VITE_BASE || "/P/";
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -124,6 +126,9 @@ const router = createBrowserRouter(
         />
         <Route path="/entertainer/calendar" element={<BookingCalendar />} />
         <Route path="/entertainer/invoice" element={<EntertainerInvoice/>} />
+        <Route path="/entertainer/events" element={<EntertainerEvents/>}/>
+        <Route path="/entertainer/availabilityform" element={<EntertainerAvailability/>}/>
+
       </Route>
 
       {/* Admin Routes */}

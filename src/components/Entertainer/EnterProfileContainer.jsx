@@ -122,7 +122,8 @@ export default function EnterProfileContainer({
                         ? headshot
                         : `${imagePath}magician-showing-trick.png`
                     }
-                    style={{ height: "130px", width: "119px" }}
+                    style={{ height: "130px", width: "125px" }}
+                    className="rounded-4"
                     alt="Profile Headshot"
                   />
                 </div>
