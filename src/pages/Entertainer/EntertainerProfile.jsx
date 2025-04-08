@@ -95,7 +95,7 @@ export default function Profile() {
           `${import.meta.env.VITE_API_URL}entertainers`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
-
+      console.log("entertainer profile",response.data)
         const entertainer = response.data?.entertainers?.[0];
 
         if (entertainer) {

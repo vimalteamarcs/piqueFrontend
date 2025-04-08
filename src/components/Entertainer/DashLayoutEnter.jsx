@@ -10,14 +10,11 @@ export default function DashLayoutEnter({ title, description, children }) {
                 <title>{title}</title>
                 <meta name="description" content={description} />
             </Helmet>
-            {/* <div className="container-xxl position-relative bg-light d-flex p-0">
-                <EnterDashSidebar /> */}
+
                 <div className="content">
                     <EnterDashNavbar />
-                    {/* <EnterSubNavbar/> */}
                     {children}
                 </div>
-            {/* </div> */}
         </>
   )
 }

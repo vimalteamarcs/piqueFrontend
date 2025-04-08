@@ -69,6 +69,7 @@ import InvoicePage from "../pages/Venue/InvoicePage";
 import PrivacyPolicy from "../pages/PrivacyPolicy";
 import TermsAndCondition from "../pages/TermsAndCondition";
 import AddLocationVenue from "../pages/Venue/AddLocationVenue";
+import EntertainerInvoice from "../pages/Entertainer/EntertainerInvoice";
 const basename = import.meta.env.VITE_BASE || "/P/";
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -122,6 +123,7 @@ const router = createBrowserRouter(
           element={<BookingRequest />}
         />
         <Route path="/entertainer/calendar" element={<BookingCalendar />} />
+        <Route path="/entertainer/invoice" element={<EntertainerInvoice/>} />
       </Route>
 
       {/* Admin Routes */}

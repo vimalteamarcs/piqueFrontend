@@ -8,6 +8,7 @@ export default function EntertainerDash() {
   const [dashboardData, setDashboardData] = useState(null);
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [events, setEvents] = useState([]);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -47,7 +48,21 @@ export default function EntertainerDash() {
     fetchBookings();
   }, []);
 
-
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    axios
+      .get(`${import.meta.env.VITE_API_URL}entertainers/events/upcoming`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        setEvents(res.data?.events || []);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch events", err);
+      });
+  }, []);
 
 
 
@@ -319,7 +334,7 @@ export default function EntertainerDash() {
 </div>
 
 
-            <div className="col-md-5 scrollable-container">
+            {/* <div className="col-md-5 scrollable-container">
               <div className="d-flex justify-content-between">
                 <p className="fw-semibold" style={{ fontSize: "16px" }}>
                   Upcoming Events
@@ -482,7 +497,73 @@ export default function EntertainerDash() {
                   </div>
                 </div>
               </div>
+            </div> */}
+
+<div className="col-md-5 scrollable-container">
+      <div className="d-flex justify-content-between">
+        <p className="fw-semibold" style={{ fontSize: "16px" }}>
+          Upcoming Events
+        </p>
+        <a href="#" className="profile-font fw-semibold">
+          View All<i className="fa-solid fa-chevron-right"></i>
+          <i className="fa-solid fa-chevron-right"></i>
+        </a>
+      </div>
+
+      <div className="upcoming-events mb-2">
+  {events.length === 0 ? (
+    <div className="text-center text-muted py-3">
+      <i className="fa-solid fa-calendar-xmark fa-lg mb-2"></i>
+      <p className="mb-0">No upcoming events</p>
+    </div>
+  ) : (
+    events.slice(0, 4).map((event) => (
+      <div key={event.id}>
+        <div className="row p-2 gx-5 bg-light mb-2 rounded">
+          <div className="col-md-3">
+            <img
+              src={`${imagePath}profilePic.avif`} // or event.image if available
+              style={{
+                height: "62px",
+                width: "73px",
+                borderRadius: "6px",
+              }}
+              alt="Event"
+            />
+          </div>
+          <div className="col-md-9">
+            <p className="dash-font fw-semibold mb-0">
+              {event.name || "Event Title"}
+            </p>
+            <p className="icon-font mb-1">
+              {event.description || "No description available."}
+            </p>
+            <div className="d-flex">
+              <p className="icon-font text-start me-3">
+                <img
+                  src={`${imagePath}Icon akar-calendar.svg`}
+                  className="me-1"
+                  alt="calendar"
+                />
+                {moment(event.date).format("DD-MMMM-YYYY")}
+              </p>
+              <p className="icon-font">
+                <img
+                  src={`${imagePath}Icon akar-location.svg`}
+                  className="me-1"
+                  alt="location"
+                />
+                {event.location || "Location"}
+              </p>
             </div>
+          </div>
+        </div>
+      </div>
+    ))
+  )}
+</div>
+
+    </div>
           </div>
         </div>
       </DashLayoutEnter>

@@ -2108,7 +2108,7 @@ body {
   min-height: 100vh;
   /* Full height */
   padding: 15px;
-  margin-top: 24px;
+  margin-top: 13px;
   background: #ffffff;
   /* Optional background */
   /* border-right: 1px solid #ddd; */
@@ -3035,3 +3035,85 @@ button:disabled {
   font-size: 0.875rem;
   padding: 6px 12px;
 }
+
+.custom-drop-menu .custom-drop-item {
+  background-color: transparent;
+  color: #000;
+  padding: 8px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.custom-drop-menu .custom-drop-item:hover {
+  background-color: #f8f9fa;
+  color: #000;
+}
+
+.custom-drop-menu .custom-drop-item.active {
+  background-color: #f8f9fa !important; /* Light grey when active */
+  color: #000 !important;
+}
+
+
+/* Active sidebar link styles */
+.enter-active-link {
+  background-color: #f1f1f1;
+  font-weight: bold;
+  border-radius: 6px;
+}
+
+.enter-active-link i {
+  color: #000e6f !important;
+}
+
+.dropdown-menu-sub .nav-link {
+  padding-left: 1rem;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.sidebar-sub-link {
+  color: #000 !important;
+  font-size: 13px !important; 
+  padding-left: 1.2rem;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+
+.sidebar-sub-link:hover {
+  color: #000e6f;
+}
+
+.active-sub {
+  color: #000e6f;
+  font-weight: 600;
+}
+
+.dot-indicator {
+  width: 8px;
+  height: 8px;
+  background-color: #000E6F;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.sidebar-sub-link.active-sub {
+  color: #000; /* black text for active */
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.sidebar-sub-link.inactive-sub {
+  color: #979797 !important; /* grey text for inactive */
+  font-size: 12px;
+}
+
+.dot-blue {
+  background-color: #000E6F; /* blue dot */
+}
+
+.dot-grey {
+  background-color: #979797;
+}
+

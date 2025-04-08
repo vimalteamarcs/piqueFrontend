@@ -44,7 +44,7 @@ export default function EnterDashNavbar() {
         <nav className="navbar navbar-expand-lg mb-0">
           <div className="container">
             {/* <!-- Logo Section --> */}
-            <Link
+            <NavLink
               className="navbar-brand d-flex align-items-center"
               to="/entertainer"
             >
@@ -53,7 +53,7 @@ export default function EnterDashNavbar() {
                 alt="logo"
                 className="logoMain"
               />
-            </Link>
+            </NavLink>
 
             {/* <!-- Toggle Button for Mobile View --> */}
             <button
@@ -83,7 +83,7 @@ export default function EnterDashNavbar() {
                   `text-decoration-none text-black dash-link ${isActive ? "active-dash" : ""}`
                 }
               >
-                <img src={`${imagePath}entdashIcon.svg`} alt="Dashboard" />
+                <img src={`${imagePath}entdashIcon.svg`} alt="Dashboard" className="ms-3"/>
                 <p className="dash-navbar-font fw-semibold mt-1">Dashboard</p>
               </NavLink>
             </div>
@@ -94,7 +94,7 @@ export default function EnterDashNavbar() {
                   `text-decoration-none text-black dash-link ${isActive ? "active-dash" : ""}`
                 }
               >
-                <img src={`${imagePath}Icon akar-calendar.svg`} alt="Calendar" />
+                <img src={`${imagePath}Icon akar-calendar.svg`} alt="Calendar" className="ms-2"/>
                 <p className="dash-navbar-font fw-semibold mt-1">Calendar</p>
               </NavLink>
             </div>
@@ -105,7 +105,7 @@ export default function EnterDashNavbar() {
                   `text-decoration-none text-black dash-link ${isActive ? "active-dash" : ""}`
                 }
               >
-                <img src={`${imagePath}Icon feather-message-square.svg`} alt="Messages" />
+                <img src={`${imagePath}Icon feather-message-square.svg`} height="19px" alt="Messages" className="ms-3"/>
                 <p className="dash-navbar-font fw-semibold mt-1">Messages</p>
               </NavLink>
             </div>
@@ -138,7 +138,9 @@ export default function EnterDashNavbar() {
                     >
                       <li>
                         <NavLink
-                          className="dropdown-item custom-drop-item"
+                           className={({ isActive }) =>
+                            `custom-drop-item ${isActive ? 'active' : ''}`
+                          }
                           to="/entertainer/profile"
                         >
                           Account
@@ -146,7 +148,9 @@ export default function EnterDashNavbar() {
                       </li>
                       <li>
                         <NavLink
-                          className="dropdown-item custom-drop-item"
+                           className={({ isActive }) =>
+                            `custom-drop-item ${isActive ? 'active' : ''}`
+                          }
                           to="/entertainer/events"
                         >
                           Events
@@ -154,19 +158,23 @@ export default function EnterDashNavbar() {
                       </li>
                       <li>
                         <NavLink
-                          className="dropdown-item custom-drop-item"
+                           className={({ isActive }) =>
+                            `custom-drop-item ${isActive ? 'active' : ''}`
+                          }
                           to="/entertainer/notifications"
                         >
                           Notifications & Reminders
                         </NavLink>
                       </li>
                       <li>
-                        <Link
-                          className="dropdown-item custom-drop-item"
+                        <NavLink
+                           className={({ isActive }) =>
+                            `custom-drop-item ${isActive ? 'active' : ''}`
+                          }
                           to="/entertainer/helpandsupport"
                         >
                           Help & Support
-                        </Link>
+                        </NavLink>
                       </li>
                       <li>
                         <button

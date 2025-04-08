@@ -84,6 +84,7 @@ export default function BookingRequest() {
     <>
       <DashLayoutEnter title ="Booking Request" description="View and manage your bookings">
           <Toaster position="top-center" reverseOrder={false} />
+        
            <div className="container d-flex">
                     <EnterAccountSidebar/>
                     <BookingDataContainer bookingRequests={bookingRequests} loading={loading} formatTime={formatTime}/>

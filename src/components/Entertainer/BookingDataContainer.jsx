@@ -11,15 +11,48 @@ export default function BookingDataContainer({
 
   const columns = [
     {
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
+      render: (date) => moment(date).format("DD-MMM-YYYY"),
+    },
+    {
       title: "Venue",
       dataIndex: "name",
       key: "name",
       render: (text) => text || "N/A",
     },
     {
+      title: "Type of Performance",
+      dataIndex: "performanceRole",
+      key : "performanceRole",
+      width: 90,
+      render: (text) => text || "N/A",
+    },
+    {
+      title: "Duration",
+      key: "duration",
+      render: (_, record) => {
+        const start = moment(record.event_startTime);
+        const end = moment(record.event_endTime);
+        const duration = moment.duration(end.diff(start));
+        const hours = duration.hours();
+        const minutes = duration.minutes();
+    
+        let result = '';
+        if (hours) result += `${hours}hr `;
+        if (minutes) result += `${minutes}m`;
+    
+        return result.trim() || '0m'; // fallback in case both are 0
+      },
+    },
+    
+    
+    {
       title: "Status",
       dataIndex: "status",
       key: "status",
+      width:80,
       render: (status) => (
         <span
           className={`badge ${
@@ -35,24 +68,20 @@ export default function BookingDataContainer({
       ),
     },
     {
-      title: "Date",
-      dataIndex: "date",
-      key: "date",
-      render: (date) => moment(date).format("DD-MMM-YYYY"),
-    },
-    {
-      title: "Time",
-      dataIndex: "showTime",
-      key: "showTime",
-      render: (time) => formatTime(time),
-    },
-    {
       title: "Action",
       key: "action",
+      width:120,
       render: (_, record) => (
-        <a href="#" className="btn btn-outline-secondary btn-sm">
-          <i className="fa-solid fa-eye"></i>
+        <div className="d-flex">
+        <a href="#" className="btn btn-outline-success btn-sm me-2 rounded-3">
+          {/* <i className="fa-solid fa-check"></i> */}
+          Approve
         </a>
+        <a href="#" className="btn btn-outline-danger btn-sm rounded-3">
+        {/* <i className="fa-solid fa-xmark"></i> */}
+        Reject
+      </a>
+      </div>
       ),
     },
   ];

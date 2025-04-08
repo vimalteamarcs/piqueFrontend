@@ -6,6 +6,7 @@ import DashLayoutEnter from "../../components/Entertainer/DashLayoutEnter";
 import PiqueFooter from "../../components/PiqueComponents/PiqueFooter";
 import EnterAccountSidebar from "../../components/Entertainer/EnterAccountSidebar";
 import CalendarComponent from "../../components/Entertainer/CalendarComponent";
+import EntertainerCalendarSidebar from "../../components/Entertainer/EntertainerCalendarSidebar";
 
 export default function BookingCalendar() {
   const calendarRef = useRef(null);
@@ -19,7 +20,7 @@ export default function BookingCalendar() {
         description="View your all bookings in the calendar"
       >
         <div className="container d-flex">
-                  <EnterAccountSidebar/>
+                  <EntertainerCalendarSidebar/>
         <div className="entertainer-profile-container">
 
         <div className="row">
