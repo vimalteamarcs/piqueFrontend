@@ -767,7 +767,19 @@ table.dataTable thead th, table.dataTable tfoot th {font-weight: 600;} */
 .taskCalendar .fc-cancelled {background-color: #fde3e3 !important;color: #ff4545 !important;}
 .taskCalendar .fc-cancelled.fc-h-event .fc-event-main {color: #ff4545 !important;}
 
-
+.e-time-slot{border-right: 1px solid #ccc;}
+.e-time-slot .form-check-input {margin-top: 0;height: 18px;width: 18px;}
+.e-time-slot .form-select {background-color: #F8F8F8;border-color: #D1D1D1;min-height: 30px !important;}
+.e-time-slot label.form-check-label {min-width: 100px;}
+.e-date-slot {}
+.e-date-slot .calendar-container{max-width:calc(100% - 25px);margin:auto;margin-top: 10px;}
+.e-date-slot .calendar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.e-date-slot .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
+.e-date-slot .day-header{text-align:center;font-weight:600;padding:5px 0;height: 30px; width: 30px;}
+.e-date-slot .date-cell{height:30px;width:30px;border:1px solid #ddd;border-radius:8px;text-align:center;line-height:30px;position:relative;font-size:12px;color:#333}
+.e-date-slot .date-cell span{position:relative}
+.e-date-slot .date-cell.has-dot::after{content:'';width:5px;height:5px;background:#007bff;border-radius:50%;position:absolute;bottom:2px;left:50%;transform:translateX(-50%)}
+.e-date-slot .nav-btn{border:none;background:#C5EAFF;padding:4px 10px;border-radius:50%;margin-left:5px;cursor:pointer}
 
 
 /* ---------- CSS Media Queries---------- */

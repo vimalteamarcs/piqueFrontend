@@ -1354,7 +1354,7 @@ body {
   background-color: #f8f9fa;
   color: #343a40;
 }
-.sidebar-link .icon-transition {font-size: 15px;}
+.sidebar-link .icon-transition {font-size: 15px;margin-right: 12px;}
 
 .active-link {
   background-color: #f1f1f1 !important;

@@ -40,7 +40,7 @@ export default function EnterDashNavbar() {
 
   return (
     <>
-      <div className="container-fluid" style={{ boxShadow: "0px 3px 6px #00000029" }}>
+      <div className="container-fluid" style={{ boxShadow: "1px 1px 8px #e5e4e4" }}>
         <nav className="navbar navbar-expand-lg mb-0">
           <div className="container">
             {/* <!-- Logo Section --> */}

@@ -148,7 +148,7 @@ export default function Dashboard() {
                 <p className="profile-font fw-semibold ms-2 mt-2 mb-0">
                   Upcoming Events
                 </p>
-                <hr />
+                <hr className="mt-0" />
                 <div className="scrollable-container">
                   {upcomingEvents.length > 0 ? (
                     upcomingEvents.map((event) => (

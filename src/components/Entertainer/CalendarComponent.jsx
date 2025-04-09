@@ -726,9 +726,9 @@ const CalendarComponent = () => {
           </div>
         </Modal.Header>
 
-        <Modal.Body className="p-3 custom-popup-body">
+        <Modal.Body className="p-1 custom-popup-body">
           {dailyEvents.length > 0 ? (
-            <div className="d-flex flex-column gap-3">
+            <div className="d-flex flex-column gap-2">
               {dailyEvents.map((event) => (
                 <div
                   key={event.id}

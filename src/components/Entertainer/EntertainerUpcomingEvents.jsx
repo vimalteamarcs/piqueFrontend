@@ -63,10 +63,10 @@ export default function EntertainerUpcomingEvents({ events = [], loading }) {
       render: (status) => (
         <span
           className={`badge ${status === "confirmed"
-              ? "badge-confirmed"
-              : status === "pending"
-                ? "badge-pending"
-                : "badge-declined"
+            ? "badge-confirmed"
+            : status === "pending"
+              ? "badge-pending"
+              : "badge-declined"
             }`}
         >
           {status}

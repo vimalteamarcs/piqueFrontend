@@ -18,10 +18,10 @@ export default function EntertainerInvoiceData({ invoices = [], loading }) {
       render: (status) => (
         <span
           className={`badge ${status === "confirmed"
-              ? "badge-confirmed"
-              : status === "pending"
-                ? "badge-pending"
-                : "badge-declined"
+            ? "badge-confirmed"
+            : status === "pending"
+              ? "badge-pending"
+              : "badge-declined"
             }`}
         >
           {status}

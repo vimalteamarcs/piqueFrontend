@@ -105,7 +105,7 @@ export default function EnterAccountSidebar() {
               style={{ cursor: 'pointer', borderRadius: '6px' }}
             >
               <div className="d-flex align-items-center">
-                <i className="fa-regular fa-bookmark icon-transition me-3"></i>
+                <i className="fa-regular fa-bookmark icon-transition"></i>
                 <span className="text-dark">EVENTS</span>
               </div>
               <i className={`fa-solid fa-chevron-${isEventDropdownOpen ? 'up' : 'down'}`}></i>
@@ -155,7 +155,7 @@ export default function EnterAccountSidebar() {
                 }`
               }
             >
-              <i className={`fa-regular ${item.icon} icon-transition me-3`}></i>
+              <i className={`fa-regular ${item.icon} icon-transition`}></i>
               <span className="text-dark">{item.label}</span>
             </NavLink>
           ))}
