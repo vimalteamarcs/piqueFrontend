@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import CustomTable from '../CustomTable';
+import { Select } from 'antd';
+const { Option } = Select;
 
 export default function EntertainerUpcomingEvents({ events = [], loading }) {
+  const [statusFilter, setStatusFilter] = useState("all");
+  
+  const handleStatusChange = (value) => {
+    setStatusFilter(value);
+  };
+
+  const filteredData = events.filter((item) => {
+    const matchesStatus =
+      statusFilter === "all" || item.status?.toLowerCase() === statusFilter;
+    return matchesStatus;
+  });
+
   const columns = [
     {
       title: "Title",
@@ -84,14 +98,28 @@ export default function EntertainerUpcomingEvents({ events = [], loading }) {
     },
   ];
 
+  const filterComponent = (
+    <Select
+      value={statusFilter}
+      onChange={handleStatusChange}
+      style={{ width: 100 }}
+    >
+      <Option value="all">Filter</Option>
+      <Option value="scheduled">Scheduled</Option>
+      <Option value="confirmed">Confirmed</Option>
+      <Option value="declined">Declined</Option>
+    </Select>
+  );
+
   return (
     <div className="entertainer-profile-container w-100">
       <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">UPCOMING EVENTS</p>
       <hr className="mt-0" />
       <CustomTable
-        data={events}
+        data={filteredData}
         columns={columns}
         loading={loading}
+        filterComponent={filterComponent}
         pagination={{
           current: 1,
           pageSize: 10,

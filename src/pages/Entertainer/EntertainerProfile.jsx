@@ -13,14 +13,16 @@ export default function Profile() {
   const [countries, setCountries] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
-    category: null,
-    specific_category: null,
+    stageName:"",
+    dob:"",
+    category: 0,
+    specific_category: 0,
     bio: "",
-    phone1: "",
-    phone2: "",
+    phoneNumber: "",
+    // phone2: "",
     performanceRole: "",
-    availability: "",
-    pricePerEvent: null,
+    // availability: "",
+    pricePerEvent: 0,
     socialLinks: "",
     vaccinated: "",
     status: "active",
@@ -30,7 +32,11 @@ export default function Profile() {
     headshot: null,
     country: 0,
     state: 0,
-    city: 0
+    city: 0,
+    zipCode: "",
+    services: [],
+    addressLine:"",
+
   });
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
@@ -42,6 +48,8 @@ export default function Profile() {
   const [tempLink, setTempLink] = useState("");
   const [media, setMedia] = useState([]);
   const [uploading, setUploading] = useState(false);
+  const [serviceInput, setServiceInput] = useState("");
+
 
   const performanceRole = [
     { value: "soloist", label: "Soloist" },
@@ -50,8 +58,8 @@ export default function Profile() {
   ];
 
   const options = [
-    { value: "yes", label: "Yes" },
-    { value: "no", label: "No" },
+    { value: "yes", label: "Vaccinated" },
+    { value: "no", label: "Non-Vaccinated" },
   ];
 
   useEffect(() => {
@@ -89,50 +97,7 @@ export default function Profile() {
       }
     };
 
-    const fetchEntertainer = async () => {
-      try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_URL}entertainers`,
-          { headers: { Authorization: `Bearer ${token}` } }
-        );
-    
-        console.log("entertainer profile", response.data);
-        const entertainer = response.data?.data; // updated: response.data.data, not entertainers[0]
-    
-        if (entertainer) {
-          localStorage.setItem("entertainerId", entertainer.uid);
-    
-          setFormData({
-            name: entertainer.name || "",
-            bio: entertainer.bio || "",
-            phone1: entertainer.phoneNumber || "",
-            phone2: "", // assuming you don't get a second phone from API
-            category: categories.find(cat => cat.label === entertainer.category)?.value || "",
-            specific_category:
-              subcategories.find(sub => sub.label === entertainer.specific_category)?.value || "",
-            availability: entertainer.availability || "",
-            vaccinated: entertainer.vaccinated || "",
-            performanceRole: entertainer.role || "",
-            pricePerEvent: entertainer.pricePerEvent || "",
-            country: entertainer.country || "",
-            state: entertainer.state || "",
-            city: entertainer.city || "",
-            socialLinks: entertainer.stageName || "", // using stageName for "socialLinks"
-          });
-    
-          setHeadshot(entertainer.headshotUrl || "");
-          setIsEditing(true);
-    
-          if (entertainer.category) {
-            const categoryId = categories.find(cat => cat.label === entertainer.category)?.value;
-            if (categoryId) fetchSubcategories(categoryId);
-          }
-        }
-      } catch (error) {
-        console.error("Error fetching entertainer:", error);
-        toast.error("Failed to fetch entertainer data.");
-      }
-    };
+
     
 
     const fetchSubcategories = async (categoryId) => {
@@ -164,25 +129,102 @@ export default function Profile() {
       }
     };
 
+    const fetchEntertainer = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_URL}entertainers`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+    
+        console.log("entertainer profile", response.data);
+        const entertainer = response.data?.data; // updated: response.data.data, not entertainers[0]
+    
+        if (entertainer) {
+          localStorage.setItem("entertainerId", entertainer.uid);
+    
+          setFormData({
+            name: entertainer.name || "",
+            stageName: entertainer.stageName || "",
+            bio: entertainer.bio || "",
+            phone1: entertainer.phoneNumber || "",
+            phone2: "", // assuming you don't get a second phone from API
+            category: entertainer.category || "",
+            specific_category:entertainer.specific_category || "",
+            availability: entertainer.availability || "",
+            vaccinated: entertainer.vaccinated || "",
+            performanceRole: entertainer.performanceRole || "",
+            pricePerEvent: entertainer.pricePerEvent || "",
+            services: entertainer.services?.map(service => service.id) || [],
+            country: entertainer.country || 0,
+            state: entertainer.state || 0,
+            city: entertainer.city || 0,
+            socialLinks: entertainer.stageName || "", // using stageName for "socialLinks"
+          });
+    
+          setHeadshot(entertainer.headshotUrl || "");
+          setIsEditing(true);
+
+          if (entertainer.country) fetchStates(entertainer.country);
+          if (entertainer.state) fetchCities(entertainer.state);
+    
+          if (entertainer.category) {
+            fetchSubcategories(entertainer.category);
+          }
+          
+        }
+      } catch (error) {
+        console.error("Error fetching entertainer:", error);
+        toast.error("Failed to fetch entertainer data.");
+      }
+    };
+
     fetchCategories();
+    // fetchSubcategories();
     fetchEntertainer();
   }, []);
 
+
+  const handleAddService = () => {
+    const trimmed = serviceInput.trim();
+    if (trimmed && !formData.services.includes(trimmed)) {
+      setFormData((prevData) => ({
+        ...prevData,
+        services: [...prevData.services, trimmed],
+      }));
+      setServiceInput("");
+    }
+  };
+  
+  const handleRemoveService = (indexToRemove) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      services: prevData.services.filter((_, index) => index !== indexToRemove),
+    }));
+  };
+  
+  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+  
     setFormData((prev) => ({ ...prev, [name]: value }));
+  
     if (name === "country") {
       setStates([]);
       setCities([]);
       fetchStates(value);
     }
-
+  
     if (name === "state") {
       setCities([]);
       fetchCities(value);
     }
-    setTempLink(value);
+  
+    if (name === "stageName") {
+      setTempLink(value);
+    }
   };
+  
 
   const handleCategoryChange = async (selectedValue) => {
 
@@ -573,6 +615,9 @@ export default function Profile() {
                 countries={countries}
                 states={states}
                 cities={cities}
+                serviceInput={serviceInput}
+                setServiceInput={setServiceInput}
+                handleAddService={handleAddService}
                 subcategories={subcategories}
                 performanceRole={performanceRole}
                 options={options}
@@ -585,6 +630,7 @@ export default function Profile() {
                 mediaUpload={mediaUpload}
                 onMediaUpdate={(updatedMedia) => setMedia(updatedMedia)}
                 handleFileChange={handleFileChange}
+                handleRemoveService={handleRemoveService}
                 handleSubmit={handleSubmit}/>
         </div>
         {/* <div className="container-fluid d-flex flex-column min-vh-100 mt-5">

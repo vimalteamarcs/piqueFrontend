@@ -1,13 +1,26 @@
 import React, { useState } from "react";
 import moment from "moment";
 import CustomTable from "../CustomTable";
-
+import { Select } from "antd";
+const { Option } = Select;
 export default function BookingDataContainer({
   bookingRequests,
   loading,
   formatTime,
 }) {
   const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+
+  const handleStatusChange = (value) => {
+    setStatusFilter(value);
+  };
+
+  const filteredData = bookingRequests.filter((item) => {
+    const matchesSearch = item.name?.toLowerCase().includes(search.toLowerCase());
+    const matchesStatus =
+      statusFilter === "all" || item.status?.toLowerCase() === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
 
   const columns = [
     {
@@ -23,10 +36,15 @@ export default function BookingDataContainer({
       render: (text) => text || "N/A",
     },
     {
+      title:"Event",
+      dataIndex: "event_title",
+      key: "event_title",
+      render: (text) => text || "N/A",
+    },
+    {
       title: "Type of Performance",
       dataIndex: "performanceRole",
-      key: "performanceRole",
-      width: 90,
+      key : "performanceRole",
       render: (text) => text || "N/A",
     },
     {
@@ -52,7 +70,7 @@ export default function BookingDataContainer({
       title: "Status",
       dataIndex: "status",
       key: "status",
-      width: 80,
+      width:60,
       render: (status) => (
         <span
           className={`badge ${status === "confirmed"
@@ -72,22 +90,35 @@ export default function BookingDataContainer({
       width: 120,
       render: (_, record) => (
         <div className="d-flex">
-          <a href="#" className="badge rounded-pill text-bg-success me-2">
-            {/* <i className="fa-solid fa-check"></i> */}
-            Approve
-          </a>
-          <a href="#" className="badge rounded-pill text-bg-danger">
-            {/* <i className="fa-solid fa-xmark"></i> */}
-            Reject
-          </a>
-        </div>
+        <button type="button" className="btn btn-outline-success btn-sm me-2 rounded-3">
+          {/* <i className="fa-solid fa-check"></i> */}
+          Approve
+        </button>
+        <button type="button" className="btn btn-outline-danger btn-sm rounded-3">
+        {/* <i className="fa-solid fa-xmark"></i> */}
+        Reject
+      </button>
+      </div>
       ),
     },
   ];
 
-  const filteredData = bookingRequests.filter((item) =>
-    item.name?.toLowerCase().includes(search.toLowerCase())
+  const filterComponent = (
+    <Select
+      value={statusFilter}
+      onChange={handleStatusChange}
+      style={{ width: 100 }}
+    >
+      <Option value="all">Filter</Option>
+      <Option value="pending">Pending</Option>
+      <Option value="confirmed">Confirmed</Option>
+      <Option value="declined">Declined</Option>
+    </Select>
   );
+
+  // const filteredData = bookingRequests.filter((item) =>
+  //   item.name?.toLowerCase().includes(search.toLowerCase())
+  // );
 
   return (
     <div className="entertainer-profile-container">
@@ -99,6 +130,7 @@ export default function BookingDataContainer({
         loading={loading}
         search={search}
         onSearchChange={setSearch}
+        filterComponent={filterComponent}
         pagination={{
           current: 1,
           pageSize: 10,

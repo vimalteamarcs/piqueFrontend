@@ -21,6 +21,10 @@ export default function EnterProfileContainer({
   countries,
   states,
   cities,
+  serviceInput,
+  handleAddService,
+  setServiceInput,
+  handleRemoveService,
 }) {
   const imagePath = import.meta.env.VITE_LOGGEDIN_IMAGE_PATH;
   const token = localStorage.getItem("token");
@@ -72,7 +76,9 @@ export default function EnterProfileContainer({
         <form className="scrollable-container" onSubmit={handleSubmit}>
           <div className="row mb-3">
             <div className="col-md-6">
-              <label className="dash-font fw-semibold">Name*</label>
+              <label className="dash-font fw-semibold">
+                Contact Person Name
+              </label>
               <Input
                 type="text"
                 name="name"
@@ -81,13 +87,22 @@ export default function EnterProfileContainer({
                 placeholder="Enter Entertainer Name"
                 onChange={handleInputChange}
               />
-              <label className="dash-font fw-semibold">Bio</label>
+              {/* <label className="dash-font fw-semibold">Bio</label>
               <textarea
                 className="form-control dash-font"
                 name="bio"
                 value={formData.bio || ""}
                 onChange={handleInputChange}
                 placeholder="Describe yourself"
+              /> */}
+              <label className="dash-font fw-semibold">Contact Number</label>
+              <Input
+                type="text"
+                name="phone1"
+                value={formData.phone1 || ""}
+                placeholder="Enter your contact number."
+                onChange={handleInputChange}
+                className="form-control dash-font"
               />
             </div>
             <div className="col-md-6">
@@ -132,23 +147,23 @@ export default function EnterProfileContainer({
           </div>
           <div className="row mb-3">
             <div className="col-md-6">
-              <label className="dash-font fw-semibold">Contact Number 1</label>
+              <label className="dash-font fw-semibold">Stage Name</label>
               <Input
                 type="text"
-                name="phone1"
-                value={formData.phone1 || ""}
+                name="stageName"
+                value={formData.stageName || ""}
                 placeholder="Enter your contact number."
                 onChange={handleInputChange}
                 className="form-control dash-font"
               />
             </div>
             <div className="col-md-6">
-              <label className="dash-font fw-semibold">Contact Number 2</label>
+              <label className="dash-font fw-semibold">DOB</label>
               <Input
-                type="text"
-                name="phone2"
-                value={formData.phone2 || ""}
-                placeholder="Enter another contact number."
+                type="date"
+                name="dob"
+                value={formData.dob || ""}
+                // placeholder="Enter another contact number."
                 onChange={handleInputChange}
                 className="form-control dash-font"
               />
@@ -173,33 +188,9 @@ export default function EnterProfileContainer({
                 value={formData.specific_category || ""}
                 onChange={(e) => handleSubCategoryChange(e.target.value)}
                 placeholder="Select Subcategory"
-                isDisabled={!formData.category}
+                // isDisabled={!formData.category}
                 className="form-control dash-font"
               />
-            </div>
-          </div>
-
-          <div className="row mb-2">
-            <div className="col-md-6 dash-font">
-              <label className="dash-font fw-semibold">Availability</label>
-              <RadioButton
-                name="availability"
-                options={options}
-                value={formData.availability || ""}
-                onChange={(e) => handleInputChange(e)} // just pass the event
-              />
-
-            </div>
-            <div className="col-md-6 dash-font">
-              <label className="dash-font fw-semibold">Vaccinated?</label>
-
-              <RadioButton
-                name="vaccinated"
-                options={options}
-                value={formData.vaccinated || ""}
-                onChange={(e) => handleInputChange(e)} // just pass the event
-              />
-
             </div>
           </div>
 
@@ -234,11 +225,42 @@ export default function EnterProfileContainer({
 
           <div className="row mb-3">
             <div className="col-md-6 dash-font">
+              {/* <label className="dash-font fw-semibold">Availability</label>
+              <RadioButton
+                name="availability"
+                options={options}
+                value={formData.availability || ""}
+                onChange={(e) => handleInputChange(e)} // just pass the event
+              /> */}
+              <label className="dash-font fw-semibold">Bio</label>
+              <textarea
+                className="form-control dash-font"
+                name="bio"
+                value={formData.bio || ""}
+                onChange={handleInputChange}
+                placeholder="Describe yourself"
+                rows="1"
+              />
+            </div>
+            <div className="col-md-6 dash-font">
+              <label className="dash-font fw-semibold">Vaccinated?</label>
+
+              <Select
+                name="vaccinated"
+                options={options}
+                value={formData.vaccinated || ""}
+                onChange={(e) => handleInputChange(e)} // just pass the event
+              />
+            </div>
+          </div>
+
+          <div className="row mb-3">
+            <div className="col-md-6 dash-font">
               <label className="dash-font fw-semibold">Country</label>
               <Select
                 name="country"
                 options={countries}
-                value={formData.country}
+                value={formData.country || 0}
                 onChange={handleInputChange}
                 defaultOption="--Select Country--"
                 className="form-control profile-font"
@@ -249,7 +271,7 @@ export default function EnterProfileContainer({
               <Select
                 name="state"
                 options={states}
-                value={formData.state}
+                value={formData.state || 0}
                 onChange={handleInputChange}
                 defaultOption="--Select State--"
                 className="form-control profile-font"
@@ -270,6 +292,41 @@ export default function EnterProfileContainer({
               />
             </div>
             <div className="col-md-6 dash-font">
+              {/* <label className="dash-font fw-semibold">Social Links</label>
+              <Input
+                type="text"
+                name="socialLinks"
+                className="form-control dash-font"
+                value={formData.socialLinks || ""}
+                placeholder="Enter your social links"
+                onChange={handleInputChange}
+              /> */}
+              <label className="dash-font fw-semibold">Address Line</label>
+              <Input
+                type="text"
+                name="addressLine"
+                className="form-control dash-font"
+                value={formData.addressLine}
+                placeholder="Enter your address line"
+                onChange={handleInputChange}
+              />
+            </div>
+          </div>
+
+          <div className="row mb-3">
+            <div className="col-md-6 dash-font">
+              <label className="dash-font fw-semibold">Zip Code</label>
+              <Input
+                type="text"
+                name="zipCode"
+                className="form-control dash-font"
+                value={formData.zipCode}
+                placeholder="Enter your zip code"
+                onChange={handleInputChange}
+              />
+            </div>
+
+            <div className="col-md-6 dash-font">
               <label className="dash-font fw-semibold">Social Links</label>
               <Input
                 type="text"
@@ -280,6 +337,59 @@ export default function EnterProfileContainer({
                 onChange={handleInputChange}
               />
             </div>
+          </div>
+
+          <div className="row mb-3">
+            <label className="dash-font fw-semibold">Services</label>
+            <div className="col-md-11">
+              <input
+                type="text"
+                className="form-control dash-font"
+                placeholder="Enter a service"
+                value={serviceInput}
+                onChange={(e) => setServiceInput(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    handleAddService();
+                  }
+                }}
+              />
+            </div>
+            <div className="col-md-1">
+              <button
+                type="button"
+                className="btn enter-btn rounded-3"
+                onClick={handleAddService}
+              >
+                <i className="fa fa-plus text-white"></i>
+              </button>
+            </div>
+
+            {/* List of Services */}
+            <div className="col-md-12 mt-2">
+              {formData?.services?.length > 0 && (
+                <ul className="ms-4">
+                  {formData.services.map((service, index) => (
+                    <li key={index} className="mb-1">
+                      <div className="d-flex align-items-center">
+                        <span className="me-2">{service}</span>
+                        <button
+                          type="button"
+                          className="btn p-0 ms-2"
+                          onClick={() => handleRemoveService(index)}
+                          aria-label="Remove Service"
+                        >
+                          <i className="fa-solid fa-xmark text-danger fw-bold fs-6"></i>
+                        </button>
+                      </div>
+                    </li>
+
+                  ))}
+                </ul>
+              )}
+            </div>
+
           </div>
 
           <div className="row">

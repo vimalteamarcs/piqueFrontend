@@ -12,6 +12,9 @@ export default function EntertainerDash() {
   const [events, setEvents] = useState([]);
   const [entertainer, setEntertainer] = useState(null);
   const navigate = useNavigate();
+  const userId = localStorage.getItem('userId');
+
+
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -126,7 +129,7 @@ export default function EntertainerDash() {
                   </button>
                   <div className="overlay-content p-3 text-white position-absolute bottom-0 start-0">
                     <h5 className="fw-bold mb-1">
-                      {entertainer?.category || "Category Name"}
+                      {entertainer?.category_name || "Category Name"}
                     </h5>
                     <p className="mb-0">
                       By {entertainer?.stageName || "Stage Name"}

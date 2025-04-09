@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/Input";
 import toast, { Toaster } from "react-hot-toast";
+import { getFcmToken } from "../notifications/registerToken";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -87,59 +88,28 @@ const Login = () => {
     }
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (!validateForm()) {
-  //     return;
-  //   }
-  //   try {
-  //     const response = await axios.post(
-  //       `${import.meta.env.VITE_API_URL}auth/login`,
-  //       formData
-  //     );
-  //     console.log("Login successful", response.data);
-  //     console.log(response.data.data.user.isVerified)
-  //     const token = response.data.access_token;
-  //     const role = response.data.data.user.role;
-  //     const userId = response.data.data.user.id;
-  //     localStorage.setItem("token", token);
-  //     localStorage.setItem("role", role);
-  //     localStorage.setItem("userId", userId);
-  //     localStorage.setItem("status", response.data.data.user.status);
-  //     localStorage.setItem("userName", response.data.data.user.name);
-  //     localStorage.setItem("phone", response.data.data.user.phone);
-  //     localStorage.setItem("email", response.data.data.user.email);
-  //     window.dispatchEvent(new Event("storage"));
-
-
-  //     if (role === "venue") {
-  //       navigate("/venue");
-  //     } else if (role === "entertainer") {
-  //       navigate("/entertainer");
-  //     } else {
-  //       navigate("/error");
-  //     }
-  //   } catch (error) {
-  //     console.error("Login error", error);
-  //     toast.error(
-  //       error.response?.data?.message || "An error occurred. Please try again."
-  //     );
-  //   }
-  // };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) {
       return;
     }
-  
+
+    const fcmToken = await getFcmToken();
+    console.log("fcmtoken", fcmToken);
+    
+    const body = {
+      email: formData.email,
+      password: formData.password,
+      fcmToken
+    }
+
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}auth/login`,
-        formData
+        body
       );
-  
+
 
       const { access_token, data } = response.data;
       const { user } = data;
@@ -152,30 +122,30 @@ const Login = () => {
       localStorage.setItem("phone", phone);
       localStorage.setItem("email", email);
       window.dispatchEvent(new Event("storage"));
-  
+
       if (!isVerified) {
         await axios.post(`${import.meta.env.VITE_API_URL}auth/user-verification`, {
           email,
         });
-  
+
         localStorage.setItem("email", email);
         localStorage.setItem("case", "login");
-  
+
         toast.success("Verification OTP sent to your email.");
-        
+
         navigate("/otpverification", { state: { email: formData.email } });
         return;
       }
-  
+
       // Store user data in local storage
 
-  
+
       // Navigate based on role
       if (role === "venue") {
         navigate("/venue");
       } else {
         navigate("/entertainer");
-      } 
+      }
     } catch (error) {
       console.error("Login error", error);
       toast.error(
@@ -183,8 +153,8 @@ const Login = () => {
       );
     }
   };
-  
-  
+
+
 
 
   const togglePasswordVisibility = () => {

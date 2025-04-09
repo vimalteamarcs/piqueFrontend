@@ -19,6 +19,7 @@ export default function CustomTable({
   onTableChange,
   search,
   onSearchChange,
+  filterComponent,
 }) {
   const [showDeleteModal, setShowDeleteModal] = useState(false); // Track modal visibility
   const [selectedRecord, setSelectedRecord] = useState(null); // Track the selected record
@@ -95,7 +96,10 @@ export default function CustomTable({
   return (
     <div className="card11">
       <div className="card-body11">
-        <div className="row">
+      <div className="row justify-content-between align-items-center">
+          <div className="col-auto mb-2">
+            {filterComponent}
+          </div>
           <div className="col dataTableSearch text-end mb-2">
             <Input
               placeholder="Search..."
