@@ -237,6 +237,9 @@ export default function EntertainerAvailability() {
                                 <Calendar />
                             </div>
                         </div>
+                        <div className='col-12 col-md-12 mt-3 text-end'>
+                            <button type="button" class="btn enter-btn icon-font text-white rounded-3"> Save Availability </button>
+                        </div>
                     </div>
 
 
