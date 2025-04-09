@@ -72,6 +72,8 @@ import AddLocationVenue from "../pages/Venue/AddLocationVenue";
 import EntertainerInvoice from "../pages/Entertainer/EntertainerInvoice";
 import EntertainerEvents from "../pages/Entertainer/EntertainerEvents";
 import EntertainerAvailability from "../pages/Entertainer/EntertainerAvailability";
+import EntertainerReviews from "../pages/Entertainer/EntertainerReviews";
+import EntertainerNotification from "../pages/Entertainer/EntertainerNotification";
 const basename = import.meta.env.VITE_BASE || "/P/";
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -125,9 +127,13 @@ const router = createBrowserRouter(
           element={<BookingRequest />}
         />
         <Route path="/entertainer/calendar" element={<BookingCalendar />} />
-        <Route path="/entertainer/invoice" element={<EntertainerInvoice/>} />
-        <Route path="/entertainer/events" element={<EntertainerEvents/>}/>
-        <Route path="/entertainer/availabilityform" element={<EntertainerAvailability/>}/>
+        <Route path="/entertainer/invoice" element={<EntertainerInvoice />} />
+        <Route path="/entertainer/events" element={<EntertainerEvents />} />
+        <Route path="/entertainer/availabilityform" element={<EntertainerAvailability />} />
+        <Route path="/entertainer/reviews" element={<EntertainerReviews />} />
+        <Route path="/entertainer/notifications" element={<EntertainerNotification />} />
+
+
 
       </Route>
 
