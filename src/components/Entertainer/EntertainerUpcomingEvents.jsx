@@ -102,7 +102,7 @@ export default function EntertainerUpcomingEvents({ events = [], loading }) {
     <Select
       value={statusFilter}
       onChange={handleStatusChange}
-      style={{ width: 100 }}
+      style={{ width: 120 }}
     >
       <Option value="all">Filter</Option>
       <Option value="scheduled">Scheduled</Option>

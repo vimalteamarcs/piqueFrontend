@@ -10,6 +10,13 @@ export default function BookingDataContainer({
 }) {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 10;
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+  
 
   const handleStatusChange = (value) => {
     setStatusFilter(value);
@@ -21,6 +28,12 @@ export default function BookingDataContainer({
       statusFilter === "all" || item.status?.toLowerCase() === statusFilter;
     return matchesSearch && matchesStatus;
   });
+  
+  const paginatedData = filteredData.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
+  
 
   const columns = [
     {
@@ -36,7 +49,7 @@ export default function BookingDataContainer({
       render: (text) => text || "N/A",
     },
     {
-      title:"Event",
+      title: "Event",
       dataIndex: "event_title",
       key: "event_title",
       render: (text) => text || "N/A",
@@ -44,7 +57,7 @@ export default function BookingDataContainer({
     {
       title: "Type of Performance",
       dataIndex: "performanceRole",
-      key : "performanceRole",
+      key: "performanceRole",
       render: (text) => text || "N/A",
     },
     {
@@ -70,7 +83,7 @@ export default function BookingDataContainer({
       title: "Status",
       dataIndex: "status",
       key: "status",
-      width:60,
+      width: 60,
       render: (status) => (
         <span
           className={`badge ${status === "confirmed"
@@ -90,15 +103,15 @@ export default function BookingDataContainer({
       width: 120,
       render: (_, record) => (
         <div className="d-flex">
-        <button type="button" className="btn btn-outline-success btn-sm me-2 rounded-3">
-          {/* <i className="fa-solid fa-check"></i> */}
-          Approve
-        </button>
-        <button type="button" className="btn btn-outline-danger btn-sm rounded-3">
-        {/* <i className="fa-solid fa-xmark"></i> */}
-        Reject
-      </button>
-      </div>
+          <button type="button" className="btn btn-outline-success btn-sm me-2 rounded-3">
+            {/* <i className="fa-solid fa-check"></i> */}
+            Approve
+          </button>
+          <button type="button" className="btn btn-outline-danger btn-sm rounded-3">
+            {/* <i className="fa-solid fa-xmark"></i> */}
+            Reject
+          </button>
+        </div>
       ),
     },
   ];
@@ -107,7 +120,7 @@ export default function BookingDataContainer({
     <Select
       value={statusFilter}
       onChange={handleStatusChange}
-      style={{ width: 100 }}
+      style={{ width: 120 }}
     >
       <Option value="all">Filter</Option>
       <Option value="pending">Pending</Option>
@@ -125,16 +138,22 @@ export default function BookingDataContainer({
       <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">BOOKINGS</p>
       <hr className="mt-0" />
       <CustomTable
-        data={filteredData}
+        data={paginatedData}
         columns={columns}
         loading={loading}
         search={search}
         onSearchChange={setSearch}
         filterComponent={filterComponent}
+        // pagination={{
+        //   current: 1,
+        //   pageSize: 10,
+        //   total: filteredData.length,
+        // }}
         pagination={{
-          current: 1,
-          pageSize: 10,
+          current: currentPage,
+          pageSize: pageSize,
           total: filteredData.length,
+          onChange: handlePageChange,
         }}
       />
     </div>

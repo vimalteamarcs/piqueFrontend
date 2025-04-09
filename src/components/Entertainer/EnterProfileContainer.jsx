@@ -12,7 +12,7 @@ export default function EnterProfileContainer({
   performanceRole,
   options,
   isEditing,
-  headshot,
+  headshotUrl,
   handleInputChange,
   handleCategoryChange,
   handleSubCategoryChange,
@@ -25,6 +25,7 @@ export default function EnterProfileContainer({
   handleAddService,
   setServiceInput,
   handleRemoveService,
+  formatDate
 }) {
   const imagePath = import.meta.env.VITE_LOGGEDIN_IMAGE_PATH;
   const token = localStorage.getItem("token");
@@ -57,7 +58,7 @@ export default function EnterProfileContainer({
       console.log(response.data);
       if (response.status === 201) {
         toast.success("Headshot uploaded successfully!");
-        setHeadshot(response.data.headshot);
+        setHeadshot(response.data.headshotUrl);
       }
     } catch (error) {
       console.error("Error uploading headshot:", error);
@@ -81,31 +82,23 @@ export default function EnterProfileContainer({
               </label>
               <Input
                 type="text"
-                name="name"
+                name="contactPerson"
                 className="form-control dash-font mb-3"
-                value={formData.name || ""}
-                placeholder="Enter Entertainer Name"
+                value={formData.contactPerson || ""}
+                placeholder="Enter Contact Person Name"
                 onChange={handleInputChange}
               />
-              {/* <label className="dash-font fw-semibold">Bio</label>
-              <textarea
-                className="form-control dash-font"
-                name="bio"
-                value={formData.bio || ""}
-                onChange={handleInputChange}
-                placeholder="Describe yourself"
-              /> */}
               <label className="dash-font fw-semibold">Contact Number</label>
               <Input
                 type="text"
-                name="phone1"
-                value={formData.phone1 || ""}
+                name="contactNumber"
+                value={formData.contactNumber || ""}
                 placeholder="Enter your contact number."
                 onChange={handleInputChange}
                 className="form-control dash-font"
               />
             </div>
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
               <div className="row">
                 <div className="col-md-8">
                   <label className="dash-font fw-semibold">
@@ -133,8 +126,8 @@ export default function EnterProfileContainer({
                 <div className="col-md-4">
                   <img
                     src={
-                      headshot
-                        ? headshot
+                      headshotUrl
+                        ? headshotUrl
                         : `${imagePath}magician-showing-trick.png`
                     }
                     style={{ height: "130px", width: "125px" }}
@@ -143,7 +136,63 @@ export default function EnterProfileContainer({
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
+
+<div className="col-md-6">
+  <div className="row">
+    <div className="col-md-8">
+      <label className="dash-font fw-semibold">
+        Profile Headshot*
+      </label>
+      <p className="icon-font mb-0">Guidelines:</p>
+      <ol className="dash-navbar-font text-start mb-1">
+        <li>Choose an image where your face is recognizable.</li>
+        <li>Your profile photo should not contain text, logos, or contact information.</li>
+        <li>Should be in .jpg or .png format. (max file size 10mb)</li>
+      </ol>
+      <button
+        type="button"
+        className="btn enter-btn icon-font text-white rounded-3"
+        onClick={() => document.getElementById("headshotInput").click()}
+      >
+        Upload
+      </button>
+
+      {/* Hidden input for file upload */}
+      <input
+        type="file"
+        id="headshotInput"
+        accept="image/jpeg, image/png"
+        style={{ display: "none" }}
+        onChange={(e) => {
+          const file = e.target.files[0];
+          if (file) {
+            setHeadshot(file); // store file
+            const previewUrl = URL.createObjectURL(file);
+            setFormData((prev) => ({
+              ...prev,
+              headshotUrl: previewUrl, // for preview
+            }));
+          }
+        }}
+      />
+    </div>
+    <div className="col-md-4">
+      <img
+        src={
+          formData.headshotUrl
+            ? formData.headshotUrl
+            : `${imagePath}magician-showing-trick.png`
+        }
+        style={{ height: "130px", width: "125px", objectFit: "cover" }}
+        className="rounded-4"
+        alt="Profile Headshot"
+      />
+    </div>
+  </div>
+</div>
+
+
           </div>
           <div className="row mb-3">
             <div className="col-md-6">
@@ -162,7 +211,7 @@ export default function EnterProfileContainer({
               <Input
                 type="date"
                 name="dob"
-                value={formData.dob || ""}
+                value={formData.dob ? formatDate(formData.dob) : ""}
                 // placeholder="Enter another contact number."
                 onChange={handleInputChange}
                 className="form-control dash-font"
@@ -225,21 +274,15 @@ export default function EnterProfileContainer({
 
           <div className="row mb-3">
             <div className="col-md-6 dash-font">
-              {/* <label className="dash-font fw-semibold">Availability</label>
-              <RadioButton
-                name="availability"
-                options={options}
-                value={formData.availability || ""}
-                onChange={(e) => handleInputChange(e)} // just pass the event
-              /> */}
-              <label className="dash-font fw-semibold">Bio</label>
-              <textarea
-                className="form-control dash-font"
-                name="bio"
-                value={formData.bio || ""}
-                onChange={handleInputChange}
-                placeholder="Describe yourself"
-                rows="1"
+
+              <label className="dash-font fw-semibold">Email</label>
+              <Input
+              type="email"
+              name="email"
+              className="form-control dash-font"
+              value={formData.email || ""}
+              placeholder="Enter your mail"
+              onChange={handleInputChange}
               />
             </div>
             <div className="col-md-6 dash-font">
@@ -252,6 +295,21 @@ export default function EnterProfileContainer({
                 onChange={(e) => handleInputChange(e)} // just pass the event
               />
             </div>
+          </div>
+
+          <div className="row mb-3">
+            <div className="col-md-12">
+            <label className="dash-font fw-semibold">Bio</label>
+              <textarea
+                className="form-control dash-font"
+                name="bio"
+                value={formData.bio || ""}
+                onChange={handleInputChange}
+                placeholder="Describe yourself"
+                rows="1"
+              />
+            </div>
+
           </div>
 
           <div className="row mb-3">
@@ -292,21 +350,12 @@ export default function EnterProfileContainer({
               />
             </div>
             <div className="col-md-6 dash-font">
-              {/* <label className="dash-font fw-semibold">Social Links</label>
-              <Input
-                type="text"
-                name="socialLinks"
-                className="form-control dash-font"
-                value={formData.socialLinks || ""}
-                placeholder="Enter your social links"
-                onChange={handleInputChange}
-              /> */}
               <label className="dash-font fw-semibold">Address Line</label>
               <Input
                 type="text"
-                name="addressLine"
+                name="address"
                 className="form-control dash-font"
-                value={formData.addressLine}
+                value={formData.address}
                 placeholder="Enter your address line"
                 onChange={handleInputChange}
               />
@@ -345,7 +394,7 @@ export default function EnterProfileContainer({
               <input
                 type="text"
                 className="form-control dash-font"
-                placeholder="Enter a service"
+                placeholder="Enter services you provide"
                 value={serviceInput}
                 onChange={(e) => setServiceInput(e.target.value)}
                 onKeyPress={(e) => {
