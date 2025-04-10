@@ -16,7 +16,7 @@ export default function BookingDataContainer({
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
-  
+
 
   const handleStatusChange = (value) => {
     setStatusFilter(value);
@@ -28,12 +28,12 @@ export default function BookingDataContainer({
       statusFilter === "all" || item.status?.toLowerCase() === statusFilter;
     return matchesSearch && matchesStatus;
   });
-  
+
   const paginatedData = filteredData.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
-  
+
 
   const columns = [
     {
@@ -102,15 +102,15 @@ export default function BookingDataContainer({
       key: "action",
       width: 120,
       render: (_, record) => (
-        <div className="d-flex">
-          <button type="button" className="btn btn-outline-success btn-sm me-2 rounded-3">
+        <div className="d-flex gap-2">
+          <span type="button" className="badge rounded-pill text-bg-success">
             {/* <i className="fa-solid fa-check"></i> */}
             Approve
-          </button>
-          <button type="button" className="btn btn-outline-danger btn-sm rounded-3">
+          </span>
+          <span type="button" className="badge rounded-pill text-bg-danger">
             {/* <i className="fa-solid fa-xmark"></i> */}
             Reject
-          </button>
+          </span>
         </div>
       ),
     },
