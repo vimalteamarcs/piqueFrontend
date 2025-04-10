@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import moment from "moment";
 import CustomTable from "../CustomTable";
 import { Select } from "antd";
+import { ToastContainer } from "react-toastify";
 const { Option } = Select;
 export default function BookingDataContainer({
   bookingRequests,
   loading,
   formatTime,
+  handleBookingResponse
 }) {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -84,36 +86,59 @@ export default function BookingDataContainer({
       dataIndex: "status",
       key: "status",
       width: 60,
-      render: (status) => (
-        <span
-          className={`badge ${status === "confirmed"
-            ? "badge-confirmed"
-            : status === "pending"
-              ? "badge-pending"
-              : "badge-declined"
-            }`}
-        >
-          {status || "N/A"}
-        </span>
-      ),
+      render: (status) => {
+        let badgeClass = "";
+    
+        switch (status) {
+          case "confirmed":
+            badgeClass = "badge-confirmed"; 
+            break;
+          case "pending":
+            badgeClass = "badge-pending";
+            break;
+          case "rejected":
+            badgeClass = "badge-declined";
+            break;
+          case "accepted":
+            badgeClass = "bg-success text-white"; 
+            break;
+          default:
+            badgeClass = "bg-secondary text-white";
+        }
+    
+        return (
+          <span className={`badge ${badgeClass}`}>
+            {status || "N/A"}
+          </span>
+        );
+      },
     },
-    {
-      title: "Action",
-      key: "action",
-      width: 120,
-      render: (_, record) => (
-        <div className="d-flex">
-          <button type="button" className="btn btn-outline-success btn-sm me-2 rounded-3">
-            {/* <i className="fa-solid fa-check"></i> */}
-            Approve
-          </button>
-          <button type="button" className="btn btn-outline-danger btn-sm rounded-3">
-            {/* <i className="fa-solid fa-xmark"></i> */}
-            Reject
-          </button>
-        </div>
-      ),
-    },
+    
+    
+      {
+        title: "Action",
+        key: "action",
+        width: 120,
+        render: (_, record) => (
+          <div className="d-flex">
+            <button
+              type="button"
+              className="btn btn-outline-success btn-sm me-2 rounded-3"
+              onClick={() => handleBookingResponse(record.id, "accepted")}
+            >
+              Approve
+            </button>
+            <button
+              type="button"
+              className="btn btn-outline-danger btn-sm rounded-3"
+              onClick={() => handleBookingResponse(record.id, "rejected")}
+            >
+              Reject
+            </button>
+          </div>
+        ),
+      }
+      
   ];
 
   const filterComponent = (
@@ -125,16 +150,14 @@ export default function BookingDataContainer({
       <Option value="all">Filter</Option>
       <Option value="pending">Pending</Option>
       <Option value="confirmed">Confirmed</Option>
-      <Option value="declined">Declined</Option>
+      <Option value="rejected">Rejected</Option>
+      <Option value="accepted">Accepted</Option>
     </Select>
   );
 
-  // const filteredData = bookingRequests.filter((item) =>
-  //   item.name?.toLowerCase().includes(search.toLowerCase())
-  // );
-
   return (
     <div className="entertainer-profile-container">
+      <ToastContainer position="top-right" autoClose={3000} />
       <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">BOOKINGS</p>
       <hr className="mt-0" />
       <CustomTable
@@ -144,11 +167,6 @@ export default function BookingDataContainer({
         search={search}
         onSearchChange={setSearch}
         filterComponent={filterComponent}
-        // pagination={{
-        //   current: 1,
-        //   pageSize: 10,
-        //   total: filteredData.length,
-        // }}
         pagination={{
           current: currentPage,
           pageSize: pageSize,

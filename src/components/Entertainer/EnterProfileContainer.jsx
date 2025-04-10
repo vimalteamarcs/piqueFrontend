@@ -17,6 +17,7 @@ export default function EnterProfileContainer({
   handleCategoryChange,
   handleSubCategoryChange,
   handleSubmit,
+  headshot,
   setHeadshot,
   countries,
   states,
@@ -25,46 +26,15 @@ export default function EnterProfileContainer({
   handleAddService,
   setServiceInput,
   handleRemoveService,
-  formatDate
+  formatDate,
+  setFormData
 }) {
   const imagePath = import.meta.env.VITE_LOGGEDIN_IMAGE_PATH;
-  const token = localStorage.getItem("token");
-  const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleHeadshotChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setSelectedFile(file);
-    }
-  };
 
-  const uploadHeadshot = async () => {
-    if (!selectedFile) {
-      toast.error("Please select a headshot to upload.");
-      return;
-    }
 
-    const formData = new FormData();
-    formData.append("headshot", selectedFile);
 
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}media/uploads`,
-        formData,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      console.log(response.data);
-      if (response.status === 201) {
-        toast.success("Headshot uploaded successfully!");
-        setHeadshot(response.data.headshotUrl);
-      }
-    } catch (error) {
-      console.error("Error uploading headshot:", error);
-      toast.error("Failed to upload headshot.");
-    }
-  };
+
   return (
     <>
       <div className="entertainer-profile-container">
@@ -138,59 +108,64 @@ export default function EnterProfileContainer({
               </div>
             </div> */}
 
-<div className="col-md-6">
-  <div className="row">
-    <div className="col-md-8">
-      <label className="dash-font fw-semibold">
-        Profile Headshot*
-      </label>
-      <p className="icon-font mb-0">Guidelines:</p>
-      <ol className="dash-navbar-font text-start mb-1">
-        <li>Choose an image where your face is recognizable.</li>
-        <li>Your profile photo should not contain text, logos, or contact information.</li>
-        <li>Should be in .jpg or .png format. (max file size 10mb)</li>
-      </ol>
-      <button
-        type="button"
-        className="btn enter-btn icon-font text-white rounded-3"
-        onClick={() => document.getElementById("headshotInput").click()}
-      >
-        Upload
-      </button>
+            <div className="col-md-6">
+              <div className="row">
+                <div className="col-md-8">
+                  <label className="dash-font fw-semibold">
+                    Profile Headshot*
+                  </label>
+                  <p className="icon-font mb-0">Guidelines:</p>
+                  <ol className="dash-navbar-font text-start mb-1">
+                    <li>Choose an image where your face is recognizable.</li>
+                    <li>Your profile photo should not contain text, logos, or contact information.</li>
+                    <li>Should be in .jpg or .png format. (max file size 10mb)</li>
+                  </ol>
+                  <button
+                    type="button"
+                    className="btn enter-btn icon-font text-white rounded-3"
+                    onClick={() => document.getElementById("headshotInput").click()}
+                  >
+                    Upload
+                  </button>
 
-      {/* Hidden input for file upload */}
-      <input
-        type="file"
-        id="headshotInput"
-        accept="image/jpeg, image/png"
-        style={{ display: "none" }}
-        onChange={(e) => {
-          const file = e.target.files[0];
-          if (file) {
-            setHeadshot(file); // store file
-            const previewUrl = URL.createObjectURL(file);
-            setFormData((prev) => ({
-              ...prev,
-              headshotUrl: previewUrl, // for preview
-            }));
-          }
-        }}
-      />
-    </div>
-    <div className="col-md-4">
-      <img
-        src={
-          formData.headshotUrl
-            ? formData.headshotUrl
-            : `${imagePath}magician-showing-trick.png`
-        }
-        style={{ height: "130px", width: "125px", objectFit: "cover" }}
-        className="rounded-4"
-        alt="Profile Headshot"
-      />
-    </div>
-  </div>
-</div>
+                  {/* Hidden input for file upload */}
+                  <input
+                    type="file"
+                    id="headshotInput"
+                    accept="image/jpeg, image/png"
+                    style={{ display: "none" }}
+                    onChange={(e) => {
+                      const file = e.target.files[0];
+                      if (file) {
+                        setHeadshot(file); // store file
+                        const previewUrl = URL.createObjectURL(file);
+                        setFormData((prev) => ({
+                          ...prev,
+                          headshotUrl: previewUrl, // temporary preview
+                        }));
+                      }
+                    }}
+                  />
+                </div>
+
+                {/* Image Preview */}
+                <div className="col-md-4">
+                  <img
+                    src={
+                      headshot && typeof headshot !== "string"
+                        ? URL.createObjectURL(headshot)
+                        : formData.headshot
+                          ? `${formData.headshot}`
+                          : `${imagePath}magician-showing-trick.png`
+                    }
+                    style={{ height: "130px", width: "125px", objectFit: "cover" }}
+                    className="rounded-4"
+                    alt="Profile Headshot"
+                  />
+                </div>
+              </div>
+            </div>
+
 
 
           </div>
@@ -277,12 +252,12 @@ export default function EnterProfileContainer({
 
               <label className="dash-font fw-semibold">Email</label>
               <Input
-              type="email"
-              name="email"
-              className="form-control dash-font"
-              value={formData.email || ""}
-              placeholder="Enter your mail"
-              onChange={handleInputChange}
+                type="email"
+                name="email"
+                className="form-control dash-font"
+                value={formData.email || ""}
+                placeholder="Enter your mail"
+                onChange={handleInputChange}
               />
             </div>
             <div className="col-md-6 dash-font">
@@ -299,7 +274,7 @@ export default function EnterProfileContainer({
 
           <div className="row mb-3">
             <div className="col-md-12">
-            <label className="dash-font fw-semibold">Bio</label>
+              <label className="dash-font fw-semibold">Bio</label>
               <textarea
                 className="form-control dash-font"
                 name="bio"

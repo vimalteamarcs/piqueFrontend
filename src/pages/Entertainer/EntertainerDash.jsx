@@ -333,7 +333,7 @@ export default function EntertainerDash() {
               </div>
 
               <div className="upcoming-events scrollable-container">
-                {bookings.slice(0, 4).map((booking, index) => (
+                {bookings.map((booking, index) => (
                   <div
                     key={booking.id}
                     className="row p-2 gx-5 bg-light rounded-3 mb-3 shadow-sm"

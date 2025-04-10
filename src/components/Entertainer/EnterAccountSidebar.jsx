@@ -144,7 +144,7 @@ export default function EnterAccountSidebar() {
             { to: "/entertainer/invoice", icon: "fa-clipboard", label: "INVOICES & PAYMENTS" },
             { to: "/entertainer/notifications", icon: "fa-bell", label: "NOTIFICATIONS" },
             { to: "/entertainer/reviews", icon: "fa-star", label: "RATINGS & REVIEWS" },
-            { to: "/gallery", icon: "fa-image", label: "GALLERY" },
+            { to: "/entertainer/gallery", icon: "fa-image", label: "GALLERY" },
             { to: "/entertainer/profile", icon: "fa-user", label: "PROFILE" }
           ].map((item, idx) => (
             <NavLink

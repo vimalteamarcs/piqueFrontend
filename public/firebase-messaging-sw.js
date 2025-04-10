@@ -14,17 +14,32 @@ firebase.initializeApp({
 });
 
 // Retrieve Firebase Messaging instance
+// const messaging = firebase.messaging();
+
+// // Handle background messages
+// messaging.onBackgroundMessage(function (payload) {
+//     console.log('[firebase-messaging-sw.js] Received background message ', payload);
+
+//     const notificationTitle = payload.notification?.title || 'Notification';
+//     const notificationOptions = {
+//         body: payload.notification?.body || '',
+//         icon: '/firebase-logo.png', // optional icon path
+//     };
+
+//     self.registration.showNotification(notificationTitle, notificationOptions);
+// });
+
 const messaging = firebase.messaging();
-
-// Handle background messages
+ 
 messaging.onBackgroundMessage(function (payload) {
-    console.log('[firebase-messaging-sw.js] Received background message ', payload);
-
-    const notificationTitle = payload.notification?.title || 'Notification';
-    const notificationOptions = {
-        body: payload.notification?.body || '',
-        icon: '/firebase-logo.png', // optional icon path
-    };
-
-    self.registration.showNotification(notificationTitle, notificationOptions);
+  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+ 
+  // fallback to data if notification is not provided
+  const notificationTitle = payload.notification?.title || payload.data?.title || 'Default Title';
+  const notificationOptions = {
+    body: payload.notification?.body || payload.data?.body || 'Default Body',
+    icon: '/icon.png', // Optional
+  };
+ 
+  self.registration.showNotification(notificationTitle, notificationOptions);
 });

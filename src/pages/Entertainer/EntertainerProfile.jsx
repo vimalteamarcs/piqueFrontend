@@ -29,7 +29,7 @@ export default function Profile() {
     userId: userId,
     image: [],
     video: [],
-    headshotUrl: "",
+    headshot: "",
     country: 0,
     state: 0,
     city: 0,
@@ -49,14 +49,7 @@ export default function Profile() {
   const [uploading, setUploading] = useState(false);
   const [serviceInput, setServiceInput] = useState("");
   const [headshot, setHeadshot] = useState(null);
-
-const handleHeadshotChange = (e) => {
-  const file = e.target.files[0];
-  if (file) {
-    setHeadshot(file);
-  }
-};
-
+  const [headshotPreview, setHeadshotPreview] = useState("");
 
 
   const performanceRole = [
@@ -69,6 +62,17 @@ const handleHeadshotChange = (e) => {
     { value: "yes", label: "Vaccinated" },
     { value: "no", label: "Non-Vaccinated" },
   ];
+
+  useEffect(() => {
+    const hasFilledField = Object.values(formData).some(
+      (val) => val !== "" && val !== null && val !== undefined && !(Array.isArray(val) && val.length === 0)
+    );
+    setIsEditing(hasFilledField);
+  }, [formData]);
+  
+
+
+  
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -134,17 +138,80 @@ const handleHeadshotChange = (e) => {
       }
     };
 
+    // const fetchEntertainer = async () => {
+    //   try {
+    //     const response = await axios.get(
+    //       `${import.meta.env.VITE_API_URL}entertainers`,
+    //       { headers: { Authorization: `Bearer ${token}` } }
+    //     );
+    
+    //     console.log("entertainer profile", response.data);
+    //     const entertainer = response.data?.data; // updated: response.data.data, not entertainers[0]
+    
+    //     if (entertainer) {
+    //       localStorage.setItem("entertainerId", entertainer.uid);
+    
+    //       setFormData({
+    //         contactPerson: entertainer.contactPerson || "",
+    //         stageName: entertainer.stageName || "",
+    //         bio: entertainer.bio || "",
+    //         contactNumber: entertainer.contactNumber || "",
+    //         category: entertainer.category || "",
+    //         specific_category:entertainer.specific_category || "",
+    //         vaccinated: entertainer.vaccinated || "",
+    //         performanceRole: entertainer.performanceRole || "",
+    //         pricePerEvent: entertainer.pricePerEvent || "",
+    //         services: entertainer.services || [],
+    //         country: entertainer.country || 0,
+    //         state: entertainer.state || 0,
+    //         city: entertainer.city || 0,
+    //         socialLinks: entertainer.socialLinks || "",
+    //         address: entertainer.address || "",
+    //         dob: entertainer.dob || "",
+    //         email : entertainer.email || "",
+    //         zipCode: entertainer.zipCode || "",
+    //         headshot: entertainer.headshot || ""
+    //       });
+    
+    //       setHeadshotPreview(entertainer.headshot || "");
+    //       setIsEditing(true);
+
+    //       if (entertainer.country) fetchStates(entertainer.country);
+    //       if (entertainer.state) fetchCities(entertainer.state);
+    
+    //       if (entertainer.category) {
+    //         fetchSubcategories(entertainer.category);
+    //       }
+          
+    //     } else{
+    //       setIsEditing(false)
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching entertainer:", error);
+    //     toast.error("Failed to fetch entertainer data.");
+    //     setIsEditing(false)
+    //   }
+    // };
+
     const fetchEntertainer = async () => {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_API_URL}entertainers`,
-          { headers: { Authorization: `Bearer ${token}` } }
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
     
-        console.log("entertainer profile", response.data);
-        const entertainer = response.data?.data; // updated: response.data.data, not entertainers[0]
+        const entertainer = response.data?.data;
     
-        if (entertainer) {
+        // Check if entertainer object is not empty and has valid data
+        const hasValidData =
+          entertainer &&
+          (entertainer.uid || entertainer.email || entertainer.stageName);
+    
+        if (hasValidData) {
           localStorage.setItem("entertainerId", entertainer.uid);
     
           setFormData({
@@ -153,38 +220,42 @@ const handleHeadshotChange = (e) => {
             bio: entertainer.bio || "",
             contactNumber: entertainer.contactNumber || "",
             category: entertainer.category || "",
-            specific_category:entertainer.specific_category || "",
+            specific_category: entertainer.specific_category || "",
             vaccinated: entertainer.vaccinated || "",
             performanceRole: entertainer.performanceRole || "",
             pricePerEvent: entertainer.pricePerEvent || "",
-            services: entertainer.services || [],
+            services: Array.isArray(entertainer.services)
+  ? entertainer.services
+  : JSON.parse(entertainer.services || "[]"),
+
             country: entertainer.country || 0,
             state: entertainer.state || 0,
             city: entertainer.city || 0,
             socialLinks: entertainer.socialLinks || "",
             address: entertainer.address || "",
             dob: entertainer.dob || "",
-            email : entertainer.email || "",
+            email: entertainer.email || "",
             zipCode: entertainer.zipCode || "",
-            headshotUrl: entertainer.headshotUrl || ""
+            headshot: entertainer.headshot || "",
           });
     
-          setHeadshot(entertainer.headshotUrl || "");
-          setIsEditing(true);
-
+          setHeadshotPreview(entertainer.headshot || "");
+          setIsEditing(true); // ✅ Only set editing if data is real
+    
           if (entertainer.country) fetchStates(entertainer.country);
           if (entertainer.state) fetchCities(entertainer.state);
-    
-          if (entertainer.category) {
-            fetchSubcategories(entertainer.category);
-          }
-          
+          if (entertainer.category) fetchSubcategories(entertainer.category);
+        } else {
+          // New user: no data returned
+          setIsEditing(false);
+          localStorage.removeItem("entertainerId");
         }
       } catch (error) {
         console.error("Error fetching entertainer:", error);
-        toast.error("Failed to fetch entertainer data.");
+        setIsEditing(false); // Treat error as no entertainer profile
       }
     };
+    
 
     fetchCategories();
     fetchEntertainer();
@@ -238,6 +309,8 @@ const handleHeadshotChange = (e) => {
     }
   };
   
+
+
 
   const handleCategoryChange = async (selectedValue) => {
 
@@ -326,20 +399,29 @@ const handleHeadshotChange = (e) => {
     fetchMedia();
   }, []);
 
-  const handleFileChange = (e, type) => {
-    const files = Array.from(e.target.files);
+  // const handleFileChange = (e, type) => {
+  //   const files = Array.from(e.target.files);
 
-    if (type === "headshot") {
-      const file = e.target.files[0];
-      const fileUrl = URL.createObjectURL(file);
+  //   if (type === "headshot") {
+  //     const file = e.target.files[0];
+  //     const fileUrl = URL.createObjectURL(file);
+  //     setHeadshot(file);
+  //     setFormData((prev) => ({ ...prev, headshot: fileUrl }));
+  //   }
+
+  //   if (type === "image") {
+  //     setImage((prev) => [...prev, ...files]);
+  //   } else if (type === "video") {
+  //     setVideo((prev) => [...prev, ...files]);
+  //   }
+  // };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
       setHeadshot(file);
-      setFormData((prev) => ({ ...prev, headshot: fileUrl }));
-    }
-
-    if (type === "image") {
-      setImage((prev) => [...prev, ...files]);
-    } else if (type === "video") {
-      setVideo((prev) => [...prev, ...files]);
+      const previewUrl = URL.createObjectURL(file);
+      setHeadshotPreview(previewUrl);
     }
   };
 
@@ -537,76 +619,85 @@ const handleHeadshotChange = (e) => {
     }
   };
  
+  const handleHeadshotChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setHeadshot(file); // actual file
+      setHeadshotPreview(URL.createObjectURL(file)); // for display
+    }
+  };
+
+
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
-  //   // console.log("data", formData);
-
-  //   const userData = {};
-  //   const entertainerData = {
-  //     contactPerson: formData.contactPerson,
-  //     category: Number(formData.category) || null,
-  //     specific_category: Number(formData.specific_category) || null,
-  //     bio: formData.bio,
-  //     contactNumber: formData.contactNumber,
-  //     performanceRole: formData.performanceRole,
-  //     vaccinated: formData.vaccinated,
-  //     pricePerEvent: Number(formData.pricePerEvent) || null,
-  //     socialLinks: formData.socialLinks,
-  //     country: Number(formData.country),
-  //     state: Number(formData.state),
-  //     city: Number(formData.city),
-  //     address: formData.address,
-  //     dob: formData.dob,
-  //     email: formData.email,
-  //     services: formData.services,
-  //     stageName: formData.stageName,
-  //     zipCode: formData.zipCode,
-  //     status: localStorage.getItem("status"),
-  //     headshotUrl: formData.headshotUrl
-  //   };
-  //   console.log("entertainerdata",entertainerData)
-
+  
   //   const entertainerId = localStorage.getItem("entertainerId");
-  //   console.log(entertainerId);
-  //   if (isEditing && !entertainerId) {
-  //     toast.error("Entertainer ID is missing.");
-  //     return;
+  //   const form = new FormData();
+  
+  //   form.append("contactPerson", formData.contactPerson);
+  //   form.append("category", Number(formData.category) || "");
+  //   form.append("specific_category", Number(formData.specific_category) || "");
+  //   form.append("bio", formData.bio);
+  //   form.append("contactNumber", formData.contactNumber);
+  //   form.append("performanceRole", formData.performanceRole);
+  //   form.append("vaccinated", formData.vaccinated);
+  //   form.append("pricePerEvent", Number(formData.pricePerEvent) || "");
+  //   form.append("socialLinks", formData.socialLinks);
+  //   form.append("country", formData.country);
+  //   form.append("state", formData.state);
+  //   form.append("city", formData.city);
+  //   form.append("address", formData.address);
+  //   form.append("dob", formData.dob);
+  //   form.append("email", formData.email);
+  //   form.append("services", JSON.stringify(formData.services));
+  //   form.append("stageName", formData.stageName);
+  //   form.append("zipCode", formData.zipCode);
+  //   form.append("status", localStorage.getItem("status"));
+  
+  //   // Add image file
+  //   if (headshot) {
+  //     form.append("headshot", headshot);
   //   }
-
+  
   //   try {
+  //     let response;
+  
   //     if (isEditing) {
-  //       console.log("Updating entertainer with ID:", entertainerId);
-  //       const updateResponse = await axios.patch(
-  //         `${import.meta.env.VITE_API_URL}entertainers/${entertainerId}`,
-  //         entertainerData,
-  //         {
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
-
-  //       console.log("Update response:", updateResponse);
-  //       if (updateResponse.status === 200) {
-  //         toast.success("Entertainer updated successfully!", {position:"top-right"});
-  //       } else {
-  //         toast.error("Failed to update entertainer.", {position:"top-right"});
-  //       }
-  //     } else {
-  //       console.log("Creating new entertainer profile");
-  //       const response = await axios.post(
+  //       response = await axios.patch(
   //         `${import.meta.env.VITE_API_URL}entertainers`,
-  //         entertainerData,
+  //         form,
   //         {
   //           headers: {
   //             Authorization: `Bearer ${token}`,
+  //             "Content-Type": "multipart/form-data",
   //           },
   //         }
   //       );
-  //       console.log(response);
-  //       if (response.status === 201 ) {
-  //         toast.success("Entertainer profile created successfully!");
+  //     } else {
+  //       response = await axios.post(
+  //         `${import.meta.env.VITE_API_URL}entertainers`,
+  //         form,
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //             "Content-Type": "multipart/form-data",
+  //           },
+  //         }
+  //       );
+  //     }
+  //    console.log(response.data)
+  //     if (response.status === 200 || response.status === 201) {
+  //       toast.success("Entertainer profile saved successfully!");
+  
+  //       // ✅ This is your required format
+  //       if (response.data?.data?.headshotUrl) {
+  //         const imageUrl = response.data.data.headshotUrl;
+  //         setFormData((prev) => ({
+  //           ...prev,
+  //           headshot: imageUrl,
+  //         }));
+  //         setHeadshot(null); // Clear file
+  //         console.log("✅ headshot saved:", imageUrl);
   //       }
   //     }
   //   } catch (error) {
@@ -614,13 +705,13 @@ const handleHeadshotChange = (e) => {
   //     toast.error("Failed to submit the form.");
   //   }
   // };
-
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
     const entertainerId = localStorage.getItem("entertainerId");
-  
     const form = new FormData();
+  
     form.append("contactPerson", formData.contactPerson);
     form.append("category", Number(formData.category) || "");
     form.append("specific_category", Number(formData.specific_category) || "");
@@ -639,18 +730,20 @@ const handleHeadshotChange = (e) => {
     form.append("services", JSON.stringify(formData.services));
     form.append("stageName", formData.stageName);
     form.append("zipCode", formData.zipCode);
+    form.append("name","abcd");
     form.append("status", localStorage.getItem("status"));
   
-    // Append image file only if selected
     if (headshot) {
-      form.append("headshot", headshot);
+      form.append("headshot", headshot); // should be File object
     }
   
     try {
       let response;
-      if (isEditing) {
+  
+      if (isEditing && entertainerId) {
+        // ✅ PATCH if editing and ID is available
         response = await axios.patch(
-          `${import.meta.env.VITE_API_URL}entertainers/${entertainerId}`,
+          `${import.meta.env.VITE_API_URL}entertainers`,
           form,
           {
             headers: {
@@ -660,6 +753,7 @@ const handleHeadshotChange = (e) => {
           }
         );
       } else {
+        // ✅ POST for new profile
         response = await axios.post(
           `${import.meta.env.VITE_API_URL}entertainers`,
           form,
@@ -675,13 +769,20 @@ const handleHeadshotChange = (e) => {
       if (response.status === 200 || response.status === 201) {
         toast.success("Entertainer profile saved successfully!");
   
-        // 🆕 Update UI with backend image URL (in case it's different from preview)
         if (response.data?.data?.headshotUrl) {
+          const imageUrl = response.data.data.headshotUrl;
           setFormData((prev) => ({
             ...prev,
-            headshotUrl: response.data.data.headshotUrl,
+            headshot: imageUrl,
           }));
-          setHeadshot(null); // reset local file
+          setHeadshot(null);
+          console.log("✅ headshot saved:", imageUrl);
+        }
+  
+        // If profile is created now, store the ID and update edit mode
+        if (!isEditing && response.data?.data?.uid) {
+          localStorage.setItem("entertainerId", response.data.data.uid);
+          setIsEditing(true);
         }
       }
     } catch (error) {
@@ -727,42 +828,10 @@ const handleHeadshotChange = (e) => {
                 handleFileChange={handleFileChange}
                 handleRemoveService={handleRemoveService}
                 formatDate={formatDate}
+                setFormData={setFormData}
                 handleSubmit={handleSubmit}/>
         </div>
-        {/* <div className="container-fluid d-flex flex-column min-vh-100 mt-5">
-          <Toaster position="top-center" reverseOrder={false} />
-          <div className="container mt-5">
-            <div className="row justify-content-center mb-4 mt-3">
-              <MediaUpload
-                handleFileChange={handleFileChange}
-                handleDeleteHeadshot={handleDeleteHeadshot}
-                handleDeleteImage={handleDeleteImage}
-                handleDeleteVideo={handleDeleteVideo}
-                headshot={headshot}
-                image={image}
-                video={video}
-                fetchMedia={fetchMedia}
-                mediaProp={media}
-                mediaUpload={mediaUpload}
-                onMediaUpdate={(updatedMedia) => setMedia(updatedMedia)}
-              />
-
-              <EntertainerDetailsForm
-                formData={formData}
-                errors={errors}
-                categories={categories}
-                subcategories={subcategories}
-                performanceRole={performanceRole}
-                options={options}
-                isEditing={isEditing}
-                handleInputChange={handleInputChange}
-                handleCategoryChange={handleCategoryChange}
-                handleSubCategoryChange={handleSubCategoryChange}
-                handleSubmit={handleSubmit}
-              />
-            </div>
-          </div>
-        </div> */}
+      
       </DashLayoutEnter>
     </>
   );
