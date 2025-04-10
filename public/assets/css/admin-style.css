@@ -24,6 +24,7 @@ body {
 .form-control, .form-select, textarea.form-control {font-size: .8rem !important;padding: .4rem .5rem !important;border: 1px solid #cfcfcf;min-height: 40px;}
 .form-control.is-invalid, .form-select.is-invalid, textarea.form-control.is-invalid {background-image: none;}
 .formLightHeading {font-size: .7rem;font-weight: 400;color: #9C9C9C;margin-bottom: .8rem;letter-spacing: .5px;    text-transform: uppercase;}
+.cursor {cursor: pointer;}
 .cursor-pointer {cursor: pointer;color: #008ab4;}
 
 /* Default date - time input icon */
@@ -465,12 +466,12 @@ table.dataTable thead th, table.dataTable tfoot th {font-weight: 600;} */
 .custom-drop-menu {
   background-color: white !important;
   border-radius: 10px !important;
-  border: none !important;
+  border: 1px solid #f1f1f1 !important;
   padding: 4px !important;
 }
 
 .custom-drop-item {
-  padding: 12px !important;
+  padding: 5px 10px !important;
   font-size: 12px !important;
 }
 

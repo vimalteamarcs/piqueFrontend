@@ -76,7 +76,7 @@ export default function EnterDashNavbar() {
                   </p>
                 </ul> */}
               <div className="row navbar-nav mx-auto mb-2 mb-lg-0 gx-5">
-                <div className="col-md-4 text-center mt-1">
+                <div className="col-md-6 text-center mt-1">
                   <NavLink
                     to="/entertainer"
                     className={({ isActive }) =>
@@ -87,7 +87,7 @@ export default function EnterDashNavbar() {
                     <p className="dash-navbar-font mt-1">Dashboard</p>
                   </NavLink>
                 </div>
-                <div className="col-md-4 text-center mt-1">
+                <div className="col-md-6 text-center mt-1">
                   <NavLink
                     to="/entertainer/calendar"
                     className={({ isActive }) =>
@@ -98,7 +98,7 @@ export default function EnterDashNavbar() {
                     <p className="dash-navbar-font mt-1">Calendar</p>
                   </NavLink>
                 </div>
-                <div className="col-md-4 text-center mt-1">
+                {/* <div className="col-md-4 text-center mt-1">
                   <NavLink
                     to="/entertainer/messages"
                     className={({ isActive }) =>
@@ -108,13 +108,13 @@ export default function EnterDashNavbar() {
                     <img src={`${imagePath}Icon feather-message-square.svg`} height="19px" alt="Messages" className="" />
                     <p className="dash-navbar-font mt-1">Messages</p>
                   </NavLink>
-                </div>
+                </div> */}
               </div>
 
 
               <div className="d-flex align-items-center">
                 <p className="profile-font mt-1 fw-medium">Manage Bookings</p>
-                <NavLink className="nav-btn ms-2" to="/entertainer">
+                <NavLink className="nav-btn ms-2" to="/entertainer/bookingrequest">
                   <img src={`${imagePath}userIcon.svg`} />
                 </NavLink>
 

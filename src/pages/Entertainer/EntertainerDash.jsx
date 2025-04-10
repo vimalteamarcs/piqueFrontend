@@ -159,8 +159,8 @@ export default function EntertainerDash() {
                         {dashboardData?.revenue?.revenueTrend !== "same" && (
                           <i
                             className={`fa-solid fa-arrow-${dashboardData.revenue.revenueTrend === "increase"
-                                ? "up"
-                                : "down"
+                              ? "up"
+                              : "down"
                               }`}
                           ></i>
                         )}{" "}
@@ -188,9 +188,9 @@ export default function EntertainerDash() {
                           "same" && (
                             <i
                               className={`fa-solid fa-arrow-${dashboardData.bookings.total.bookingTrend ===
-                                  "increase"
-                                  ? "up"
-                                  : "down"
+                                "increase"
+                                ? "up"
+                                : "down"
                                 }`}
                             ></i>
                           )}{" "}
@@ -220,9 +220,9 @@ export default function EntertainerDash() {
                           "same" && (
                             <i
                               className={`fa-solid fa-arrow-${dashboardData.bookings.pending.bookingTrend ===
-                                  "increase"
-                                  ? "up"
-                                  : "down"
+                                "increase"
+                                ? "up"
+                                : "down"
                                 }`}
                             ></i>
                           )}{" "}
@@ -258,9 +258,9 @@ export default function EntertainerDash() {
                           "same" && (
                             <i
                               className={`fa-solid fa-arrow-${dashboardData.bookings.completed.bookingTrend ===
-                                  "increase"
-                                  ? "up"
-                                  : "down"
+                                "increase"
+                                ? "up"
+                                : "down"
                                 }`}
                             ></i>
                           )}{" "}
@@ -320,69 +320,70 @@ export default function EntertainerDash() {
                 </table>
               </div>
             </div> */}
-
-            <div className="col-md-4">
-              <div className="d-flex justify-content-between">
-                <p className="fw-semibold" style={{ fontSize: "16px" }}>
-                  New Booking Requests
-                </p>
-                <Link to="/entertainer/bookingrequest" className="profile-font fw-semibold">
-                  View All<i className="fa-solid fa-chevron-right"></i>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </Link>
-              </div>
-
-              <div className="upcoming-events scrollable-container">
-                {bookings.map((booking, index) => (
-                  <div
-                    key={booking.id}
-                    className="row p-2 gx-5 bg-light rounded-3 mb-3 shadow-sm"
-                  >
-                    <div className="col-md-3">
-                      <img
-                        src={`${imagePath}profilePic.avif`}
-                        style={{
-                          height: "62px",
-                          width: "73px",
-                          borderRadius: "6px",
-                          objectFit: "cover",
-                        }}
-                        alt="Event"
-                      />
-                    </div>
-                    <div className="col-md-9">
-                      <p className="dash-font fw-semibold mb-0">
-                        {booking.name || "Untitled Venue"}
-                      </p>
-                      <p className="icon-font mb-1">
-                        {booking.description || "No description available."}
-                      </p>
-                      <div className="d-flex flex-wrap">
-                        <p className="icon-font text-start me-3">
-                          <img
-                            src={`${imagePath}Icon akar-calendar.svg`}
-                            className="me-1"
-                            alt="calendar"
-                          />
-                          {moment(booking.showDate).format("DD-MMMM-YYYY")}
-                        </p>
-                        <p className="icon-font">
-                          <img
-                            src={`${imagePath}Icon akar-location.svg`}
-                            className="me-1"
-                            alt="location"
-                          />
-                          {`${booking.city || "City"}, ${booking.state || "State"
-                            }`}
-                        </p>
-                      </div>
-                    </div>
+            <div className="col-md-9">
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="d-flex justify-content-between">
+                    <p className="fw-semibold" style={{ fontSize: "16px" }}>
+                      New Booking Requests
+                    </p>
+                    <Link to="/entertainer/bookingrequest" className="profile-font fw-semibold">
+                      View All<i className="fa-solid fa-chevron-right"></i>
+                      <i className="fa-solid fa-chevron-right"></i>
+                    </Link>
                   </div>
-                ))}
-              </div>
-            </div>
 
-            {/* <div className="col-md-5 scrollable-container">
+                  <div className="upcoming-events scrollable-container">
+                    {bookings.map((booking, index) => (
+                      <div
+                        key={booking.id}
+                        className="row p-2 gx-5 bg-light rounded-3 mb-3 shadow-sm"
+                      >
+                        <div className="col-md-3">
+                          <img
+                            src={`${imagePath}profilePic.avif`}
+                            style={{
+                              height: "62px",
+                              width: "73px",
+                              borderRadius: "6px",
+                              objectFit: "cover",
+                            }}
+                            alt="Event"
+                          />
+                        </div>
+                        <div className="col-md-9">
+                          <p className="dash-font fw-semibold mb-0">
+                            {booking.name || "Untitled Venue"}
+                          </p>
+                          <p className="icon-font mb-1">
+                            {booking.description || "No description available."}
+                          </p>
+                          <div className="d-flex flex-wrap">
+                            <p className="icon-font text-start me-3">
+                              <img
+                                src={`${imagePath}Icon akar-calendar.svg`}
+                                className="me-1"
+                                alt="calendar"
+                              />
+                              {moment(booking.showDate).format("DD-MMMM-YYYY")}
+                            </p>
+                            <p className="icon-font">
+                              <img
+                                src={`${imagePath}Icon akar-location.svg`}
+                                className="me-1"
+                                alt="location"
+                              />
+                              {`${booking.city || "City"}, ${booking.state || "State"
+                                }`}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* <div className="col-md-5 scrollable-container">
               <div className="d-flex justify-content-between">
                 <p className="fw-semibold" style={{ fontSize: "16px" }}>
                   Upcoming Events
@@ -547,74 +548,78 @@ export default function EntertainerDash() {
               </div>
             </div> */}
 
-            <div className="col-md-5 scrollable-container">
-              <div className="d-flex justify-content-between">
-                <p className="fw-semibold" style={{ fontSize: "16px" }}>
-                  Upcoming Events
-                </p>
-                <Link to="/entertainer/events" className="profile-font fw-semibold">
-                  View All<i className="fa-solid fa-chevron-right"></i>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </Link>
-              </div>
-
-              <div className="upcoming-events mb-2">
-                {events.length === 0 ? (
-                  <div className="text-center text-muted py-3">
-                    <i className="fa-solid fa-calendar-xmark fa-lg mb-2"></i>
-                    <p className="mb-0">No upcoming events</p>
+                <div className="col-md-6 scrollable-container">
+                  <div className="d-flex justify-content-between">
+                    <p className="fw-semibold" style={{ fontSize: "16px" }}>
+                      Upcoming Events
+                    </p>
+                    <Link to="/entertainer/events" className="profile-font fw-semibold">
+                      View All<i className="fa-solid fa-chevron-right"></i>
+                      <i className="fa-solid fa-chevron-right"></i>
+                    </Link>
                   </div>
-                ) : (
-                  events.slice(0, 4).map((event) => (
-                    <div key={event.event_id}>
-                      <div className="overflow-hidden bg-light shadow-sm mb-3">
-                      <div className="row p-2 gx-3">
-                        <div className="col-md-3">
-                          <img
-                            src={event.image_url || `${imagePath}profilePic.avif`}
-                            style={{
-                              height: "62px",
-                              width: "73px",
-                              borderRadius: "6px",
-                            }}
-                            alt="Event"
-                          />
 
-                        </div>
-                        <div className="col-md-9">
-                          <p className="dash-font fw-semibold mb-0">
-                            {event.title || "Event Title"}
-                          </p>
-                          <p className="icon-font mb-1">
-                            {event.description || "No description available."}
-                          </p>
-                          <div className="d-flex">
-                            <p className="icon-font text-start me-3">
-                              <img
-                                src={`${imagePath}Icon akar-calendar.svg`}
-                                className="me-1"
-                                alt="calendar"
-                              />
-                              {moment(event.startTime).format("DD-MMMM-YYYY")}
-                            </p>
-                            <p className="icon-font">
-                              <img
-                                src={`${imagePath}Icon akar-location.svg`}
-                                className="me-1"
-                                alt="location"
-                              />
-                              {event.location || "Location"}
-                            </p>
-                          </div>
-
-                        </div>
+                  <div className="upcoming-events mb-2">
+                    {events.length === 0 ? (
+                      <div className="text-center text-muted py-3">
+                        <i className="fa-solid fa-calendar-xmark fa-lg mb-2"></i>
+                        <p className="mb-0">No upcoming events</p>
                       </div>
-                    </div>
-                    </div>
-                  ))
-                )}
+                    ) : (
+                      events.slice(0, 4).map((event) => (
+                        <div key={event.event_id}>
+                          <div className="overflow-hidden bg-light shadow-sm mb-3">
+                            <div className="row p-2 gx-3">
+                              <div className="col-md-3">
+                                <img
+                                  src={event.image_url || `${imagePath}profilePic.avif`}
+                                  style={{
+                                    height: "62px",
+                                    width: "73px",
+                                    borderRadius: "6px",
+                                  }}
+                                  alt="Event"
+                                />
+
+                              </div>
+                              <div className="col-md-9">
+                                <p className="dash-font fw-semibold mb-0">
+                                  {event.title || "Event Title"}
+                                </p>
+                                <p className="icon-font mb-1">
+                                  {event.description || "No description available."}
+                                </p>
+                                <div className="d-flex">
+                                  <p className="icon-font text-start me-3">
+                                    <img
+                                      src={`${imagePath}Icon akar-calendar.svg`}
+                                      className="me-1"
+                                      alt="calendar"
+                                    />
+                                    {moment(event.startTime).format("DD-MMMM-YYYY")}
+                                  </p>
+                                  <p className="icon-font">
+                                    <img
+                                      src={`${imagePath}Icon akar-location.svg`}
+                                      className="me-1"
+                                      alt="location"
+                                    />
+                                    {event.location || "Location"}
+                                  </p>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+
               </div>
             </div>
+
           </div>
         </div>
       </DashLayoutEnter>

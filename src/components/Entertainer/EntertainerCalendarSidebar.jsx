@@ -70,17 +70,36 @@ export default function EntertainerCalendarSidebar() {
                 <p className="text-muted">No upcoming events.</p>
               ) : (
                 upcomingEvents.map((event, index) => (
-                  <div key={index} className="mb-3 p-2 rounded bg-light border">
-                    <p className="mb-1 fw-semibold">
-                      {moment(event.startTime).format("DD-MMM-YYYY")}
-                    </p>
-                    <p className="mb-1 text-muted">
-                      <i className="fa-regular fa-clock me-2"></i>
-                      {moment(event.startTime).format("hh:mm A")}
-                    </p>
-                    <p className="mb-1">{event.title}</p>
-                    {/* <button className="btn btn-sm btn-outline-primary">View event</button> */}
+                  // <div key={index}>
+                  //   <p className="mb-1 fw-semibold">
+                  //     {moment(event.startTime).format("DD-MMM-YYYY")}
+                  //   </p>
+                  //   <div className="d-flex align-item-center alert alert-primary">
+                  //     <div className='d-flex flex-column'>
+                  //       <p className="mb-1 text-muted">
+                  //         <i className="fa-regular fa-clock me-2"></i>
+                  //         {moment(event.startTime).format("hh:mm A")}
+                  //       </p>
+                  //     </div>
+                  //     <p className="mb-1">{event.title}</p>
+                  //     {/* <button className="btn btn-sm btn-outline-primary">View event</button> */}
+                  //   </div>
+                  // </div>
+
+                  <div key={index} className="">
+                    <p className="mb-1 fw-semibold">{moment(event.startTime).format("DD-MMM-YYYY")}</p>
+                    <div className="mb-3 p-2 rounded alert alert-primary d-flex justify-content-between align-items-center">
+                      <div className="">
+                        <p className="mb-1 text-muted">
+                          <i className="fa-regular fa-clock me-2"></i>
+                          {moment(event.startTime).format("hh:mm A")}
+                        </p>
+                        <p className="mb-1">{event.title}</p>
+                      </div>
+                      <span className="badge bg-primary rounded-pill p-2 cursor">View event</span>
+                    </div>
                   </div>
+
                 ))
               )}
 

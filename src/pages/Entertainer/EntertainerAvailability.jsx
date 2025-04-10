@@ -101,9 +101,8 @@ const Calendar = ({ unavailableDates, setUnavailableDates }) => {
         {dates.map((date, idx) => (
           <div
             key={idx}
-            className={`date-cell ${
-              date && isUnavailable(date) ? "unavailable" : ""
-            }`}
+            className={`date-cell ${date && isUnavailable(date) ? "unavailable" : ""
+              }`}
             onClick={() => date && toggleUnavailable(date)}
             style={{
               position: "relative",
@@ -158,7 +157,7 @@ export default function EntertainerAvailability() {
         );
         console.log(response.data)
         const data = response.data;
-  
+
         // Set availability slots
         const updatedAvailability = availability.map((slot) => {
           const match = data?.availability?.slots?.find(
@@ -166,31 +165,31 @@ export default function EntertainerAvailability() {
           );
           return match
             ? {
-                ...slot,
-                available: true,
-                from: match.startTime,
-                to: match.endTime,
-              }
+              ...slot,
+              available: true,
+              from: match.startTime,
+              to: match.endTime,
+            }
             : slot;
         });
-  
+
         // Set unavailable dates
         const updatedUnavailableDates =
           data?.unavailability?.dates?.map((d) => {
             const parts = d.split("-");
             return `${parts[0]}-${parseInt(parts[1]) - 1}-${parts[2]}`;
           }) || [];
-  
+
         setAvailability(updatedAvailability);
         setUnavailableDates(updatedUnavailableDates);
       } catch (error) {
         console.error("Error fetching availability:", error);
       }
     };
-  
+
     fetchAvailabilityData();
   }, []);
-  
+
 
   const generateTimeOptions = () => {
     const times = [];
@@ -326,7 +325,7 @@ export default function EntertainerAvailability() {
                   key={index}
                 >
                   <input
-                    className="form-check-input"
+                    className="form-check-input cursor"
                     type="checkbox"
                     id={`${dayData.day}Check`}
                     checked={dayData.available}
@@ -339,7 +338,7 @@ export default function EntertainerAvailability() {
                     }
                   />
                   <label
-                    className="form-check-label me-3"
+                    className="form-check-label me-3 cursor"
                     htmlFor={`${dayData.day}Check`}
                   >
                     {dayData.day}
