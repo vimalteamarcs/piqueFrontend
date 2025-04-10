@@ -58,14 +58,18 @@ export default function EntertainerCalendarSidebar() {
             <div className="mt-2"><hr />
               <h6 className="fw-medium mb-3">Upcoming Events</h6>
               {upcomingEvents.map((event, index) => (
-                <div key={index} className="mb-3 p-2 rounded bg-light border">
+                <div key={index} className="">
                   <p className="mb-1 fw-semibold">{event.date}</p>
-                  <p className="mb-1 text-muted">
-                    <i className="fa-regular fa-clock me-2"></i>
-                    {event.time}
-                  </p>
-                  <p className="mb-1">{event.title}</p>
-                  <button className="btn btn-sm btn-outline-primary">View event</button>
+                  <div className="mb-3 p-2 rounded alert alert-primary d-flex justify-content-between align-items-center">
+                    <div className="">
+                      <p className="mb-1 text-muted">
+                        <i className="fa-regular fa-clock me-2"></i>
+                        {event.time}
+                      </p>
+                      <p className="mb-1">{event.title}</p>
+                    </div>
+                    <span className="badge bg-primary rounded-pill p-2 cursor">View event</span>
+                  </div>
                 </div>
               ))}
             </div>
