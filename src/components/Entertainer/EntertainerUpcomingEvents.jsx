@@ -11,6 +11,12 @@ export default function EntertainerUpcomingEvents({ events = [], loading }) {
     setStatusFilter(value);
   };
 
+  const handleView = (record) => {
+    console.log("Viewing event:", record);
+    // You can navigate to a detailed event page or show a modal here
+  };
+  
+
   const filteredData = events.filter((item) => {
     const matchesStatus =
       statusFilter === "all" || item.status?.toLowerCase() === statusFilter;
@@ -87,15 +93,15 @@ export default function EntertainerUpcomingEvents({ events = [], loading }) {
         </span>
       ),
     },
-    {
-      title: "Action",
-      key: "action",
-      render: (_, record) => (
-        <button className="btn btn-outline-secondary btn-sm">
-          <i className="fa-solid fa-eye"></i>
-        </button>
-      ),
-    },
+    // {
+    //   title: "Action",
+    //   key: "action",
+    //   render: (_, record) => (
+    //     <button className="btn btn-outline-secondary btn-sm">
+    //       <i className="fa-solid fa-eye"></i>
+    //     </button>
+    //   ),
+    // },
   ];
 
   const filterComponent = (
@@ -119,6 +125,7 @@ export default function EntertainerUpcomingEvents({ events = [], loading }) {
         data={filteredData}
         columns={columns}
         loading={loading}
+        onView={handleView}
         filterComponent={filterComponent}
         pagination={{
           current: 1,

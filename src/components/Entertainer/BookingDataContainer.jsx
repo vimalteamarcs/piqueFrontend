@@ -119,12 +119,10 @@ export default function BookingDataContainer({
       width: 120,
       render: (_, record) => (
         <div className="d-flex gap-2">
-          <span type="button" className="badge rounded-pill text-bg-success">
-            {/* <i className="fa-solid fa-check"></i> */}
+          <span type="button" className="badge rounded-pill text-bg-success" onClick={() => handleBookingResponse(record.id, "accepted")}>
             Approve
           </span>
-          <span type="button" className="badge rounded-pill text-bg-danger">
-            {/* <i className="fa-solid fa-xmark"></i> */}
+          <span type="button" className="badge rounded-pill text-bg-danger" onClick={() => handleBookingResponse(record.id, "rejected")}>
             Reject
           </span>
         </div>
@@ -141,8 +139,6 @@ export default function BookingDataContainer({
       <Option value="all">Filter</Option>
       <Option value="pending">Pending</Option>
       <Option value="confirmed">Confirmed</Option>
-      <Option value="rejected">Rejected</Option>
-      <Option value="accepted">Accepted</Option>
     </Select>
   );
 

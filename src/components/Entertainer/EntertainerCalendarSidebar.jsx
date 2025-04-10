@@ -1,27 +1,35 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
 export default function EntertainerCalendarSidebar() {
   const location = useLocation();
   const isCalendarPage = location.pathname === "/entertainer/calendar";
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
 
-  const upcomingEvents = [
-    {
-      date: "19-MAR-2025",
-      time: "12:30pm",
-      title: "Facing the Reality",
-    },
-    {
-      date: "20-MAR-2025",
-      time: "12:30pm",
-      title: "Facing the Reality",
-    },
-    {
-      date: "20-MAR-2025",
-      time: "12:30pm",
-      title: "Facing the Reality",
+  useEffect(() => {
+    if (isCalendarPage) {
+      fetchUpcomingEvents();
     }
-  ];
+  }, [isCalendarPage]);
+
+  const fetchUpcomingEvents = async () => {
+    const token = localStorage.getItem("token")
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}entertainers/events/upcoming`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response.data)
+      setUpcomingEvents(response.data.data || []);
+    } catch (error) {
+      console.error("Failed to fetch upcoming events:", error);
+    }
+  };
 
   return (
     <>
@@ -55,19 +63,27 @@ export default function EntertainerCalendarSidebar() {
 
           {/* Show Upcoming Events ONLY on the calendar page */}
           {isCalendarPage && (
-            <div className="mt-2"><hr />
+            <div className="mt-2">
+              <hr />
               <h6 className="fw-medium mb-3">Upcoming Events</h6>
-              {upcomingEvents.map((event, index) => (
-                <div key={index} className="mb-3 p-2 rounded bg-light border">
-                  <p className="mb-1 fw-semibold">{event.date}</p>
-                  <p className="mb-1 text-muted">
-                    <i className="fa-regular fa-clock me-2"></i>
-                    {event.time}
-                  </p>
-                  <p className="mb-1">{event.title}</p>
-                  <button className="btn btn-sm btn-outline-primary">View event</button>
-                </div>
-              ))}
+              {upcomingEvents.length === 0 ? (
+                <p className="text-muted">No upcoming events.</p>
+              ) : (
+                upcomingEvents.map((event, index) => (
+                  <div key={index} className="mb-3 p-2 rounded bg-light border">
+                    <p className="mb-1 fw-semibold">
+                      {moment(event.startTime).format("DD-MMM-YYYY")}
+                    </p>
+                    <p className="mb-1 text-muted">
+                      <i className="fa-regular fa-clock me-2"></i>
+                      {moment(event.startTime).format("hh:mm A")}
+                    </p>
+                    <p className="mb-1">{event.title}</p>
+                    {/* <button className="btn btn-sm btn-outline-primary">View event</button> */}
+                  </div>
+                ))
+              )}
+
             </div>
           )}
         </div>
@@ -75,3 +91,4 @@ export default function EntertainerCalendarSidebar() {
     </>
   );
 }
+
