@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import DashLayoutEnter from "../../components/Entertainer/DashLayoutEnter";
 import EntertainerCalendarSidebar from "../../components/Entertainer/EntertainerCalendarSidebar";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 const days = ["S", "M", "T", "W", "T", "F", "S"];
 
@@ -101,8 +102,9 @@ const Calendar = ({ unavailableDates, setUnavailableDates }) => {
         {dates.map((date, idx) => (
           <div
             key={idx}
-            className={`date-cell ${date && isUnavailable(date) ? "unavailable" : ""
-              }`}
+            className={`date-cell ${
+              date && isUnavailable(date) ? "unavailable" : ""
+            }`}
             onClick={() => date && toggleUnavailable(date)}
             style={{
               position: "relative",
@@ -134,13 +136,13 @@ const Calendar = ({ unavailableDates, setUnavailableDates }) => {
 export default function EntertainerAvailability() {
   const [unavailableDates, setUnavailableDates] = useState([]);
   const [availability, setAvailability] = useState([
-    { day: "Monday", available: false, from: "", to: "" },
-    { day: "Tuesday", available: false, from: "", to: "" },
-    { day: "Wednesday", available: false, from: "", to: "" },
-    { day: "Thursday", available: false, from: "", to: "" },
-    { day: "Friday", available: false, from: "", to: "" },
-    { day: "Saturday", available: false, from: "", to: "" },
-    { day: "Sunday", available: false, from: "", to: "" },
+    { day: "Monday", available: false, from: "00:00", to: "00:01" },
+    { day: "Tuesday", available: false, from: "00:00", to: "00:01" },
+    { day: "Wednesday", available: false, from: "00:00", to: "00:01" },
+    { day: "Thursday", available: false, from: "00:00", to: "00:01" },
+    { day: "Friday", available: false, from: "00:00", to: "00:01" },
+    { day: "Saturday", available: false, from: "00:00", to: "00:01" },
+    { day: "Sunday", available: false, from: "00:00", to: "00:01" },
   ]);
 
   useEffect(() => {
@@ -155,30 +157,31 @@ export default function EntertainerAvailability() {
             },
           }
         );
-        console.log(response.data)
+        console.log("availability",response.data);
         const data = response.data;
 
         // Set availability slots
         const updatedAvailability = availability.map((slot) => {
-          const match = data?.availability?.slots?.find(
-            (s) => s.dayOfWeek === slot.day
-          );
+          const match = data?.availability?.find((s) => s.dayOfWeek === slot.day);
           return match
             ? {
-              ...slot,
-              available: true,
-              from: match.startTime,
-              to: match.endTime,
-            }
+                ...slot,
+                available: true,
+                from: match.startTime.slice(0, 5),
+                to: match.endTime.slice(0, 5),
+              }
             : slot;
         });
+        
+        
 
         // Set unavailable dates
         const updatedUnavailableDates =
-          data?.unavailability?.dates?.map((d) => {
-            const parts = d.split("-");
-            return `${parts[0]}-${parseInt(parts[1]) - 1}-${parts[2]}`;
-          }) || [];
+        data?.unavailability?.map((d) => {
+          const parts = d.split("-");
+          return `${parts[0]}-${parseInt(parts[1]) - 1}-${parseInt(parts[2])}`;
+        }) || [];
+      
 
         setAvailability(updatedAvailability);
         setUnavailableDates(updatedUnavailableDates);
@@ -190,7 +193,6 @@ export default function EntertainerAvailability() {
     fetchAvailabilityData();
   }, []);
 
-
   const generateTimeOptions = () => {
     const times = [];
     for (let hour = 0; hour < 24; hour++) {
@@ -198,28 +200,70 @@ export default function EntertainerAvailability() {
         const valueHour = hour.toString().padStart(2, "0");
         const valueMinute = min.toString().padStart(2, "0");
         const value = `${valueHour}:${valueMinute}`;
-
-        const suffix = hour >= 12 ? "PM" : "AM";
-        const displayHour = hour % 12 === 0 ? 12 : hour % 12;
-        const displayMinute =
-          min === 0 ? "00" : min.toString().padStart(2, "0");
-        const label = `${displayHour}:${displayMinute} ${suffix}`;
-
+        const label = value; // Same as value for 24-hour format
+  
         times.push({ value, label });
       }
     }
     return times;
   };
+  
 
   const timeOptions = generateTimeOptions();
 
   const handleAvailabilityChange = (index, field, value) => {
     const updated = [...availability];
     updated[index][field] = value;
+  
+    // Show alert if time is selected but the day is not marked available
+    if (
+      (field === "from" || field === "to") &&
+      value &&
+      !updated[index].available
+    ) {
+      toast.error("Please mark the day as available before selecting a time.");
+    }
+  
     setAvailability(updated);
   };
+  
+
 
   const handleSaveAvailability = async () => {
+    const hasAvailability = availability.some(
+      (slot) => slot.available && slot.from && slot.to
+    );
+    const hasUnavailability = unavailableDates.length > 0;
+  
+    // Ensure at least one type of availability/unavailability is selected
+    if (!hasAvailability && !hasUnavailability) {
+      toast.error(
+        "Please select at least one availability slot or unavailable date before saving."
+      );
+      return;
+    }
+  
+    // Validation for time slots
+    for (const slot of availability) {
+      if (slot.available) {
+        if (!slot.from || !slot.to) {
+          toast.error(
+            `Please select both "From" and "To" times for ${slot.day}.`
+          );
+          return;
+        }
+        
+        
+        // Validate that 'from' is before 'to'
+        const timeToMinutes = (timeStr) => {
+          const [hours, minutes] = timeStr.split(":").map(Number);
+          return hours * 60 + minutes;
+        };
+        
+      }
+    }
+  
+    // If no validation errors, prepare payload and send to server
     const slots = availability
       .filter((slot) => slot.available && slot.from && slot.to)
       .map((slot) => ({
@@ -227,25 +271,24 @@ export default function EntertainerAvailability() {
         startTime: slot.from,
         endTime: slot.to,
       }));
-
+  
+    // Format the unavailable dates
     const formattedUnavailableDates = unavailableDates.map((dateKey) => {
-      // Convert "2025-3-12" to "2025-04-12"
       const [year, month, day] = dateKey.split("-");
       const formattedMonth = (parseInt(month) + 1).toString().padStart(2, "0");
       const formattedDay = day.toString().padStart(2, "0");
       return `${year}-${formattedMonth}-${formattedDay}`;
     });
-
+  
     const payload = {
       availability: {
         slots: slots,
       },
       unavailability: {
-        dates:
-          formattedUnavailableDates.length > 0 ? formattedUnavailableDates : [],
+        dates: formattedUnavailableDates.length > 0 ? formattedUnavailableDates : [],
       },
     };
-    console.log("Payload:", payload);
+  
     const token = localStorage.getItem("token");
     try {
       const res = await axios.post(
@@ -258,23 +301,24 @@ export default function EntertainerAvailability() {
           },
         }
       );
-
+  
       console.log("Saved successfully:", res.data);
-      alert("Availability saved!");
+      toast.success("Availability saved!");
     } catch (error) {
       console.error("Error saving availability:", error);
-      alert("Something went wrong!");
+      toast.error("Something went wrong!");
     }
   };
-
+  
   return (
     <DashLayoutEnter
       title=""
       description="View your all bookings in the calendar"
     >
+      <ToastContainer />
       <div className="container d-flex">
         <EntertainerCalendarSidebar />
-        <div className="entertainer-profile-container">
+        <div className="entertainer-profile-container entrWrapper">
           <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">
             {" "}
             AVAILABILITY{" "}
@@ -289,36 +333,6 @@ export default function EntertainerAvailability() {
           <div className="row mt-4">
             <div className="col-12 col-md-6 e-time-slot">
               <p className="mb-0">What days are you available for events?</p>
-              {/* <div className="d-flex align-items-center gap-2 mt-3">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="mondayCheck"
-                />
-                <label className="form-check-label me-3" htmlFor="mondayCheck">
-                  Monday
-                </label>
-
-                <select
-                  className="form-select w-auto"
-                  style={{ minWidth: "110px" }}
-                >
-                  <option>12:00 am</option>
-                  <option>1:00 am</option>
-                  <option>2:00 am</option>
-                </select>
-
-                <span className="mx-3">to</span>
-
-                <select
-                  className="form-select w-auto"
-                  style={{ minWidth: "110px" }}
-                >
-                  <option>12:00 am</option>
-                  <option>1:00 am</option>
-                  <option>2:00 am</option>
-                </select>
-              </div> */}
               {availability.map((dayData, index) => (
                 <div
                   className="d-flex align-items-center gap-2 mt-3"
@@ -351,7 +365,6 @@ export default function EntertainerAvailability() {
                     onChange={(e) =>
                       handleAvailabilityChange(index, "from", e.target.value)
                     }
-                    disabled={!dayData.available}
                   >
                     <option value="">From</option>
                     {timeOptions.map((time, idx) => (
@@ -362,6 +375,7 @@ export default function EntertainerAvailability() {
                   </select>
 
                   <span className="mx-3">to</span>
+
                   <select
                     className="form-select w-auto"
                     style={{ minWidth: "110px" }}
@@ -369,14 +383,25 @@ export default function EntertainerAvailability() {
                     onChange={(e) =>
                       handleAvailabilityChange(index, "to", e.target.value)
                     }
-                    disabled={!dayData.available}
                   >
-                    <option value="">To</option>
-                    {timeOptions.map((time, idx) => (
-                      <option key={idx} value={time.value}>
-                        {time.label}
-                      </option>
-                    ))}
+                    {/* <option value="">To</option> */}
+                    {timeOptions
+                      .filter((time) => {
+                        const fromTimeIndex = timeOptions.findIndex(
+                          (t) => t.value === dayData.from
+                        );
+                        const currentIndex = timeOptions.findIndex(
+                          (t) => t.value === time.value
+                        );
+                        return (
+                          fromTimeIndex === -1 || currentIndex > fromTimeIndex
+                        );
+                      })
+                      .map((time, idx) => (
+                        <option key={idx} value={time.value}>
+                          {time.label}
+                        </option>
+                      ))}
                   </select>
                 </div>
               ))}

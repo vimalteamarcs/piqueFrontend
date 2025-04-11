@@ -27,18 +27,16 @@ export default function EnterProfileContainer({
   setServiceInput,
   handleRemoveService,
   formatDate,
-  setFormData
+  setFormData,
 }) {
   const imagePath = import.meta.env.VITE_LOGGEDIN_IMAGE_PATH;
 
-
-
-
-
   return (
     <>
-      <div className="entertainer-profile-container">
-        <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">PROFILE</p>
+      <div className="entertainer-profile-container entrWrapper">
+        <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">
+          PROFILE
+        </p>
         <hr className="mt-0" />
         <p className="dash-font text-muted">
           The contact information provided below is for Pique Entertainment's
@@ -117,13 +115,20 @@ export default function EnterProfileContainer({
                   <p className="icon-font mb-0">Guidelines:</p>
                   <ol className="dash-navbar-font text-start mb-1">
                     <li>Choose an image where your face is recognizable.</li>
-                    <li>Your profile photo should not contain text, logos, or contact information.</li>
-                    <li>Should be in .jpg or .png format. (max file size 10mb)</li>
+                    <li>
+                      Your profile photo should not contain text, logos, or
+                      contact information.
+                    </li>
+                    <li>
+                      Should be in .jpg or .png format. (max file size 10mb)
+                    </li>
                   </ol>
                   <button
                     type="button"
                     className="btn enter-btn icon-font text-white rounded-3"
-                    onClick={() => document.getElementById("headshotInput").click()}
+                    onClick={() =>
+                      document.getElementById("headshotInput").click()
+                    }
                   >
                     Upload
                   </button>
@@ -150,24 +155,25 @@ export default function EnterProfileContainer({
 
                 {/* Image Preview */}
                 <div className="col-md-4">
-                  <img
-                    src={
-                      headshot && typeof headshot !== "string"
-                        ? URL.createObjectURL(headshot)
-                        : formData.headshot
-                          ? `${formData.headshot}`
-                          : `${imagePath}magician-showing-trick.png`
-                    }
-                    style={{ height: "130px", width: "125px", objectFit: "cover" }}
-                    className="rounded-4"
-                    alt="Profile Headshot"
-                  />
+                  {(headshot && typeof headshot !== "string") || headshotUrl ? (
+                    <img
+                      src={
+                        headshot && typeof headshot !== "string"
+                          ? URL.createObjectURL(headshot)
+                          : headshotUrl
+                      }
+                      style={{
+                        height: "130px",
+                        width: "125px",
+                        objectFit: "cover",
+                      }}
+                      className="rounded-4"
+                      alt="Profile Headshot"
+                    />
+                  ) : null}
                 </div>
               </div>
             </div>
-
-
-
           </div>
           <div className="row mb-3">
             <div className="col-md-6">
@@ -249,7 +255,6 @@ export default function EnterProfileContainer({
 
           <div className="row mb-3">
             <div className="col-md-6 dash-font">
-
               <label className="dash-font fw-semibold">Email</label>
               <Input
                 type="email"
@@ -284,7 +289,6 @@ export default function EnterProfileContainer({
                 rows="1"
               />
             </div>
-
           </div>
 
           <div className="row mb-3">
@@ -408,12 +412,10 @@ export default function EnterProfileContainer({
                         </button>
                       </div>
                     </li>
-
                   ))}
                 </ul>
               )}
             </div>
-
           </div>
 
           <div className="row">

@@ -41,11 +41,11 @@ export default function EnterDashNavbar() {
   return (
     <>
       <div className="container-fluid" style={{ boxShadow: "1px 1px 8px #e5e4e4" }}>
-        <nav className="navbar navbar-expand-lg mb-0">
+        <nav className="navbar entrnavbar navbar-expand-lg mb-0">
           <div className="container">
             {/* <!-- Logo Section --> */}
             <NavLink
-              className="navbar-brand d-flex align-items-center"
+              className="navbar-brand  d-flex align-items-center"
               to="/entertainer"
             >
               <img
@@ -166,7 +166,7 @@ export default function EnterDashNavbar() {
                         Notifications & Reminders
                       </NavLink>
                     </li>
-                    <li>
+                    {/* <li>
                       <NavLink
                         className={({ isActive }) =>
                           `custom-drop-item ${isActive ? 'active' : ''}`
@@ -175,7 +175,7 @@ export default function EnterDashNavbar() {
                       >
                         Help & Support
                       </NavLink>
-                    </li>
+                    </li> */}
                     <li>
                       <button
                         className="dropdown-item custom-drop-item text-dark"

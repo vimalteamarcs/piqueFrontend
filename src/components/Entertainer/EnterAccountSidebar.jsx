@@ -73,15 +73,20 @@
 // }
 
 import React, { useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 export default function EnterAccountSidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isEventSubRoute = location.pathname.startsWith('/entertainer/bookingrequest') ||
     location.pathname.startsWith('/entertainer/events');
 
   const [isEventDropdownOpen, setIsEventDropdownOpen] = useState(isEventSubRoute);
+
+  const handleNavigation = () => {
+    navigate('/entertainer'); 
+  };
 
   const toggleEventDropdown = () => {
     setIsEventDropdownOpen(!isEventDropdownOpen);
@@ -92,7 +97,10 @@ export default function EnterAccountSidebar() {
   return (
     <div className="custom-entertainer-sidebar">
       <div className="profile-font">
-        <p className="fs-5 fw-medium mb-1">Account</p>
+        <div className="d-flex cursor" onClick={handleNavigation}>
+        <i class="fa-solid fa-chevron-left me-2 mt-2 fs-6"></i> <p className="fs-5 fw-medium mb-1">Account</p>
+
+        </div>
         <p className="profile-font">Olivia Andrews, California, USA</p>
 
         <nav className="nav flex-column position-relative">

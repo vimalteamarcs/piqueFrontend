@@ -1354,7 +1354,11 @@ body {
   background-color: #f8f9fa;
   color: #343a40;
 }
-.sidebar-link .icon-transition {font-size: 15px;margin-right: 12px;}
+
+.sidebar-link .icon-transition {
+  font-size: 15px;
+  margin-right: 12px;
+}
 
 .active-link {
   background-color: #f1f1f1 !important;
@@ -1824,7 +1828,8 @@ body {
   display: flex !important;
   align-items: center !important;
   gap: 4px !important;
-  padding: 5px 12px !important;border: none;
+  padding: 5px 12px !important;
+  border: none;
 }
 
 .btn-nav-enter:hover,
@@ -2001,7 +2006,7 @@ body {
 }
 
 .scrollable-container {
-  max-height: 80vh;
+  max-height: 112vh;
   /* Adjust as needed */
   overflow-y: auto;
   /* Enable vertical scrolling */
@@ -2013,6 +2018,10 @@ body {
   /* Hide scrollbar for Firefox */
   -ms-overflow-style: none;
   /* Hide scrollbar for Internet Explorer/Edge */
+}
+
+.badge.badgeSucessBH {
+  background-color: rgb(40 199 125) !important
 }
 
 .scrollable-container::-webkit-scrollbar {
@@ -2103,6 +2112,9 @@ body {
   /* Light border for separation */
 }
 
+
+
+
 .custom-entertainer-sidebar {
   width: 280px;
   /* Adjust width as needed */
@@ -2112,9 +2124,6 @@ body {
   padding-right: 20px;
   margin-top: 13px;
   background: #ffffff;
-  /* Optional background */
-  /* border-right: 1px solid #ddd; */
-  /* Light border for separation */
 }
 
 .sidebar-link::before {
@@ -2475,7 +2484,8 @@ body {
 }
 
 .dash-navbar-font {
-  font-size: 10px;margin-bottom: 0;
+  font-size: 10px;
+  margin-bottom: 0;
 }
 
 .dash-font {
@@ -2518,7 +2528,11 @@ body {
   padding: 5px 10px;
   padding-top: 10px;
 }
-.dbIconE {height: 16px;}
+
+.dbIconE {
+  height: 16px;
+}
+
 .booking-table {
   border: 1px solid #EBEBEB;
   padding: 12px;
@@ -3052,7 +3066,8 @@ button:disabled {
 }
 
 .custom-drop-menu .custom-drop-item.active {
-  background-color: #f8f9fa !important; /* Light grey when active */
+  background-color: #f8f9fa !important;
+  /* Light grey when active */
   color: #000 !important;
 }
 
@@ -3076,7 +3091,7 @@ button:disabled {
 
 .sidebar-sub-link {
   color: #000 !important;
-  font-size: 13px !important; 
+  font-size: 13px !important;
   padding-left: 1.2rem;
   position: relative;
   transition: color 0.2s ease;
@@ -3101,18 +3116,21 @@ button:disabled {
 }
 
 .sidebar-sub-link.active-sub {
-  color: #000; /* black text for active */
+  color: #000;
+  /* black text for active */
   font-weight: 600;
   font-size: 12px;
 }
 
 .sidebar-sub-link.inactive-sub {
-  color: #979797 !important; /* grey text for inactive */
+  color: #979797 !important;
+  /* grey text for inactive */
   font-size: 12px;
 }
 
 .dot-blue {
-  background-color: #000E6F; /* blue dot */
+  background-color: #000E6F;
+  /* blue dot */
 }
 
 .dot-grey {
@@ -3152,7 +3170,8 @@ button:disabled {
 
 .event-card {
   background-color: #e8f8e8;
-  border-left: 5px solid #66bb6a;font-size: 12px;
+  border-left: 5px solid #66bb6a;
+  font-size: 12px;
 }
 
 .status-dot {

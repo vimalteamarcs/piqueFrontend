@@ -75,6 +75,8 @@ import EntertainerAvailability from "../pages/Entertainer/EntertainerAvailabilit
 import EntertainerReviews from "../pages/Entertainer/EntertainerReviews";
 import EntertainerNotification from "../pages/Entertainer/EntertainerNotification";
 import EntertainerGallery from "../pages/Entertainer/EntertainerGallery";
+import EntertainerEventDetails from "../pages/Entertainer/EntertainerEventDetails";
+import EntertainerInvoicePage from "../pages/Entertainer/EntertainerInvoicePage";
 const basename = import.meta.env.VITE_BASE || "/P/";
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -134,6 +136,9 @@ const router = createBrowserRouter(
         <Route path="/entertainer/reviews" element={<EntertainerReviews />} />
         <Route path="/entertainer/notifications" element={<EntertainerNotification />} />
         <Route path="/entertainer/gallery" element={<EntertainerGallery />} />
+        <Route path="/entertainer/events/details" element={<EntertainerEventDetails />} />
+        <Route path="/entertainer/invoicepage" element={<EntertainerInvoicePage />} />
+
 
 
 

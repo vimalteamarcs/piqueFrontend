@@ -22,6 +22,7 @@ export default function BookingRequest() {
           },
         }
       );
+      console.log("booking",response.data)
       setBookingRequests(response.data.bookings || []);
     } catch (err) {
       console.error("Error fetching booking requests:", err);
@@ -81,6 +82,39 @@ export default function BookingRequest() {
 
 
 
+  // const handleBookingResponse = async (bookingId, status) => {
+  //   const body = {
+  //     bookingId,
+  //     status,
+  //   };
+  
+  //   try {
+  //     const response = await axios.patch(
+  //       `${import.meta.env.VITE_API_URL}entertainers/booking/response`,
+  //       body,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //         },
+  //       }
+  //     );
+  //    console.log(response.data)
+  //     toast.success(response.data.message);
+  //     await fetchBookingRequests();
+  //     // Update booking status in state
+  //     setBookingRequests((prev) =>
+  //       prev.map((booking) =>
+  //         booking.id === bookingId ? { ...booking, status } : booking
+  //       )
+  //     );
+  //   } catch (error) {
+  //     console.error("Error updating booking status:", error);
+  //     toast.error(error.response?.data?.message || "Failed to update booking status.");
+  //   }
+  // };
+  
+  
   const handleBookingResponse = async (bookingId, status) => {
     const body = {
       bookingId,
@@ -98,15 +132,21 @@ export default function BookingRequest() {
           },
         }
       );
-     console.log(response.data)
-      toast.success(`Booking ${status === "accepted" ? "approved" : "rejected"} successfully.`);
-      await fetchBookingRequests();
-      // Update booking status in state
-      setBookingRequests((prev) =>
-        prev.map((booking) =>
-          booking.id === bookingId ? { ...booking, status } : booking
-        )
-      );
+  
+      const { message, status: success } = response.data;
+  
+      if (success) {
+        toast.success(message);
+        await fetchBookingRequests();
+        setBookingRequests((prev) =>
+          prev.map((booking) =>
+            booking.id === bookingId ? { ...booking, status } : booking
+          )
+        );
+      } else {
+        toast.warning(message); // show warning if already responded
+      }
+  
     } catch (error) {
       console.error("Error updating booking status:", error);
       toast.error(error.response?.data?.message || "Failed to update booking status.");
@@ -115,16 +155,15 @@ export default function BookingRequest() {
   
   
   
-  
-  
 
   return (
     <>
       <DashLayoutEnter title ="Booking Request" description="View and manage your bookings">
-          <ToastContainer position="top-right"  />
         
            <div className="container d-flex">
                     <EnterAccountSidebar/>
+          <ToastContainer position="top-right" className="mt-5" />
+
                     <BookingDataContainer bookingRequests={bookingRequests} loading={loading} handleBookingResponse={handleBookingResponse} formatTime={formatTime}/>
                     </div>
       </DashLayoutEnter>

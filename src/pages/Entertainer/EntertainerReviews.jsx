@@ -103,7 +103,7 @@ export default function EntertainerReviews() {
         >
             <div className="container d-flex">
                 <EnterAccountSidebar />
-                <div className="entertainer-profile-container">
+                <div className="entertainer-profile-container entrWrapper">
                     <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">
                         RATINGS & REVIEWS
                     </p>

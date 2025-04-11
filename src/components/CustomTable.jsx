@@ -97,7 +97,7 @@ export default function CustomTable({
     <div className="card11">
       <div className="card-body11">
       <div className="row justify-content-between align-items-center">
-          <div className="col-auto mb-2">
+          <div className="col-auto">
             {filterComponent}
           </div>
           <div className="col dataTableSearch text-end mb-2">

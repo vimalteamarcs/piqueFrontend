@@ -114,7 +114,6 @@ export default function OtpVerifyModal({ email,  onSuccess, onClose }) {
 
   return (
     <>
-      <ToastContainer />
 
       {/* Bootstrap Modal */}
       <div className="modal fade show d-block" tabIndex="-1" role="dialog">
@@ -155,9 +154,9 @@ export default function OtpVerifyModal({ email,  onSuccess, onClose }) {
                 <button
                   className="btn btn-success rounded-3"
                   onClick={handleVerifyOtp}
-                  disabled={verifying}
+                  // disabled={verifying}
                 >
-                  {verifying ? "Verifying..." : "Verify OTP"}
+                  {/* {verifying ? "Verifying..." : "Verify OTP"} */} Verify OTP
                 </button>
 
                 <button

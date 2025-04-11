@@ -105,9 +105,9 @@ export default function EntertainerDash() {
         title="Entertainer Dashboard"
         description="View and manage your data"
       >
-        <div className="container mt-4">
+        <div className="container">
           <div className="row gx-5">
-            <div className="col-md-3 col-sm-12 col-12 position-relative profile-card">
+            <div className="col-md-3 col-sm-12 col-12 position-relative profile-card" style={{marginTop:"70px"}}>
               {isLoading ? (
                 <div className="image-container skeleton-loader rounded-4" />
               ) : (
@@ -320,7 +320,7 @@ export default function EntertainerDash() {
                 </table>
               </div>
             </div> */}
-            <div className="col-md-9">
+            <div className="col-md-9" style={{marginTop:"70px"}}>
               <div className="row">
                 <div className="col-md-6">
                   <div className="d-flex justify-content-between">
@@ -334,221 +334,64 @@ export default function EntertainerDash() {
                   </div>
 
                   <div className="upcoming-events scrollable-container">
-                    {bookings.map((booking, index) => (
-                      <div
-                        key={booking.id}
-                        className="row p-2 gx-5 bg-light rounded-3 mb-3 shadow-sm"
-                      >
-                        <div className="col-md-3">
-                          <img
-                            src={`${imagePath}profilePic.avif`}
-                            style={{
-                              height: "62px",
-                              width: "73px",
-                              borderRadius: "6px",
-                              objectFit: "cover",
-                            }}
-                            alt="Event"
-                          />
-                        </div>
-                        <div className="col-md-9">
-                          <p className="dash-font fw-semibold mb-0">
-                            {booking.name || "Untitled Venue"}
-                          </p>
-                          <p className="icon-font mb-1">
-                            {booking.description || "No description available."}
-                          </p>
-                          <div className="d-flex flex-wrap">
-                            <p className="icon-font text-start me-3">
-                              <img
-                                src={`${imagePath}Icon akar-calendar.svg`}
-                                className="me-1"
-                                alt="calendar"
-                              />
-                              {moment(booking.showDate).format("DD-MMMM-YYYY")}
+                    {bookings.length === 0 ? (
+                      <div className="text-center text-muted py-3">
+                        <i className="fa-solid fa-calendar-xmark fa-lg mb-2"></i>
+                        <p className="mb-0">No bookings available</p>
+                      </div>
+                    ) : (
+                      bookings.map((booking, index) => (
+                        <div
+                          key={booking.id}
+                          className="row p-2 gx-5 bg-light rounded-3 mb-3 shadow-sm"
+                        >
+                          <div className="col-md-3">
+                            <img
+                              src={`${imagePath}profilePic.avif`}
+                              style={{
+                                height: "62px",
+                                width: "73px",
+                                borderRadius: "6px",
+                                objectFit: "cover",
+                              }}
+                              alt="Event"
+                            />
+                          </div>
+                          <div className="col-md-9">
+                            <p className="dash-font fw-semibold mb-0">
+                              {booking.name || "Untitled Venue"}
                             </p>
-                            <p className="icon-font">
-                              <img
-                                src={`${imagePath}Icon akar-location.svg`}
-                                className="me-1"
-                                alt="location"
-                              />
-                              {`${booking.city || "City"}, ${booking.state || "State"
-                                }`}
+                            <p className="icon-font mb-1">
+                              {booking.description || "No description available."}
                             </p>
+                            <div className="d-flex flex-wrap">
+                              <p className="icon-font text-start me-3">
+                                <img
+                                  src={`${imagePath}Icon akar-calendar.svg`}
+                                  className="me-1"
+                                  alt="calendar"
+                                />
+                                {moment(booking.showDate).format("DD-MMMM-YYYY")}
+                              </p>
+                              <p className="icon-font">
+                                <img
+                                  src={`${imagePath}Icon akar-location.svg`}
+                                  className="me-1"
+                                  alt="location"
+                                />
+                                {`${booking.city || "City"}, ${booking.state || "State"
+                                  }`}
+                              </p>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ))
+                    )}
                   </div>
                 </div>
 
-                {/* <div className="col-md-5 scrollable-container">
-              <div className="d-flex justify-content-between">
-                <p className="fw-semibold" style={{ fontSize: "16px" }}>
-                  Upcoming Events
-                </p>
-                <a href="#" className="profile-font fw-semibold">
-                  View All<i className="fa-solid fa-chevron-right"></i>
-                  <i className="fa-solid fa-chevron-right"></i>
-                </a>
-              </div>
-              <div className=" upcoming-events mb-2">
-                <div className="d-flex justify-content-between"></div>
-                <div className="row p-2">
-                  <div className="col-md-3">
-                    <img
-                      src={`${imagePath}profilePic.avif`}
-                      style={{
-                        height: " 62px",
-                        width: "73px",
-                        borderRadius: "6px",
-                      }}
-                    />
-                  </div>
-                  <div className="col-md-9">
-                    <p className="dash-font fw-semibold mb-0">
-                      The Majestic Downtown
-                    </p>
-                    <p className="icon-font mb-1">
-                      Lorem ipsum sample dummy text qwerty uio jhg
-                    </p>
-                    <div className="d-flex">
-                      <p className="icon-font text-start me-3">
-                        <img
-                          src={`${imagePath}Icon akar-calendar.svg`}
-                          className="me-1"
-                        />
-                        12-February-2025
-                      </p>
-                      <p className="icon-font">
-                        <img
-                          src={`${imagePath}Icon akar-location.svg`}
-                          className="me-1"
-                        />
-                        Amsterdam
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <hr className="mt-0" />
 
-                <div className="row p-2 gx-5">
-                  <div className="col-md-3">
-                    <img
-                      src={`${imagePath}profilePic.avif`}
-                      style={{
-                        height: "62px",
-                        width: "73px",
-                        borderRadius: "6px",
-                      }}
-                    />
-                  </div>
-                  <div className="col-md-9">
-                    <p className="dash-font fw-semibold mb-0">
-                      The Majestic Downtown
-                    </p>
-                    <p className="icon-font mb-1">
-                      Lorem ipsum sample dummy text qwerty uio jhg
-                    </p>
-                    <div className="d-flex">
-                      <p className="icon-font text-start me-3">
-                        <img
-                          src={`${imagePath}Icon akar-calendar.svg`}
-                          className="me-1"
-                        />
-                        12-February-2025
-                      </p>
-                      <p className="icon-font">
-                        <img
-                          src={`${imagePath}Icon akar-location.svg`}
-                          className="me-1"
-                        />
-                        Amsterdam
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <hr className="mt-0" />
-
-                <div className="row p-2 gx-5">
-                  <div className="col-md-3">
-                    <img
-                      src={`${imagePath}profilePic.avif`}
-                      style={{
-                        height: "62px",
-                        width: "73px",
-                        borderRadius: "6px",
-                      }}
-                    />
-                  </div>
-                  <div className="col-md-9">
-                    <p className="dash-font fw-semibold mb-0">
-                      The Majestic Downtown
-                    </p>
-                    <p className="icon-font mb-1">
-                      Lorem ipsum sample dummy text qwerty uio jhg{" "}
-                    </p>
-                    <div className="d-flex">
-                      <p className="icon-font text-start me-3">
-                        <img
-                          src={`${imagePath}Icon akar-calendar.svg`}
-                          className="me-1"
-                        />
-                        12-February-2025
-                      </p>
-                      <p className="icon-font">
-                        <img
-                          src={`${imagePath}Icon akar-location.svg`}
-                          className="me-1"
-                        />
-                        Amsterdam
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <hr className="mt-0 " />
-
-                <div className="row p-2 gx-5">
-                  <div className="col-md-3">
-                    <img
-                      src={`${imagePath}profilePic.avif`}
-                      style={{
-                        height: "62px",
-                        width: "73px",
-                        borderRadius: "6px",
-                      }}
-                    />
-                  </div>
-                  <div className="col-md-9">
-                    <p className="dash-font fw-semibold mb-0">
-                      The Majestic Downtown
-                    </p>
-                    <p className="icon-font mb-1">
-                      Lorem ipsum sample dummy text qwerty uio jhg
-                    </p>
-                    <div className="d-flex">
-                      <p className="icon-font text-start me-3">
-                        <img
-                          src={`${imagePath}Icon akar-calendar.svg`}
-                          className="me-1"
-                        />
-                        12-February-2025
-                      </p>
-                      <p className="icon-font">
-                        <img
-                          src={`${imagePath}Icon akar-location.svg`}
-                          className="me-1"
-                        />
-                        Amsterdam
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
-
-                <div className="col-md-6 scrollable-container">
+                <div className="col-md-6 scrollable-container" >
                   <div className="d-flex justify-content-between">
                     <p className="fw-semibold" style={{ fontSize: "16px" }}>
                       Upcoming Events

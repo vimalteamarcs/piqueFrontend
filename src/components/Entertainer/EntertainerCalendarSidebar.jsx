@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 export default function EntertainerCalendarSidebar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const isCalendarPage = location.pathname === "/entertainer/calendar";
   const [upcomingEvents, setUpcomingEvents] = useState([]);
 
@@ -12,6 +13,8 @@ export default function EntertainerCalendarSidebar() {
       fetchUpcomingEvents();
     }
   }, [isCalendarPage]);
+
+
 
   const fetchUpcomingEvents = async () => {
     const token = localStorage.getItem("token")
@@ -31,13 +34,23 @@ export default function EntertainerCalendarSidebar() {
     }
   };
 
+  const handleNavigate=(eventId)=>{
+    navigate('/entertainer/events/details', {
+      state: { id: eventId, from: "calendar" },
+    })
+  }
+
   return (
     <>
       <div className="custom-entertainer-sidebar">
         <div className="profile-font">
-          <p className="fs-5 fw-medium mb-1">
-            <i className="fa-solid fa-chevron-left fs-6 me-2"></i>Calendar
-          </p>
+        <p
+      className="fs-5 fw-medium mb-1"
+      style={{ cursor: 'pointer' }}
+      onClick={() => navigate('/entertainer')}
+    >
+      <i className="fa-solid fa-chevron-left fs-6 me-2"></i>Calendar
+    </p>
           <p className="profile-font ms-3">{moment().format('dddd, DD MMMM, YYYY')}</p>
 
 
@@ -45,7 +58,7 @@ export default function EntertainerCalendarSidebar() {
             {[
               { to: "/entertainer/calendar", icon: "fa-calendar", label: "CALENDAR" },
               { to: "/entertainer/availabilityform", icon: "fa-calendar-check", label: "AVAILABILITY" },
-              { to: "/ratings", icon: "fa-solid fa-arrows-rotate", label: "SYNC AN EXTERNAL CALENDAR" }
+              // { to: "/ratings", icon: "fa-solid fa-arrows-rotate", label: "SYNC AN EXTERNAL CALENDAR" }
             ].map((item, idx) => (
               <NavLink
                 key={idx}
@@ -96,7 +109,7 @@ export default function EntertainerCalendarSidebar() {
                         </p>
                         <p className="mb-1">{event.title}</p>
                       </div>
-                      <span className="badge bg-primary rounded-pill p-2 cursor">View event</span>
+                      <span className="badge bg-primary rounded-pill p-2 cursor" onClick={() => handleNavigate(event.event_id)}>View event</span>
                     </div>
                   </div>
 

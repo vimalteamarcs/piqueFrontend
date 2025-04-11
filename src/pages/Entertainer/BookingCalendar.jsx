@@ -21,7 +21,8 @@ export default function BookingCalendar() {
       >
         <div className="container d-flex">
           <EntertainerCalendarSidebar />
-          <div className="entertainer-profile-container">
+          <div className="entertainer-profile-container entrWrapper
+">
 
             <div className="row">
 

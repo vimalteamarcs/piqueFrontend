@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 const EntertainerCard = ({ entertainer, isWishlisted, isProcessing, onRemoveFromWishlist }) => {
   const imagePath = import.meta.env.VITE_LOGGEDIN_IMAGE_PATH;
   const navigate = useNavigate();
@@ -140,7 +141,7 @@ const EntertainerCard = ({ entertainer, isWishlisted, isProcessing, onRemoveFrom
           </button>
 
           <img
-            src={entertainer.mediaUrl || entertainer.url}
+            src={entertainer.mediaUrl || "./assets/pique/image/magician.jpg"}
             className="card-img"
             style={{
               aspectRatio: "4 / 3",

@@ -70,10 +70,6 @@ export default function Profile() {
     setIsEditing(hasFilledField);
   }, [formData]);
   
-
-
-  
-
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -203,7 +199,7 @@ export default function Profile() {
             },
           }
         );
-    
+    console.log(response.data)
         const entertainer = response.data?.data;
     
         // Check if entertainer object is not empty and has valid data
@@ -236,10 +232,10 @@ export default function Profile() {
             dob: entertainer.dob || "",
             email: entertainer.email || "",
             zipCode: entertainer.zipCode || "",
-            headshot: entertainer.headshot || "",
+            headshot: entertainer.headshotUrl || "",
           });
     
-          setHeadshotPreview(entertainer.headshot || "");
+          setHeadshotPreview(entertainer.headshotUrl || "");
           setIsEditing(true); // ✅ Only set editing if data is real
     
           if (entertainer.country) fetchStates(entertainer.country);
@@ -286,8 +282,6 @@ export default function Profile() {
     return date.toISOString().split("T")[0];
   };
   
-  
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
   
@@ -309,9 +303,6 @@ export default function Profile() {
     }
   };
   
-
-
-
   const handleCategoryChange = async (selectedValue) => {
 
     setFormData((prev) => ({
@@ -355,67 +346,6 @@ export default function Profile() {
     }));
   };
 
-  const fetchMedia = async () => {
-    try {
-      const token = localStorage.getItem("token");
-
-      if (!token) {
-        console.error("No token found in localStorage.");
-        return;
-      }
-
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}media/uploads`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      if (response.status === 200 && response.data?.media) {
-        console.log("Fetched Media Successfully:", response.data.media);
-        setMedia(response.data.media);
-
-        if (onMediaUpdate) {
-          onMediaUpdate(response.data.media);
-        }
-      } else {
-        console.warn("Unexpected API response structure:", response.data);
-        setMedia([]);
-      }
-    } catch (error) {
-      console.error(
-        "Error fetching media:",
-        error.response?.data || error.message
-      );
-      setMedia([]);
-    }
-  };
-
-  const onMediaUpdate = (updatedMedia) => {
-    setMedia(updatedMedia);
-  };
-
-  useEffect(() => {
-    fetchMedia();
-  }, []);
-
-  // const handleFileChange = (e, type) => {
-  //   const files = Array.from(e.target.files);
-
-  //   if (type === "headshot") {
-  //     const file = e.target.files[0];
-  //     const fileUrl = URL.createObjectURL(file);
-  //     setHeadshot(file);
-  //     setFormData((prev) => ({ ...prev, headshot: fileUrl }));
-  //   }
-
-  //   if (type === "image") {
-  //     setImage((prev) => [...prev, ...files]);
-  //   } else if (type === "video") {
-  //     setVideo((prev) => [...prev, ...files]);
-  //   }
-  // };
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -447,112 +377,6 @@ export default function Profile() {
     return newErrors;
   };
   
-  // const mediaUpload = async (e) => {
-  //   e.preventDefault();
-  //   const token = localStorage.getItem("token");
-  
-  //   try {
-  //     if (!headshot && image.length === 0 && video.length === 0) {
-  //       toast.error("Please select media to upload.");
-  //       return;
-  //     }
-  
-  //     setUploading(true);
-  
-  //     let updatedHeadshotUrl = null;
-  //     let newImages = [];
-  //     let newVideos = [];
-  
-  //     if (media.length > 0) {
-  //       // ✅ Update existing media
-  //       const updatePromises = media.map(async (item) => {
-  //         if (
-  //           (item.type === "headshot" && !headshot) ||
-  //           (item.type === "image" && image.length === 0) ||
-  //           (item.type === "video" && video.length === 0)
-  //         ) {
-  //           return null;
-  //         }
-  
-  //         const updateFormData = new FormData();
-  //         if (item.type === "headshot" && headshot) {
-  //           updateFormData.append("headshot", headshot);
-  //         } else if (item.type === "image" && image.length > 0) {
-  //           image.forEach((img) => updateFormData.append("images", img));
-  //         } else if (item.type === "video" && video.length > 0) {
-  //           video.forEach((vid) => updateFormData.append("videos", vid));
-  //         }
-  
-  //         try {
-  //           const response = await axios.put(
-  //             `${import.meta.env.VITE_API_URL}media/${item.id}`,
-  //             updateFormData,
-  //             {
-  //               headers: {
-  //                 Authorization: `Bearer ${token}`,
-  //                 "Content-Type": "multipart/form-data",
-  //               },
-  //             }
-  //           );
-  //           if (item.type === "headshot") {
-  //             updatedHeadshotUrl = response.data.headshotUrl;
-  //           }
-  //         } catch (err) {
-  //           console.error(`Failed to update ${item.type}:`, err.response?.data || err);
-  //           toast.error(`Failed to update ${item.type}.`);
-  //         }
-  //       });
-  
-  //       await Promise.all(updatePromises);
-  //       toast.success("Media updated successfully!");
-  //     } else {
-  //       // ✅ Post new media (only if media is empty)
-  //       const uploadFormData = new FormData();
-  //       if (headshot) uploadFormData.append("headshot", headshot);
-  //       image.forEach((img) => uploadFormData.append("images", img));
-  //       video.forEach((vid) => uploadFormData.append("videos", vid));
-  
-  //       try {
-  //         const uploadResponse = await axios.post(
-  //           `${import.meta.env.VITE_API_URL}media/uploads`,
-  //           uploadFormData,
-  //           {
-  //             headers: {
-  //               Authorization: `Bearer ${token}`,
-  //               "Content-Type": "multipart/form-data",
-  //             },
-  //           }
-  //         );
-  
-  //         if (uploadResponse.status === 201) {
-  //           const { headshotUrl, imagesUrls, videosUrls } = uploadResponse.data;
-  //           updatedHeadshotUrl = headshotUrl;
-  //           newImages = imagesUrls;
-  //           newVideos = videosUrls;
-  //           toast.success("Media uploaded successfully!");
-  //         }
-  //       } catch (error) {
-  //         console.error("Error uploading new media:", error.response?.data || error);
-  //         toast.error(error.response?.data?.message || "Failed to upload media.");
-  //       }
-  //     }
-  
-  //     // ✅ Update UI with new media
-  //     setFormData((prev) => ({
-  //       ...prev,
-  //       headshot: updatedHeadshotUrl || prev.headshot,
-  //       image: newImages.length > 0 ? newImages : prev.image,
-  //       video: newVideos.length > 0 ? newVideos : prev.video,
-  //     }));
-  
-  //     await fetchMedia(); // Refresh media list once
-  //   } catch (error) {
-  //     console.error("Error in mediaUpload:", error.response?.data || error);
-  //     toast.error(error.response?.data?.message || "Failed to process media.");
-  //   } finally {
-  //     setUploading(false);
-  //   }
-  // };
 
   useEffect(() => {
     fetchCountries();
@@ -708,6 +532,34 @@ export default function Profile() {
  
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const requiredFields = [
+      "contactPerson",
+      "category",
+      "specific_category",
+      "bio",
+      "contactNumber",
+      "performanceRole",
+      "vaccinated",
+      "pricePerEvent",
+      "socialLinks",
+      "country",
+      "state",
+      "city",
+      "address",
+      "dob",
+      "email",
+      "services",
+      "stageName",
+      "zipCode",
+    ];
+  
+    for (let field of requiredFields) {
+      if (!formData[field] || (field === "services" && formData.services.length === 0)) {
+        toast.error(`Please fill out all fields.`);
+        return; 
+      }
+    }
   
     const entertainerId = localStorage.getItem("entertainerId");
     const form = new FormData();
@@ -821,7 +673,6 @@ export default function Profile() {
                 handleInputChange={handleInputChange}
                 handleCategoryChange={handleCategoryChange}
                 handleSubCategoryChange={handleSubCategoryChange}
-                fetchMedia={fetchMedia}
                 mediaProp={media}
                 // mediaUpload={mediaUpload}
                 onMediaUpdate={(updatedMedia) => setMedia(updatedMedia)}
@@ -829,6 +680,7 @@ export default function Profile() {
                 handleRemoveService={handleRemoveService}
                 formatDate={formatDate}
                 setFormData={setFormData}
+                headshotUrl={formData.headshot}
                 handleSubmit={handleSubmit}/>
         </div>
       

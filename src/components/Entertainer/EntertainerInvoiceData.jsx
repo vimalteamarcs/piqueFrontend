@@ -1,8 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import moment from 'moment';
 import CustomTable from '../CustomTable';
+import { useNavigate } from 'react-router-dom';
 
 export default function EntertainerInvoiceData({ invoices = [], loading }) {
+  const navigate = useNavigate()
+  const [searchTerm, setSearchTerm] = useState("");
+ 
+  const handleView = (record) => {
+    console.log("Viewing event:", record);
+    navigate('/entertainer/invoicepage',{ state: record })
+  };
+
+  const handleSearchChange = (value) => {
+    setSearchTerm(value.toLowerCase());
+  };
+
+  const filteredData = invoices.filter((item) => {
+    const searchText = searchTerm.toLowerCase();
+
+    const invoiceNumber = item.invoice_number?.toLowerCase() || "";
+    const status = item.status?.toLowerCase() || "";
+    const date = item.issue_date ? moment(item.issue_date).format("DD-MMM-YYYY").toLowerCase() : "";
+    const userType = item.user_type?.toLowerCase() || "";
+    const total = item.total_with_tax?.toString().toLowerCase() || "";
+
+    return (
+      invoiceNumber.includes(searchText) ||
+      status.includes(searchText) ||
+      date.includes(searchText) ||
+      userType.includes(searchText) ||
+      total.includes(searchText)
+    );
+  });
+
   const columns = [
     {
       title: "Invoice Number",
@@ -46,26 +77,29 @@ export default function EntertainerInvoiceData({ invoices = [], loading }) {
       key: "total_with_tax",
       render: (text) => `$${text}`,
     },
-    {
-      title: "Action",
-      key: "action",
-      render: (_, record) => (
-        <a href="#" className="btn btn-outline-secondary btn-sm">
-          <i className="fa-solid fa-eye"></i>
-        </a>
-      ),
-    },
+    // {
+    //   title: "Action",
+    //   key: "action",
+    //   render: (_, record) => (
+    //     <a href="#" className="btn btn-outline-secondary btn-sm">
+    //       <i className="fa-solid fa-eye"></i>
+    //     </a>
+    //   ),
+    // },
   ];
 
 
   return (
-    <div className="entertainer-profile-container w-100">
+    <div className="entertainer-profile-container entrWrapper">
       <p className="subheadingPG mb-2 d-flex justify-content-between align-items-center">INVOICE LIST</p>
       <hr className='mt-0' />
       <CustomTable
-        data={invoices}
+        data={filteredData}
         columns={columns}
         loading={loading}
+        search={searchTerm}
+        onSearchChange={handleSearchChange}
+        onView={handleView}
         pagination={{
           current: 1,
           pageSize: 10,
