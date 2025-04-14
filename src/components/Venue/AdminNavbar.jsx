@@ -51,7 +51,7 @@ export default function AdminNavbar() {
         <div className="row">
           <nav id="navbar1" className="topNavbar navbar navbar-expand-lg p-2">
             <div className="container-fluid">
-              <span className="mobileMenuToggler"> <i className="fa-solid fa-bars"></i> </span>
+              <span className="e-mobileMenuToggler"> <i className="fa-solid fa-bars"></i> </span>
               {/* <!-- Logo Section --> */}
               <Link
                 className="navbar-brand d-flex align-items-center"

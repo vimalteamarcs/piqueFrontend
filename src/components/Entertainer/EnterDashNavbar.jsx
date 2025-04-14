@@ -8,6 +8,18 @@ export default function EnterDashNavbar() {
   const imagePath = import.meta.env.VITE_LOGGEDIN_IMAGE_PATH;
 
   useEffect(() => {
+    // Sidebar toggler functionality
+    $(".sidebar-toggler").click(function () {
+      $(".sidebar, .content").toggleClass("open");
+      return false;
+    });
+
+    $(".mobileMenuToggler").on('click', function () {
+      $(".custom-entertainer-sidebar").toggleClass('show');
+    });
+  }, []);
+
+  useEffect(() => {
     const user = localStorage.getItem("userName");
 
     if (!user) {
@@ -40,9 +52,10 @@ export default function EnterDashNavbar() {
 
   return (
     <>
-      <div className="container-fluid" style={{ boxShadow: "1px 1px 8px #e5e4e4" }}>
-        <nav className="navbar entrnavbar navbar-expand-lg mb-0">
+      <div className="container-fluid e-topNavbar" style={{ boxShadow: "1px 1px 8px #e5e4e4" }}>
+        <nav className="navbar navbar-expand-lg mb-0">
           <div className="container">
+            <span className="mobileMenuToggler"> <i className="fa-solid fa-bars"></i> </span>
             {/* <!-- Logo Section --> */}
             <NavLink
               className="navbar-brand  d-flex align-items-center"
@@ -75,8 +88,8 @@ export default function EnterDashNavbar() {
                     Entertainment | Education | Engagement
                   </p>
                 </ul> */}
-              <div className="row navbar-nav mx-auto mb-2 mb-lg-0 gx-5">
-                <div className="col-md-6 text-center mt-1">
+              <div className="row navbar-nav1 mx-auto mb-2 mb-lg-0 gx-5">
+                <div className="col-md-6 col-6 text-center mt-1">
                   <NavLink
                     to="/entertainer"
                     className={({ isActive }) =>
@@ -87,7 +100,7 @@ export default function EnterDashNavbar() {
                     <p className="dash-navbar-font mt-1">Dashboard</p>
                   </NavLink>
                 </div>
-                <div className="col-md-6 text-center mt-1">
+                <div className="col-md-6 col-6 text-center mt-1">
                   <NavLink
                     to="/entertainer/calendar"
                     className={({ isActive }) =>

@@ -955,8 +955,7 @@ table.dataTable thead th, table.dataTable tfoot th {font-weight: 600;} */
   border-radius: 2px;
   opacity: 1;
 }
-
-.mobileMenuToggler {
+.mobileMenuToggler, .e-mobileMenuToggler {
   display: none;
 }
 
@@ -1224,58 +1223,38 @@ table.dataTable thead th, table.dataTable tfoot th {font-weight: 600;} */
   cursor: pointer
 }
 
+.e-pageLayout {padding-top: 70px;}
+.e-topNavbar {background: #fff !important;position: fixed;height: 70px;z-index: 9;top: 0;}
+.e-topNavbar .navbar {background: #fff ;}
+.custom-entertainer-sidebar {position: fixed;}
+.entertainer-profile-container {margin-left: 280px;}
 
 /* ---------- CSS Media Queries---------- */
 /* ##Device = Desktops, ##Screen = 1281px to higher resolution desktops */
-@media (min-width:1281px) {}
-
-/* ##Device = Laptops, Desktops, ##Screen = B/w 1025px to 1280px */
-@media (min-width:1025px) and (max-width:1280px) {}
-
-/* ##Device = Tablets, Ipads (portrait), ##Screen = B/w 768px to 1024px */
-@media (min-width:768px) and (max-width:1024px) {}
-
-/* ##Device = Tablets, Ipads (landscape), ##Screen = B/w 768px to 1024px */
-@media (min-width:768px) and (max-width:1024px) and (orientation:landscape) {}
-
-/* ##Device = Low Resolution Tablets, Mobiles (Landscape), ##Screen = B/w 481px to 767px */
-@media (min-width:481px) and (max-width:767px) {}
-
-/* ##Device = Most of the Smartphones Mobiles (Portrait), ##Screen = B/w 320px to 479px */
-@media (min-width:320px) and (max-width:480px) {
-  nav .logoMain {
-    height: 35px;
-    width: 140px;
-  }
-
-  .pageLayout {
-    margin-top: 55px;
-  }
-
-  .mobileMenuToggler {
-    display: inline;
-    color: #e65f29;
-    margin-right: 5px;
-    font-size: 20px;
-    border: 1px solid;
-    padding: 4px 10px;
-    border-radius: 40px;
-  }
-
-  .dash-sidebar-container {
-    display: none;
-    z-index: 8;
-  }
-
-  .dash-sidebar-container.show {
-    display: inline;
-  }
-
-  .dash-sidebar-container.hide {
-    display: none;
-  }
-
-  .dash-profile-container {
-    margin-left: 0;
-  }
-}
+@media (min-width:1281px){ 
+ }
+ /* ##Device = Laptops, Desktops, ##Screen = B/w 1025px to 1280px */
+ @media (min-width:1025px) and (max-width:1280px){ 
+ }
+ /* ##Device = Tablets, Ipads (portrait), ##Screen = B/w 768px to 1024px */
+ @media (min-width:768px) and (max-width:1024px){ 
+ }
+ /* ##Device = Tablets, Ipads (landscape), ##Screen = B/w 768px to 1024px */
+ @media (min-width:768px) and (max-width:1024px) and (orientation:landscape){ 
+ }
+ /* ##Device = Low Resolution Tablets, Mobiles (Landscape), ##Screen = B/w 481px to 767px */
+ @media (min-width:481px) and (max-width:767px){ 
+ }
+ /* ##Device = Most of the Smartphones Mobiles (Portrait), ##Screen = B/w 320px to 479px */
+ @media (min-width:320px) and (max-width:480px){
+  nav .logoMain {height: 35px;width: 140px;}
+  .pageLayout {margin-top: 70px;}
+  .mobileMenuToggler, .e-mobileMenuToggler {display: inline;color: #e65f29;margin-right: 5px;font-size: 20px;border: 1px solid;padding: 4px 10px;border-radius: 40px;}
+  .dash-sidebar-container, .custom-entertainer-sidebar {display: none;z-index: 8;}
+  .dash-sidebar-container.show, .custom-entertainer-sidebar.show {display: inline;}
+  .dash-sidebar-container.hide, .custom-entertainer-sidebar.hide {display: none;}
+  .dash-profile-container, .entertainer-profile-container {margin-left: 0;}
+  .e-pageLayout { }
+  .e-pageLayout .container-fluid, .e-pageLayout .container {overflow: initial;flex-direction: initial;}
+  .custom-entertainer-sidebar {top: 55px;padding-top: 15px;}
+ }
