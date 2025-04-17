@@ -78,11 +78,47 @@ export default function AdminNavbar() {
               </button>
 
               <div className="collapse navbar-collapse" id="navbarContent">
-                <ul className="navbar-nav mx-auto ">
+                {/* <ul className="navbar-nav mx-auto ">
                   <p className="fw-semibold fs-6 nav-font mt-3">
                     Entertainment | Education | Engagement
                   </p>
-                </ul>
+                </ul> */}
+
+                <div className="row navbar-nav1 mx-auto mb-2 mb-lg-0 gx-5 topNavbarMenus">
+                  <div className="col-md-4 m-name active col text-center">
+                    <NavLink
+                      to="/entertainer"
+                      className={({ isActive }) =>
+                        `text-decoration-none dash-link ${isActive ? "active-dash" : ""}`
+                      }
+                    >
+                      <img src={`${imagePath}entdashIcon.svg`} alt="Dashboard" className="" />
+                      <p className="dash-navbar-font mt-1">Dashboard</p>
+                    </NavLink>
+                  </div>
+                  <div className="col-md-4 m-name col text-center">
+                    <NavLink
+                      to="/entertainer/calendar"
+                      className={({ isActive }) =>
+                        `text-decoration-none dash-link ${isActive ? "active-dash" : ""}`
+                      }
+                    >
+                      <img src={`${imagePath}Icon akar-calendar.svg`} alt="Calendar" className="" />
+                      <p className="dash-navbar-font mt-1">Calendar</p>
+                    </NavLink>
+                  </div>
+                  <div className="col-md-4 m-name col text-center">
+                    <NavLink
+                      to="/entertainer/messages"
+                      className={({ isActive }) =>
+                        `text-decoration-none dash-link ${isActive ? "active-dash" : ""}`
+                      }
+                    >
+                      <img src={`${imagePath}Icon feather-message-square.svg`} height="19px" alt="Messages" className="" />
+                      <p className="dash-navbar-font mt-1">Messages</p>
+                    </NavLink>
+                  </div>
+                </div>
 
                 <div className="d-flex align-items-center">
                   <div className="dropdown ms-3">

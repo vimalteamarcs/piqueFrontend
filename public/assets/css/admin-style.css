@@ -269,6 +269,28 @@ table.dataTable thead th, table.dataTable tfoot th {font-weight: 600;} */
   height: 70px;
   z-index: 9;
 }
+.topNavbarMenus {background: #FFFFFF 0% 0% no-repeat padding-box;
+  box-shadow: 0px 3px 6px #00000029;
+  border-radius: 30px; --bs-gutter-x: 4rem; padding: 5px 5px;
+}
+.topNavbarMenus .m-name {
+  border-radius: 30px;
+  padding: 5px 35px;
+}
+.topNavbarMenus .m-name.active {
+  background-color: #F3F3F3;  
+}
+.topNavbarMenus .m-name .dash-link img { 
+  height: 18px;
+}
+.topNavbarMenus .m-name .dash-link { 
+  color: #000;font-weight: 600;
+}
+.topNavbarMenus .m-name.active .dash-link { 
+  color: #000E6F;
+}
+
+.topNavbarMenus {}
 
 .dash-sidebar-container {
   position: fixed;
@@ -857,6 +879,11 @@ table.dataTable thead th, table.dataTable tfoot th {font-weight: 600;} */
 
 .total-entertainers {
   background: #e9fffa !important;
+  border-radius: 7px !important;
+  height: 103px !important;
+}
+.totalRevenue {
+  background: #EBF5FF !important;
   border-radius: 7px !important;
   height: 103px !important;
 }
