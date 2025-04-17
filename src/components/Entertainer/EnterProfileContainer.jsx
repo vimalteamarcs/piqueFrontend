@@ -254,8 +254,8 @@ export default function EnterProfileContainer({
           </div>
 
           <div className="row mb-3">
-            <div className="col-md-6 dash-font">
-              <label className="dash-font fw-semibold">Email</label>
+            {/* <div className="col-md-6 dash-font">
+              <label className="dash-font fw-semibold">Business Email</label>
               <Input
                 type="email"
                 name="email"
@@ -264,7 +264,7 @@ export default function EnterProfileContainer({
                 placeholder="Enter your mail"
                 onChange={handleInputChange}
               />
-            </div>
+            </div> */}
             <div className="col-md-6 dash-font">
               <label className="dash-font fw-semibold">Vaccinated?</label>
 
@@ -275,10 +275,7 @@ export default function EnterProfileContainer({
                 onChange={(e) => handleInputChange(e)} // just pass the event
               />
             </div>
-          </div>
-
-          <div className="row mb-3">
-            <div className="col-md-12">
+            <div className="col-md-6">
               <label className="dash-font fw-semibold">Bio</label>
               <textarea
                 className="form-control dash-font"
@@ -290,6 +287,20 @@ export default function EnterProfileContainer({
               />
             </div>
           </div>
+
+          {/* <div className="row mb-3">
+            <div className="col-md-12">
+              <label className="dash-font fw-semibold">Bio</label>
+              <textarea
+                className="form-control dash-font"
+                name="bio"
+                value={formData.bio || ""}
+                onChange={handleInputChange}
+                placeholder="Describe yourself"
+                rows="1"
+              />
+            </div>
+          </div> */}
 
           <div className="row mb-3">
             <div className="col-md-6 dash-font">

@@ -140,7 +140,7 @@ export default function AllVenues() {
       key: "location",
     },
     {
-      title: "Contact Info",
+      title: "Contact",
       dataIndex: "phone",
       key: "contactInfo",
     },
@@ -181,7 +181,7 @@ export default function AllVenues() {
                         current: pagination.current,
                         pageSize: pagination.pageSize,
                         total: pagination.total,
-                        showSizeChanger: true,
+                        showSizeChanger: false,
                       }}
                       onTableChange={(pagination) => {
                         // Trigger API call with new page and pageSize
@@ -196,6 +196,7 @@ export default function AllVenues() {
                         setSearch(value);
                         fetchVenues(1, pagination.pageSize, value); // Reset to the first page on search
                       }}
+                      showPageSizeDropdown={true}
                     />
                   </div>
                 )}

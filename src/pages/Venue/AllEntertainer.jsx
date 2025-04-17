@@ -49,7 +49,7 @@ export default function AllEntertainer() {
             },
           }
         );
-        console.log(response.data)
+        console.log("entertainer data",response.data)
         setEntertainers(response.data.entertainers || []);
         setTotalCount(response.data.totalCount || 0);
       } catch (err) {
@@ -61,6 +61,11 @@ export default function AllEntertainer() {
 
     fetchEntertainers();
   }, [searchQuery, availability, category, pageIndex, pageSize,date]);
+
+  useEffect(() => {
+    fetchVenues();
+  }, []);
+  
 
   const updateFilters = (newFilters) => {
     const updatedParams = new URLSearchParams(searchParams);
@@ -75,6 +80,42 @@ export default function AllEntertainer() {
     updatedParams.set("page", "1");
     setSearchParams(updatedParams);
   };
+
+  const fetchVenues = async () => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}venues`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+  
+      console.log("Venue Response:", response.data);
+  
+      const parentVenue = response.data.venues.find(venue => venue.isParent);
+  
+      if (parentVenue) {
+        localStorage.setItem("venueId", parentVenue.id);
+      } else {
+        console.warn("No parent venue found.");
+      }
+    } catch (error) {
+      console.error("Error fetching venues:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleWishlistToggle = (eid, isWishlisted) => {
+    setEntertainers(prev =>
+      prev.map(ent =>
+        ent.eid === eid ? { ...ent, isWishlisted } : ent
+      )
+    );
+  };
+  
 
   return (
     <DashLayoutVenue
@@ -102,6 +143,8 @@ export default function AllEntertainer() {
                     isWishlisted={entertainer.isWishlisted}
                     isProcessing={false}
                     entertainer={entertainer}
+                    onRemoveFromWishlist={(eid) => handleWishlistToggle(eid, false)}
+                    onToggleWishlist={handleWishlistToggle}
                   />
                 ))
               ) : <div>

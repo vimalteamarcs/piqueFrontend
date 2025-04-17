@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, NavLink, replace, useNavigate } from "react-router-dom";
 import Button from "../Button";
+import axios from "axios";
 
 export default function VenueDashNavbar() {
   const navigate = useNavigate();
@@ -21,16 +22,29 @@ export default function VenueDashNavbar() {
     };
   }, [navigate]);
 
-  function handleLogout(e) {
+  async function handleLogout(e) {
     e.preventDefault();
-    localStorage.clear();
-
-    const closeBtn = document.querySelector(
-      ".btn-close[data-bs-dismiss='modal']"
-    );
-    if (closeBtn) closeBtn.click();
-
-    navigate("/");
+  
+    const token = localStorage.getItem("token");
+    if (!token) return;
+  
+    try {
+      await axios.post(`${import.meta.env.VITE_API_URL}auth/logout`, {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+  
+      localStorage.clear();
+  
+      const closeBtn = document.querySelector(
+        ".btn-close[data-bs-dismiss='modal']"
+      );
+      if (closeBtn) closeBtn.click();
+  
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      alert("Failed to logout. Please try again.");
+    }
   }
 
   return (
@@ -73,10 +87,10 @@ export default function VenueDashNavbar() {
                 </ul>
 
                 <div className="d-flex align-items-center">
-                  <NavLink className="nav-btn" to="/venue">
+                  <NavLink className="nav-btn" to="/venue/addvenuelocation">
                     <img src={`${imagePath}plusIcon.svg`} />
                   </NavLink>
-                  <NavLink className="nav-btn ms-2" to="/venue">
+                  <NavLink className="nav-btn ms-2" to="/venue/message">
                     <img src={`${imagePath}messageIcon.svg`} />
                   </NavLink>
                   <NavLink className="nav-btn ms-2" to="/venue/profile">

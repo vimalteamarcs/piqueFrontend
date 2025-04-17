@@ -17,8 +17,8 @@ export default function ProfileSidebar() {
 
   return (
     <div className="p-2 profile-font">
-      <button className="btn fw-medium mb-1 ms-2" onClick={() => { navigate('/venue') }} style={{ fontSize: "20px" }}><i className="fa-solid fa-angle-left fs-6 me-1"></i>Account</button>
-      <p className="text-muted fw-regular ms-4" style={{ fontSize: "14px" }}>{name}</p>
+      <button className="btn fw-medium ms-2" onClick={() => { navigate('/venue') }} style={{ fontSize: "20px" }}><i className="fa-solid fa-angle-left fs-6 me-1"></i>Account</button>
+      <p className="text-muted fw-regular text-muted fw-medium" style={{ fontSize: "12px", marginLeft:"34px" }}>{name}</p>
       <nav className="nav flex-column position-relative ms-4 label-font">
         {/* VENUE PROFILE, CONTACT PERSON, WISHLIST */}
         {[

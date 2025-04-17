@@ -4,8 +4,8 @@ import { Helmet } from "react-helmet-async";
 import Button from "../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../components/Input";
-import toast, { Toaster } from "react-hot-toast";
 import { getFcmToken } from "../notifications/registerToken";
+import { toast, ToastContainer } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -69,6 +69,14 @@ const Login = () => {
 
   const handleResetPsw = async (e) => {
     e.preventDefault();
+
+    if (!formData.email.trim()) {
+      toast.error("Email is required", {
+        position: "top-right",
+      });
+      return;
+    }
+
     const body = { email: formData.email };
 
     try {
@@ -76,14 +84,18 @@ const Login = () => {
         `${import.meta.env.VITE_API_URL}auth/forgot-password`,
         body
       );
+      console.log(response.data)
       toast.success("Password reset link sent to your registered  email", {
-        position: "top-center",
+        position: "top-right",
       });
 
       // navigate("/reset-password", { state: { email: formData.email } });
     } catch (error) {
-      toast.error("User not found", {
-        position: "top-center",
+      // Check if the error has a response and a message, otherwise fallback to a generic message
+      const errorMessage = error.response?.data?.message || error.message || "An error occurred. Please try again.";
+    
+      toast.error(errorMessage, {
+        position: "top-right",
       });
     }
   };
@@ -170,7 +182,7 @@ const Login = () => {
           content="Login to your account to access personalized features and services."
         />
       </Helmet>
-      <Toaster />
+      <ToastContainer />
       {/* <PiqueNavbar/> */}
       <div className="container min-vh-100 ">
         <div className="row d-flex justify-content-around mt-5">
@@ -250,7 +262,7 @@ const Login = () => {
                     <div className="col d-flex justify-content-center">
                       <button
                         type="submit"
-                        className="btn-primary w-100 fw-bold sign-in-btn"
+                        className="btn w-100 fw-bold login-btn rounded-3"
                         label="Login"
                       >
                         Login
@@ -259,14 +271,13 @@ const Login = () => {
                   </div>
                 </form>
                 <p className="text-center mt-3 profile-font">
-                  Don't have an account?
-                  <Link to="/signup/venue" className="text-primary fw-semibold">
-                    Sign Up Now
+                  Don't have an account? <Link to="/signup/venue" className="text-primary fw-semibold">
+                    Signup Now
                   </Link>
                 </p>
 
-                <p className="text-center" style={{ fontSize: "12px" }}>
-                  T&C | Privacy Policy
+                <p className="text-center fw-semibold" style={{ fontSize: "12px" }}>
+                  <Link to = "/terms-and-conditions" className="text-decoration-none text-black"> T&C</Link> |  <Link to="/privacy-policy" className="text-decoration-none text-black">Privacy Policy</Link>
                 </p>
               </div>
             </div>

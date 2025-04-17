@@ -90,11 +90,9 @@ export default function BookingDataContainer({
     const description = item?.description?.toLowerCase() || "";
     const specialNotes = item?.specialNotes?.toLowerCase() || "";
   
-    // Format show date
     const formattedDate = moment(item?.showDate).format("DD-MMM-YYYY").toLowerCase();
     const formattedTime = item?.showTime?.toLowerCase() || "";
   
-    // Calculate event duration
     const start = moment(item?.event_startTime);
     const end = moment(item?.event_endTime);
     const duration = moment.duration(end.diff(start));
@@ -105,7 +103,7 @@ export default function BookingDataContainer({
     if (minutes) durationText += `${minutes}m`;
     durationText = durationText.trim() || "0m";
   
-    return (
+    const matchesSearch =
       eventTitle.includes(searchText) ||
       venueName.includes(searchText) ||
       status.includes(searchText) ||
@@ -119,9 +117,14 @@ export default function BookingDataContainer({
       specialNotes.includes(searchText) ||
       formattedDate.includes(searchText) ||
       formattedTime.includes(searchText) ||
-      durationText.includes(searchText)
-    );
+      durationText.includes(searchText);
+  
+    const matchesStatus =
+      statusFilter === "all" || status === statusFilter.toLowerCase();
+  
+    return matchesSearch && matchesStatus;
   });
+  
   
   
 
@@ -135,6 +138,7 @@ export default function BookingDataContainer({
       title: "Date",
       dataIndex: "date",
       key: "date",
+      width: 100,
       render: (date) => moment(date).format("DD-MMM-YYYY"),
     },
     {
@@ -177,7 +181,6 @@ export default function BookingDataContainer({
       title: "Status",
       dataIndex: "status",
       key: "status",
-      width: 60,
       render: (status) => {
         let badgeClass = "";
     

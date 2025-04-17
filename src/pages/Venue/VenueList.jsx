@@ -5,6 +5,8 @@ import VenueTable from "../../components/Venue/VenueTable";
 import DashLayoutVenue from "../../components/Venue/DashLayoutVenue";
 import ProfileSidebar from "../../components/Venue/ProfileSidebar";
 import SearchBar from "../../components/Venue/SearchBar";
+import CustomTable from "../../components/CustomTable";
+import { Button } from "antd";
 
 export default function VenueList() {
   const [expanded, setExpanded] = useState({});
@@ -27,7 +29,7 @@ export default function VenueList() {
 
       if (!response.data || !Array.isArray(response.data.data)) {
         console.error("Unexpected API response format:", response.data);
-        setVenues([]); 
+        setVenues([]);
         return;
       }
       setVenues(response.data.data);
@@ -64,6 +66,8 @@ export default function VenueList() {
   const handleEditClick = (venue) => {
     setSelectedVenue(venue);
   };
+
+
   return (
     <>
       <DashLayoutVenue
@@ -75,9 +79,9 @@ export default function VenueList() {
           <div className="d-flex">
             <div className="sidebar-container">
               <ProfileSidebar />
-           </div>
-           <div className="profile-container">
-                <VenueTable
+            </div>
+            <div className="profile-container">
+              <VenueTable
                   venues={venues}
                   setVenues={setVenues}
                   selectedVenue={selectedVenue}
@@ -85,7 +89,11 @@ export default function VenueList() {
                   handleEditClick={handleEditClick}
                   loading={loading}
                 />
+
              
+
+
+
             </div>
           </div>
         </div>

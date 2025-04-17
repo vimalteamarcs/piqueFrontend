@@ -3200,3 +3200,72 @@ button:disabled {
 .btn.view-btn:hover {
   background-color: #5fa934;
 }
+
+.login-btn {
+  border: 1px solid #DA3E07;
+  color: #DA3E07;
+  height: 50px;
+}
+.login-btn:hover{
+  background-color: #DA3E07;
+  color: white;
+  height: 50px;
+}
+
+
+/* message css */
+.message-wrapper {
+  /* flex-grow: 1; */
+  background-color: #fff;
+  flex: 1;
+}
+
+.chat-user img {
+  width: 40px;
+  height: 40px;
+}
+
+.chat-bubble {
+  display: inline-block;
+  max-width: 75%;
+  padding: 10px;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  position: relative;
+  word-wrap: break-word;
+}
+
+.chat-bubble.left {
+  background-color: white;
+  border-top-left-radius: 0; /* Move the rounded corner to the top-left */
+}
+
+.chat-bubble.right {
+  background-color: #fdbda2;
+  color: #fff;
+  border-top-right-radius: 0; /* Move the rounded corner to the top-right */
+}
+
+
+.timestamp {
+  font-size: 0.7rem;
+  display: block;
+  text-align: right;
+  opacity: 0.6;
+  margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .message-sidebar {
+    border-bottom: 1px solid #eee;
+  }
+
+  .chat-header,
+  .chat-input {
+    padding: 1rem 0.75rem;
+    padding-right: 50px !important;
+    padding-left: 30px !important;
+    margin-left:  335px !important;;
+  }
+}

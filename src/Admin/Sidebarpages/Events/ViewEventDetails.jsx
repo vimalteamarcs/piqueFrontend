@@ -252,8 +252,8 @@ const ViewEventDetails = () => {
                               <th>Special Notes</th>
                               <th>Created At</th>
                               <th>Updated At</th>
-                              <th>Is Accepted Date</th>
-                              <th>Status Date</th>
+                              {/* <th>Is Accepted Date</th>
+                              <th>Status Date</th> */}
                             </tr>
                           </thead>
                           <tbody>
@@ -261,40 +261,41 @@ const ViewEventDetails = () => {
                               bookings.map((booking, index) => (
                                 <tr key={index} className="profile-font">
                                   <td>
-                                    {booking.name ? (
-                                      <strong
-                                        style={{
-                                          cursor: "pointer",
-                                          color: "blue",
-                                        }}
-                                        onClick={() =>
-                                          handleShow({
-                                            name: booking.name,
-                                            phone1: booking.phone1,
-                                            phone2: booking.phone2,
-                                            bio: booking.bio,
-                                            performanceRole:
-                                              booking.performanceRole,
-                                            categoryName: booking.categoryName,
-                                            specificCatName:
-                                              booking.specific_catName,
-                                            availability: booking.availability,
-                                            pricePerEvent:
-                                              booking.pricePerEvent,
-                                            vaccinated: booking.vaccinated,
-                                            socialLinks: booking.socialLinks,
-                                            createdAt: booking.createdAt,
-                                            updatedAt: booking.updatedAt,
-                                          })
-                                        }
-                                      >
+                                    {/* {booking.name ? (
+                                      // <strong
+                                      //   style={{
+                                      //     cursor: "pointer",
+                                      //     color: "blue",
+                                      //   }}
+                                      //   onClick={() =>
+                                      //     handleShow({
+                                      //       name: booking.name,
+                                      //       phone1: booking.phone1,
+                                      //       phone2: booking.phone2,
+                                      //       bio: booking.bio,
+                                      //       performanceRole:
+                                      //         booking.performanceRole,
+                                      //       categoryName: booking.categoryName,
+                                      //       specificCatName:
+                                      //         booking.specific_catName,
+                                      //       availability: booking.availability,
+                                      //       pricePerEvent:
+                                      //         booking.pricePerEvent,
+                                      //       vaccinated: booking.vaccinated,
+                                      //       socialLinks: booking.socialLinks,
+                                      //       createdAt: booking.createdAt,
+                                      //       updatedAt: booking.updatedAt,
+                                      //     })
+                                      //   }
+                                      // >
                                         {booking.name}
-                                      </strong>
+                                      // </strong>
                                     ) : (
                                       <span style={{ color: "gray" }}>
                                         No Entertainer
                                       </span>
-                                    )}
+                                    )} */}
+                                    {booking.name}
                                   </td>
                                   <td>{booking.categoryName}</td>
                                   <td>{booking.specific_catName}</td>
@@ -310,32 +311,15 @@ const ViewEventDetails = () => {
                                   <td>{booking.specialNotes || "No notes"}</td>
                                   <td>
                                     {booking.createdAt
-                                      ? new Date(
-                                        booking.createdAt
-                                      ).toLocaleString()
+                                      ? moment(booking.createdAt).format("DD MMM YYYY | hh:mm A")
                                       : " "}
                                   </td>
                                   <td>
                                     {booking.updatedAt
-                                      ? new Date(
-                                        booking.updatedAt
-                                      ).toLocaleString()
+                                      ? moment(booking.updatedAt).format("DD MMM YYYY | hh:mm A")
                                       : " "}
                                   </td>
-                                  <td>
-                                    {booking.isAcceptedDate
-                                      ? new Date(
-                                        booking.isAcceptedDate
-                                      ).toLocaleString()
-                                      : " "}
-                                  </td>
-                                  <td>
-                                    {booking.statusDate
-                                      ? new Date(
-                                        booking.statusDate
-                                      ).toLocaleString()
-                                      : " "}
-                                  </td>
+
                                 </tr>
                               ))
                             ) : (

@@ -66,13 +66,23 @@ export default function FilterNavbar() {
   }, []);
 
   const handleCategorySelect = (category) => {
-    setSelectedCategory(category.id); // Store ID instead of name
-    setSearchParams((prev) => {
-      const newParams = new URLSearchParams(prev);
-      newParams.set("category", category.id); // Set category ID in URL params
-      return newParams;
-    });
+    if (selectedCategory === category.id) {
+      setSelectedCategory("");
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev);
+        newParams.delete("category"); // Remove category param from URL
+        return newParams;
+      });
+    } else {
+      setSelectedCategory(category.id);
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev);
+        newParams.set("category", category.id); // Set category param in URL
+        return newParams;
+      });
+    }
   };
+  
 
   return (
     <>

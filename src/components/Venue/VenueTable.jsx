@@ -4,6 +4,7 @@ import Input from "../Input";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import CustomTable from "../CustomTable";
 
 export default function VenueTable({
   venues,
@@ -13,6 +14,7 @@ export default function VenueTable({
   setVenues,
   loading,
 }) {
+  console.log(venues)
   const [formData, setFormData] = useState({
     addressLine1: "",
     addressLine2: "",
@@ -23,6 +25,8 @@ export default function VenueTable({
   const [venueToDelete, setVenueToDelete] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -51,27 +55,27 @@ export default function VenueTable({
 
   const validateForm = () => {
     let newErrors = {};
-  
+
     if (!formData.addressLine1.trim()) {
       newErrors.addressLine1 = "Address Line 1 is required.";
     }
-  
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
       newErrors.email = "Email is required.";
     } else if (!emailRegex.test(formData.email)) {
       newErrors.email = "Please enter a valid email address.";
     }
-  
+
     const phoneRegex = /^\d{10}$/;
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required.";
     } else if (!phoneRegex.test(formData.phone)) {
       newErrors.phone = "Enter a valid 10-digit phone number.";
     }
-  
+
     setErrors(newErrors);
-  
+
     return Object.keys(newErrors).length === 0; // Returns true if no errors
   };
 
@@ -125,7 +129,7 @@ export default function VenueTable({
     } catch (error) {
       console.error("Error updating venue:", error);
       toast.error("An error occurred while updating the venue.");
-    }finally {
+    } finally {
       // console.log("isLoading set to false"); 
       setIsLoading(false);
     }
@@ -167,13 +171,54 @@ export default function VenueTable({
     }
   };
 
+  const columns = [
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Address Line 1",
+      dataIndex: "addressLine1",
+      key: "addressLine1",
+    },
+    {
+      title: "Address Line 2",
+      dataIndex: "addressLine2",
+      key: "addressLine2"
+    },
+    {
+      title: "Zip Code",
+      dataIndex: "zipCode",
+      key: "zipCode"
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email"
+    },
+    {
+      title: "Phone Number",
+      dataIndex: "phone",
+      key: "phone"
+    }
+  ];
+
+  const filteredVenues = venues?.filter((venue) =>
+    Object.values(venue).some(
+      (value) =>
+        value &&
+        value.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
+
 
   return (
     <>
-    <div className="d-flex justify-content-between mb-0">
-    <p className="fw-bold">LOCATIONS</p>
-<button className="btn btn-dark" onClick={() => navigate("/venue/addvenuelocation")}>Add Location</button>
-    </div>
+      <div className="d-flex justify-content-between mb-0">
+        <p className="fw-bold">LOCATIONS</p>
+        <button className="btn venue-btn" onClick={() => navigate("/venue/addvenuelocation")}>Add Location</button>
+      </div>
       <hr />
       <div className="row">
         <ToastContainer position="top-right" reverseOrder={false} />
@@ -184,48 +229,26 @@ export default function VenueTable({
             </div>
           </div>
         ) : venues?.length > 0 ? (
-          <div className="table-responsive">
-            <table className="table">
-              <thead>
-                <tr className="profile-font">
-                  <th>SNo</th>
-                  <th>Address Line 1</th>
-                  <th>Address Line 2</th>
-                  <th>Email</th>
-                  <th>Contact Number</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody className="profile-font text-secondary">
-                {venues.map((venue, index) => (
-                  <tr key={venue.id}>
-                    <td>{index + 1}</td>
-                    <td>{venue.addressLine1} </td>
-                    <td>{venue.addressLine2}</td>
-                    <td>{venue.email}</td>
-                    <td>{venue.phone}</td>
-                    <td>
-                      <Button
-                        className="btn btn-outline-secondary rounded-3 btn-sm"
-                        onClick={() => handleEditClick(venue)}
-                      >
-                        <i className="fa-solid fa-pen-to-square"></i>
-                      </Button>
-                      <Button
-                        className="btn btn-outline-secondary ms-1 rounded-3 btn-sm"
-                        onClick={() => {
-                          setVenueToDelete(venue.id);
-                          setShowDeleteModal(true);
-                        }}
-                      >
-                        <i className="fa-solid fa-trash"></i>
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <CustomTable
+            data={filteredVenues}
+            columns={columns}
+            onEdit={handleEditClick}
+            onDelete={(venueId) => {
+              setVenueToDelete(venueId);
+              setShowDeleteModal(true);
+            }}
+            loading={loading}
+            pagination={{
+              current: currentPage,
+              pageSize: 10,
+              total: filteredVenues.length,
+              onChange: (page) => setCurrentPage(page),
+            }}
+            search={searchTerm}
+            onSearchChange={(value) => setSearchTerm(value)}
+          />
+
+
         ) : null}
 
         {selectedVenue && (

@@ -77,6 +77,7 @@ import EntertainerNotification from "../pages/Entertainer/EntertainerNotificatio
 import EntertainerGallery from "../pages/Entertainer/EntertainerGallery";
 import EntertainerEventDetails from "../pages/Entertainer/EntertainerEventDetails";
 import EntertainerInvoicePage from "../pages/Entertainer/EntertainerInvoicePage";
+import VenueMessage from "../pages/Venue/VenueMessage";
 const basename = import.meta.env.VITE_BASE || "/P/";
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -119,6 +120,8 @@ const router = createBrowserRouter(
         <Route path='/venue/addevents' element={<AddEvents />} />
         <Route path='/venue/addvenuelocation' element={<AddLocationVenue />} />
         <Route path='/venue/invoices' element={<InvoicePage />} />
+        <Route path='/venue/message' element={<VenueMessage />} />
+
 
       </Route>
 

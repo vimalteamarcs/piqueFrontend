@@ -13,12 +13,13 @@ import AdminSideBar from "../../components/Venue/AdminSideBar";
 import { Button, Modal } from "react-bootstrap";
 import SubCategoryModal from "./SubCategoryModal";
 import DeleteConfirmationModal from "./DeleteConfirmationModal";
+import { toast, ToastContainer } from "react-toastify";
 
 const CategoryForm = () => {
   const [isMainCategory, setIsMainCategory] = useState(true);
   const [name, setName] = useState("");
   const [subname, setSubname] = useState("");
-  const [mainCategoryId, setMainCategoryId] = useState("");
+  const [mainCategoryId, setMainCategoryId] = useState(null);
   const [mainCategories, setMainCategories] = useState([]);
   const [subCategories, setSubCategories] = useState([]);
   const [error, setError] = useState("");
@@ -116,13 +117,44 @@ const CategoryForm = () => {
     fetchSubCategories();
   }, [mainCategoryId, success, error]);
 
+  // const handlemainSubmit = async (e) => {
+  //   console.log("main category");
+  //   e.preventDefault();
+  //   setError("");
+  //   setSuccess("");
+
+  //   try {
+  //     const response = await axios.post(
+  //       `${import.meta.env.VITE_API_URL}${CREATE_CATEGORY}`,
+  //       {
+  //         name: name,
+  //         parentId: 0,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //         },
+  //       }
+  //     );
+  //     console.log("main category", response.data);
+  //     setSuccess("Main category created successfully");
+
+  //     setName("");
+  //     setMainCategoryId("");
+  //     fetchMainCategories();
+  //   } catch (err) {
+  //     setError("Failed to create category");
+  //   }
+  // };
+
   const handlemainSubmit = async (e) => {
     console.log("main category");
     e.preventDefault();
-    setError("");
-    setSuccess("");
-
+    setError("");  // Clear previous error
+    setSuccess("");  // Clear previous success message
+  
     try {
+      // Make the API call to create the category
       const response = await axios.post(
         `${import.meta.env.VITE_API_URL}${CREATE_CATEGORY}`,
         {
@@ -135,14 +167,33 @@ const CategoryForm = () => {
           },
         }
       );
+  
       console.log("main category", response.data);
+  
+      // Close the modal first
+      setIsModalOpen(false);
+  
+      // Set success message
       setSuccess("Main category created successfully");
-
+  
+      // Clear the form
       setName("");
       setMainCategoryId("");
+  
+      // Fetch updated categories
       fetchMainCategories();
+  
+      // Show success toast notification
+      toast.success("Main category created successfully ✅", {
+        autoClose: 3000, // Toast auto-close after 3 seconds
+      });
     } catch (err) {
       setError("Failed to create category");
+  
+      // Optionally show an error toast as well
+      toast.error("Failed to create category", {
+        autoClose: 3000, // Toast auto-close after 3 seconds
+      });
     }
   };
 
@@ -164,7 +215,7 @@ const CategoryForm = () => {
           },
         }
       );
-      setSuccess("Sub-category created successfully");
+      // setSuccess("Sub-category created successfully");
       fetchSubCategories();
       setSubname("");
     } catch (err) {
@@ -194,6 +245,15 @@ const CategoryForm = () => {
       setError("Failed to delete category");
     }
   };
+
+  const showToast = (message, type) => {
+    if (type === "success") {
+      toast.success(message);
+    } else if (type === "error") {
+      toast.error(message);
+    }
+  };
+
   const handleDeleteMainCategory = async (id) => {
     try {
       console.log(id);
@@ -252,6 +312,7 @@ const CategoryForm = () => {
           <div className="dash-sidebar-container">
             <AdminSideBar />
           </div>
+          <ToastContainer/>
           <div className="dash-profile-container">
             <div className="card">
               <div className="card-body">
@@ -415,6 +476,7 @@ const CategoryForm = () => {
                                 }
                                 mainCategoryId={mainCategoryId}
                                 fetchSubCategories={fetchSubCategories}
+                                showToast={showToast}
                               />
                             </div>
 
@@ -508,7 +570,7 @@ const CategoryForm = () => {
           </div>
         </div>
         {/* create category modal */}
-        <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)} centered>
+        {/* <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)} centered>
           <Modal.Header closeButton>
             <Modal.Title className="fs-5">Create Main Category</Modal.Title>
           </Modal.Header>
@@ -542,7 +604,43 @@ const CategoryForm = () => {
               </Button>
             </Modal.Footer>
           </form>
-        </Modal>
+        </Modal> */}
+
+<Modal show={isModalOpen} onHide={() => setIsModalOpen(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title className="fs-5">Create Main Category</Modal.Title>
+        </Modal.Header>
+        <form onSubmit={handlemainSubmit}>
+          <Modal.Body>
+            <label htmlFor="name" className="form-label fw-semibold">
+              Main Category Name
+            </label>
+            <div className="col">
+              <input
+                type="text"
+                id="name"
+                className="form-control"
+                placeholder="Enter category name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <button type="submit" className="btn btn-dark btn-sm rounded-3">
+              Add Category
+            </button>
+            <Button
+              variant="danger"
+              className="btn-sm rounded-3"
+              onClick={() => setIsModalOpen(false)}
+            >
+              Close
+            </Button>
+          </Modal.Footer>
+        </form>
+      </Modal>
 
         <DeleteConfirmationModal
           show={showDeleteModal}

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import Button from "../Button";
+import axios from "axios";
 
 
 export default function EnterDashNavbar() {
@@ -39,16 +40,37 @@ export default function EnterDashNavbar() {
   }, [navigate]);
 
 
-  function handleLogout(e) {
+  async function handleLogout(e) {
     e.preventDefault();
-    localStorage.clear();
-
-    const closeBtn = document.querySelector(
-      ".btn-close[data-bs-dismiss='modal']"
-    );
-    if (closeBtn) closeBtn.click();
-    navigate("/");
+  
+    const token = localStorage.getItem("token");
+    if (!token) return;
+  
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}auth/logout`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+  
+      localStorage.clear();
+  
+      const closeBtn = document.querySelector(
+        ".btn-close[data-bs-dismiss='modal']"
+      );
+      if (closeBtn) closeBtn.click();
+  
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+      alert("Failed to logout. Please try again.");
+    }
   }
+  
 
   return (
     <>

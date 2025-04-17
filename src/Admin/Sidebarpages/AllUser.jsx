@@ -407,18 +407,38 @@ export default function AllUser() {
   };
 
   // Handle individual row selection
+  // const handleRowSelect = (id, checked) => {
+  //   setSelectedRowKeys((prev) =>
+  //     checked ? [...prev, id] : prev.filter((rowId) => rowId !== id)
+  //   );
+  // };
+
   const handleRowSelect = (id, checked) => {
-    setSelectedRowKeys((prev) =>
-      checked ? [...prev, id] : prev.filter((rowId) => rowId !== id)
-    );
+    let newSelectedRowKeys = [...selectedRowKeys];
+    if (checked) {
+      newSelectedRowKeys = [...newSelectedRowKeys, id];
+    } else {
+      newSelectedRowKeys = newSelectedRowKeys.filter((key) => key !== id);
+    }
+    setSelectedRowKeys(newSelectedRowKeys);
   };
 
   // Handle "Select All"
-  const handleSelectAll = (e) => {
-    if (e.target.checked) {
-      setSelectedRowKeys(userdata.map((user) => user.id));
+  // const handleSelectAll = (e) => {
+  //   if (e.target.checked) {
+  //     setSelectedRowKeys(userdata.map((user) => user.id));
+  //   } else {
+  //     setSelectedRowKeys([]);
+  //   }
+  // };
+
+  const handleSelectAll = (checked) => {
+    if (checked) {
+      // Select all rows based on current page
+      const currentPageKeys = userdata.map((item) => item.id);
+      setSelectedRowKeys(currentPageKeys);
     } else {
-      setSelectedRowKeys([]);
+      setSelectedRowKeys([]); // Deselect all rows
     }
   };
 
@@ -449,24 +469,24 @@ export default function AllUser() {
 
   // Define columns
   const columns = [
-    {
-      title: (
-        <input
-          type="checkbox"
-          onChange={handleSelectAll}
-          checked={selectedRowKeys.length === userdata.length && userdata.length > 0}
-        />
-      ),
-      dataIndex: "id",
-      key: "select",
-      render: (_, record) => (
-        <input
-          type="checkbox"
-          checked={selectedRowKeys.includes(record.id)}
-          onChange={(e) => handleRowSelect(record.id, e.target.checked)}
-        />
-      ),
-    },
+    // {
+    //   title: (
+    //     <input
+    //       type="checkbox"
+    //       onChange={handleSelectAll}
+    //       checked={selectedRowKeys.length === userdata.length && userdata.length > 0}
+    //     />
+    //   ),
+    //   dataIndex: "id",
+    //   key: "select",
+    //   render: (_, record) => (
+    //     <input
+    //       type="checkbox"
+    //       checked={selectedRowKeys.includes(record.id)}
+    //       onChange={(e) => handleRowSelect(record.id, e.target.checked)}
+    //     />
+    //   ),
+    // },
     {
       title: "Name",
       dataIndex: "name",
@@ -601,10 +621,15 @@ export default function AllUser() {
                       total: pagination.total,
                       showSizeChanger: true,
                     }}
-                    onTableChange={(pagination) => handleTableChange(pagination.current, pagination.pageSize)}
+                    onTableChange={(pagination) => handleTableChange(pagination.current, pagination.pageSize, search)}
                     search={search}
+                    showPageSizeDropdown={true}
                     onSearchChange={handleSearch}
+                    showCheckboxes={true}
                     loading={tableLoading} // Pass table loading state to CustomTable
+                    selectedRowKeys={selectedRowKeys} // Pass selected rows
+                    handleRowSelect={handleRowSelect} // Handle row selection
+                    handleSelectAll={handleSelectAll}
                   />
                 </div>
               </div>

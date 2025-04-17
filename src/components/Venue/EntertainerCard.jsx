@@ -9,53 +9,11 @@ const EntertainerCard = ({ entertainer, isWishlisted, isProcessing, onRemoveFrom
   const [isFavorited, setIsFavorited] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  // const toggleFavorite = async (e) => {
-  //   e.stopPropagation();
-  //   if (isLoading) return; 
-  //   setIsLoading(true);
-  //   console.log("entertainer details", entertainer);
-  //   const body = {
-  //     name: entertainer.name,
-  //     username:entertainer.user_name,
-  //     ratings: 4,
-  //     url: entertainer.mediaUrl,
-  //     category: entertainer.category,
-  //     specific_category: entertainer.specific_category,
-  //     entId: Number(entertainer.ent_id || entertainer.eid),
-
-  //   };
-  //   console.log("toggle fav",body);
-  //   try {
-  //     const response = await axios.post(
-  //       `${import.meta.env.VITE_API_URL}venues/toogle/wishlist`,
-  //       body,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //         },
-  //       }
-  //     );
-  //     console.log("toogle", response);
-  //     if (response.status === 200 || response.status === 201) {
-  //       setIsFavorited((prev) => !prev);
-
-  //       if (isFavorited && onRemoveFromWishlist) {
-  //         onRemoveFromWishlist(entertainer.eid);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Error toggling wishlist:", error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
   useEffect(() => {
     setIsFavorited(!!isWishlisted); // Convert truthy/falsy values to boolean
   }, [isWishlisted]);
 
-  const toggleFavorite = async (e) => {-
+  const toggleFavorite = async (e) => {
     e.stopPropagation();
     if (isLoading) return;
     setIsLoading(true);
@@ -80,13 +38,6 @@ const EntertainerCard = ({ entertainer, isWishlisted, isProcessing, onRemoveFrom
         }
       );
 
-      // if (response.status === 200 || response.status === 201) {
-      //   setIsFavorited((prev) => !prev);
-
-      //   if (isFavorited && onRemoveFromWishlist) {
-      //     onRemoveFromWishlist(entertainer.eid);
-      //   }
-      // }
       if (response.data.isWishlisted !== undefined) {
         setIsFavorited(response.data.isWishlisted);
       } else {

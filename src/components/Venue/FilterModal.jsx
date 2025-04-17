@@ -78,44 +78,44 @@ export default function FilterModal({
               </div>
               <div className="modal-body">
                 <div className="row mb-3">
-                  {/* <p>Date Range</p>
+                  <p>Date Range</p>
                   <p className="modal-font">Select Date Range for your event</p>
-                  <div className="d-flex gap-3">
+                  <div className="d-flex gap-3 mb-3">
                     <div className="col-md-3">
                       <Input
-                        type="text"
+                        type="date"
                         className="form-control modal-font"
-                        onFocus={(e) => (e.target.type = "date")}
-                        onBlur={(e) =>
-                          e.target.value
-                            ? (e.target.type = "date")
-                            : (e.target.type = "text")
-                        }
+                        // onFocus={(e) => (e.target.type = "date")}
+                        // onBlur={(e) =>
+                        //   e.target.value
+                        //     ? (e.target.type = "date")
+                        //     : (e.target.type = "text")
+                        // }
                         value={startDate}
                         onChange={(e) => setStartDate(e.target.value)}
                         placeholder="Start Date"
                       />
                     </div>
 
-                    <p className="mt-2 fw-semibold">-</p>
+                    <p className="mt-2 fw-semibold">to</p>
 
                     <div className="col-md-3">
                       <Input
-                        type="text"
+                        type="date"
                         className="form-control modal-font"
-                        onFocus={(e) => (e.target.type = "date")}
-                        onBlur={(e) =>
-                          e.target.value
-                            ? (e.target.type = "date")
-                            : (e.target.type = "text")
-                        }
+                        // onFocus={(e) => (e.target.type = "date")}
+                        // onBlur={(e) =>
+                        //   e.target.value
+                        //     ? (e.target.type = "date")
+                        //     : (e.target.type = "text")
+                        // }
                         value={endDate}
                         onChange={(e) => setEndDate(e.target.value)}
                         placeholder="End Date"
                       />
                     </div>
                   </div>
-                  <hr /> */}
+                  <hr />
 
                   <div className="row mb-3">
                     <p>Entertainer Type</p>

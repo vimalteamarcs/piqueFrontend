@@ -37,12 +37,13 @@ export default function EntertainerDash() {
       const token = localStorage.getItem("token");
       try {
         const res = await axios.get(
-          `${import.meta.env.VITE_API_URL}entertainers/booking/request`,
+          `${import.meta.env.VITE_API_URL}entertainers/booking/request/pending`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
+          
         );
         console.log(res.data);
         if (res.data?.status && Array.isArray(res.data.bookings)) {
@@ -107,7 +108,7 @@ export default function EntertainerDash() {
       >
         <div className="container">
           <div className="row gx-5">
-            <div className="col-md-3 col-sm-12 col-12 position-relative profile-card" style={{marginTop:"70px"}}>
+            <div className="col-md-3 col-sm-12 col-12 position-relative profile-card" style={{marginTop:"30px"}}>
               {isLoading ? (
                 <div className="image-container skeleton-loader rounded-4" />
               ) : (
@@ -320,7 +321,7 @@ export default function EntertainerDash() {
                 </table>
               </div>
             </div> */}
-            <div className="col-md-9" style={{marginTop:"70px"}}>
+            <div className="col-md-9" style={{marginTop:"30px"}}>
               <div className="row">
                 <div className="col-md-6">
                   <div className="d-flex justify-content-between">
@@ -362,7 +363,7 @@ export default function EntertainerDash() {
                               {booking.name || "Untitled Venue"}
                             </p>
                             <p className="icon-font mb-1">
-                              {booking.description || "No description available."}
+                              {booking.specialNotes || "No description available."}
                             </p>
                             <div className="d-flex flex-wrap">
                               <p className="icon-font text-start me-3">
@@ -371,7 +372,7 @@ export default function EntertainerDash() {
                                   className="me-1"
                                   alt="calendar"
                                 />
-                                {moment(booking.showDate).format("DD-MMMM-YYYY")}
+                                {moment(booking.showDate).format("DD-MMM-YYYY")}
                               </p>
                               <p className="icon-font">
                                 <img
@@ -379,8 +380,8 @@ export default function EntertainerDash() {
                                   className="me-1"
                                   alt="location"
                                 />
-                                {`${booking.city || "City"}, ${booking.state || "State"
-                                  }`}
+                                {`${booking.city_name || "City"}, ${booking.state_name || "State"
+                                  }, ${booking.country_name || "country"}`}
                               </p>
                             </div>
                           </div>
@@ -439,7 +440,7 @@ export default function EntertainerDash() {
                                       className="me-1"
                                       alt="calendar"
                                     />
-                                    {moment(event.startTime).format("DD-MMMM-YYYY")}
+                                    {moment(event.startTime).format("DD-MMM-YYYY")}
                                   </p>
                                   <p className="icon-font">
                                     <img

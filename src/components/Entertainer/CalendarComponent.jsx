@@ -490,31 +490,69 @@ const CalendarComponent = () => {
     left: "50%",
   });
 
+  // const handleMoreLinkClick = (info) => {
+  //   const clickedDate = info.date;
+  //   setselectedDate(clickedDate);
+
+  //   const rect = info.jsEvent?.target?.getBoundingClientRect?.();
+  //   if (rect) {
+  //     const scrollTop =
+  //       window.pageYOffset || document.documentElement.scrollTop;
+  //     const scrollLeft =
+  //       window.pageXOffset || document.documentElement.scrollLeft;
+
+  //     setPopupPosition({
+  //       top: `${rect.top + scrollTop + 5}px`,
+  //       left: `${rect.left + scrollLeft}px`,
+  //     });
+  //   }
+
+  //   const eventsForDay = allEvents.filter((e) => {
+  //     const eventDate = new Date(e.start).toDateString();
+  //     return eventDate === clickedDate.toDateString();
+  //   });
+
+  //   setDailyEvents(eventsForDay);
+  //   setShowDailyModal(true);
+  // };
+
   const handleMoreLinkClick = (info) => {
     const clickedDate = info.date;
     setselectedDate(clickedDate);
-
-    const rect = info.jsEvent?.target?.getBoundingClientRect?.();
-    if (rect) {
-      const scrollTop =
-        window.pageYOffset || document.documentElement.scrollTop;
-      const scrollLeft =
-        window.pageXOffset || document.documentElement.scrollLeft;
-
+  
+    let targetElement = info.jsEvent?.target;
+  
+    // Traverse up to find the element with class `.fc-more` or `.fc-daygrid-day`
+    while (targetElement && !targetElement.classList.contains("fc-more") && !targetElement.classList.contains("fc-daygrid-day")) {
+      targetElement = targetElement.parentElement;
+    }
+  
+    if (targetElement) {
+      const rect = targetElement.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+  
       setPopupPosition({
-        top: `${rect.top + scrollTop + 5}px`,
+        top: `${rect.top + scrollTop + targetElement.offsetHeight + 8}px`,
         left: `${rect.left + scrollLeft}px`,
       });
+    } else {
+      // fallback to center of screen
+      setPopupPosition({
+        top: "50%",
+        left: "50%",
+      });
     }
-
+  
     const eventsForDay = allEvents.filter((e) => {
       const eventDate = new Date(e.start).toDateString();
       return eventDate === clickedDate.toDateString();
     });
-
+  
     setDailyEvents(eventsForDay);
     setShowDailyModal(true);
   };
+  
 
   return (
     <div className="taskCalendar my-1">
@@ -548,7 +586,7 @@ const CalendarComponent = () => {
         height="auto"
         eventClick={handleEventClick}
         datesSet={handleDatesSet}
-        dayMaxEvents={1}
+        dayMaxEvents={2}
         moreLinkClick={(info) => {
           handleMoreLinkClick(info);
           return true;
@@ -580,7 +618,9 @@ const CalendarComponent = () => {
           top: popupPosition.top,
           left: popupPosition.left,
           position: "absolute",
+           zIndex: 1050,
         }}
+        container={document.querySelector(".taskCalendar")}
       >
         <Modal.Header closeButton>
           <div className="d-flex align-items-center gap-3 w-100">

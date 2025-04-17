@@ -18,7 +18,7 @@ export default function AllEntertainer() {
   const [error, setError] = useState(null);
   const [pagination, setPagination] = useState({
     current: 1, // Current page
-    pageSize: 20, // Records per page
+    pageSize: 10, // Records per page
     total: 0, // Total number of records
   });
   const [search, setSearch] = useState("");
@@ -249,6 +249,7 @@ export default function AllEntertainer() {
                       setSearch(value);
                       fetchEntertainers(1, pagination.pageSize, value);
                     }}
+                    showPageSizeDropdown={true}
                   />
                 </div>
                 {/* End of table loader */}

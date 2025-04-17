@@ -160,65 +160,9 @@ const Signup = () => {
       ...prevData,
       [name]: value,
     }));
-
-    // let error = "";
-    // if (name === "name" && !value) {
-    //   error = "Name is required.";
-    // } else if (
-    //   name === "email" &&
-    //   !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)
-    // ) {
-    //   error = "Please enter a valid email address.";
-    // } else if (name === "password" && value.length < 6) {
-    //   error = "Password must be at least 6 characters long.";
-    // } else if (name === "cpassword" && value !== formData.password) {
-    //   error = "Password do not match.";
-    // } else if (name === "phoneNumber" && !/^[0-9]{10}$/.test(value)) {
-    //   error = "Please enter a valid contact number.";
-    // }
-
-    // setErrors((prevErrors) => ({
-    //   ...prevErrors,
-    //   [name]: error,
-    // }));
   };
 
-  // const handleVerification = async (e) => {
-  //   e.preventDefault();
-  //   if (!formData.email) {
-  //     toast.error("Please enter an email.");
-  //     return;
-  //   }
-  //   if (!formData.name) {
-  //     toast.error("Please enter your name")
-  //   }
-  //   if (!formData.phoneNumber) {
-  //     toast.error("Please enter your phone number")
-  //   }
-  //   localStorage.setItem("userDetails", JSON.stringify(formData));
-  //   navigate("/otpverification", {
-  //     state: { email: formData.email, source: "register" },
-  //   });
-  //   const body = { email: formData.email };
-
-  //   try {
-  //     const response = await axios.post(
-  //       `${import.meta.env.VITE_API_URL}auth/send-otp`,
-  //       body
-  //     );
-  //     toast.success("OTP sent successfully to your mail!", { position: "top-right" });
-  //     localStorage.setItem("case", "signup")
-  //     navigate("/otpverification", { state: { email: formData.email } });
-  //     // setShowOtpModal(true);
-  //   } catch (error) {
-  //     toast.error("Failed to send OTP, Please try again later", {
-  //       position: "top-center",
-  //     });
-  //   }
-  //   setTimeout(() => {
-  //     setIsEmailVerified(true);
-  //   }, 1000);
-  // };
+ 
 
   const handleVerification = async () => {
     const userDetails = {
@@ -238,8 +182,12 @@ const Signup = () => {
       toast.success("OTP sent successfully to your mail!", {
         position: "top-right",
       });
-    } catch (err) {
-      toast.error("Something went wrong");
+    }  catch (err) {
+      const errorMessage =
+        err.response?.data?.message || "Something went wrong. Please try again.";
+      toast.error(errorMessage, {
+        position: "top-right",
+      });
     }
   };
 
@@ -342,8 +290,8 @@ const Signup = () => {
       <Helmet>
         <title>
           {formData.role === "venue"
-            ? "Sign Up as Venue"
-            : "Sign Up as Entertainer"}
+            ? "SignUp as Venue"
+            : "SignUp as Entertainer"}
         </title>
         <meta
           name="description"
@@ -378,7 +326,7 @@ const Signup = () => {
               />
             </div>
             <div className="row d-flex justify-content-around">
-              <h3 className="text-center mt-4 fw-semibold">Sign Up</h3>
+              <h3 className="text-center mt-4 fw-semibold">Signup</h3>
               <div className="col-md-10 col-sm-12 p-3 ">
                 <form onSubmit={handleSubmit}>
                   <div className="role-container w-100 p-2">
@@ -394,7 +342,7 @@ const Signup = () => {
                         onClick={() => handleRoleSelection("venue")}
                       >
                         <p className="fw-light profile-font pt-2">
-                          Sign Up as Venue
+                          Signup as Venue
                         </p>
                       </button>
                       <button
@@ -404,7 +352,7 @@ const Signup = () => {
                         onClick={() => handleRoleSelection("entertainer")}
                       >
                         <p className="fw-light profile-font pt-2">
-                          Sign Up as Entertainer
+                          Signup as Entertainer
                         </p>
                       </button>
                     </div>
@@ -602,18 +550,18 @@ const Signup = () => {
                     )}
                   </div>
                   <div className="d-flex justify-content-between">
-                    <div className="row gx-4">
-                      <div className="col-1">
+                    
+                      
                         <input
                           type="checkbox"
                           id="terms&Services"
-                          className="form-check-input"
+                          className="form-check-input me-2"
                           checked={isChecked}
                           onChange={(e) => setIsChecked(e.target.checked)}
                           name="termsAndServices"
                         />
-                      </div>
-                      <div className="col-11">
+                     
+                      <div className="">
                         <label htmlFor="terms&Services" className="fw-light">
                           {/* <p className="termsServices">
                             By entering your information here, you affirm you
@@ -623,11 +571,9 @@ const Signup = () => {
                           </p> */}
                           <p className="termsServices">
                             By entering your information here, you affirm you
-                            have read and agree to our
-                            <Link to="/terms-and-conditions">
-                              Terms of Services
-                            </Link>
-                            and <Link to="/privacy-policy">Privacy Policy</Link>
+                            have read and agree to our <Link to="/terms-and-conditions">
+                               Terms of Services
+                            </Link> and <Link to="/privacy-policy">Privacy Policy</Link>
                           </p>
                           {errors.termsAndServices && (
                             <p className="text-danger profile-font text-start">
@@ -638,10 +584,9 @@ const Signup = () => {
                       </div>
 
                     </div>
-                  </div>
                   <button
                     type="submit"
-                    className=" btn-primary text-white w-100 sign-in-btn"
+                    className=" btn login-btn w-100"
                     label="Signup"
                     disabled={!formData?.emailVerified}
                   >
@@ -651,9 +596,8 @@ const Signup = () => {
 
                 <hr />
                 <p className="text-center profile-font">
-                  Already have an account?
-                  <Link to="/login" className="text-primary fw-semibold" onClick={() => localStorage.removeItem("userDetails")}>
-                    Sign In Now
+                  Already have an account? <Link to="/login" className="text-primary fw-semibold" onClick={() => localStorage.removeItem("userDetails")}>
+                    Login Now
                   </Link>
                 </p>
               </div>

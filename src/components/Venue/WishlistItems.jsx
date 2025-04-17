@@ -20,6 +20,7 @@ export default function WishlistItems() {
           },
         }
       );
+      console.log(response.data)
       setWishlist(response.data.data || []);
     } catch (err) {
       setError("Failed to fetch wishlist.");
@@ -34,7 +35,7 @@ export default function WishlistItems() {
 
   const removeFromWishlist = async (eid) => {
     console.log("inside remove wishlist function");
-    
+
     setProcessingId(eid);
 
     const entertainer = wishlist.find((item) => item.eid === eid);
@@ -42,14 +43,19 @@ export default function WishlistItems() {
       setProcessingId(null);
       return;
     }
-console.log("url",`${import.meta.env.VITE_API_URL}venues/entertainer/wishlist/${Number(entertainer.eid)}`);
-
-    
+    console.log(
+      "url",
+      `${import.meta.env.VITE_API_URL}venues/entertainer/wishlist/${Number(
+        entertainer.eid
+      )}`
+    );
 
     try {
       const response = await axios.delete(
-        `${import.meta.env.VITE_API_URL}venues/entertainer/wishlist/${Number(entertainer.eid)}`,
-        
+        `${import.meta.env.VITE_API_URL}venues/entertainer/wishlist/${Number(
+          entertainer.eid
+        )}`,
+
         {
           headers: {
             "Content-Type": "application/json",
@@ -57,23 +63,25 @@ console.log("url",`${import.meta.env.VITE_API_URL}venues/entertainer/wishlist/${
           },
         }
       );
-
       if (response.status === 200 || response.status === 201) {
-        console.log("resksjhdbcfjahb",response);
-        
+        console.log("resksjhdbcfjahb", response);
+
         setWishlist((prev) => prev.filter((item) => item.eid !== eid));
       } else {
         console.error("Unexpected response:", response);
       }
     } catch (error) {
-      console.error("Error removing from wishlist:", error.response?.data || error);
+      console.error(
+        "Error removing from wishlist:",
+        error.response?.data || error
+      );
     } finally {
       setProcessingId(null);
     }
   };
 
   const handleCardClick = (eid) => {
-    navigate(`/venue/entertainerDetails`,{ state: { entertainerId:eid } }); 
+    navigate(`/venue/entertainerDetails`, { state: { entertainerId: eid } });
   };
 
   return (
@@ -101,68 +109,76 @@ console.log("url",`${import.meta.env.VITE_API_URL}venues/entertainer/wishlist/${
             />
           ))} */}
           {wishlist.map((entertainer) => (
-  <div className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4" key={entertainer.eid}>
-    <div
-      className="card card-rounded mb-3 rounded-4 overflow-hidden"
-      style={{ cursor: "pointer", border: "none" }} onClick={() => handleCardClick(entertainer.eid)}
-    >
-      <button
-        className="favorite-btn position-absolute top-1 me-3 end-0 m-2 border-0 bg-transparent"
-        onClick={(e) => {
-          e.stopPropagation(); 
-          removeFromWishlist(entertainer.eid);
-        }}
-        disabled={processingId === entertainer.eid}
-      >
-        {processingId === entertainer.eid ? (
-          <div className="spinner-border spinner-border-sm text-danger" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </div>
-        ) : (
-          <i
-            className={`fa-solid fa-heart text-danger`}
-            style={{ fontSize: "1.5rem" }}
-          ></i>
-        )}
-      </button>
+            <div
+              className="col-lg-3 col-md-4 col-sm-6 col-12 mb-4"
+              key={entertainer.eid}
+            >
+              <div
+                className="card card-rounded mb-3 rounded-4 overflow-hidden"
+                style={{ cursor: "pointer", border: "none" }}
+                onClick={() => handleCardClick(entertainer.eid)}
+              >
+                <button
+                  className="favorite-btn position-absolute top-1 me-3 end-0 m-2 border-0 bg-transparent"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    removeFromWishlist(entertainer.eid);
+                  }}
+                  disabled={processingId === entertainer.eid}
+                >
+                  {processingId === entertainer.eid ? (
+                    <div
+                      className="spinner-border spinner-border-sm text-danger"
+                      role="status"
+                    >
+                      <span className="visually-hidden">Loading...</span>
+                    </div>
+                  ) : (
+                    <i
+                      className={`fa-solid fa-heart text-danger`}
+                      style={{ fontSize: "1.5rem" }}
+                    ></i>
+                  )}
+                </button>
 
-      <img
-        src={entertainer.mediaUrl || entertainer.url}
-        className="card-img"
-        style={{
-          aspectRatio: "4 / 3",
-          objectFit: "cover",
-          borderRadius: "12px",
-        }}
-        alt={entertainer.name}
-      />
-      <div className="d-flex justify-content-between mt-2">
-        <p className="icon-font fw-semibold mb-0">
-          {entertainer.specific_category_name}
-        </p>
-        <p className="icon-font mb-0">{entertainer.ratings}</p>
-      </div>
-      <div className="d-flex justify-content-between">
-        <p className="mb-2 mt-0">By {entertainer.user_name}</p>
-        <div className="ratings">
-          {[...Array(5)].map((_, index) => (
-            <i
-              key={index}
-              className={`fa-star ${
-                index < entertainer.ratings ? "fa-solid text-warning" : "fa-regular text-muted"
-              }`}
-              style={{ fontSize: "0.6rem" }}
-            ></i>
+                <img
+                  src={entertainer.mediaUrl || entertainer.url}
+                  className="card-img"
+                  style={{
+                    aspectRatio: "4 / 3",
+                    objectFit: "cover",
+                    borderRadius: "12px",
+                  }}
+                  alt={entertainer.name}
+                />
+                <div className="d-flex justify-content-between mb-0">
+                  <p className="">
+                   By {entertainer.user_name}
+                  </p>
+                  <p className="icon-font">{entertainer.ratings}</p>
+                </div>
+                <div className="d-flex justify-content-between">
+                  <p className="icon-font fw-semibold">{entertainer.specific_category_name || entertainer.category_name}</p>
+                  <div className="ratings">
+                    {[...Array(5)].map((_, index) => (
+                      <i
+                        key={index}
+                        className={`fa-star ${
+                          index < entertainer.ratings
+                            ? "fa-solid text-warning"
+                            : "fa-regular text-muted"
+                        }`}
+                        style={{ fontSize: "0.6rem" }}
+                      ></i>
+                    ))}
+                  </div>
+                </div>
+                {/* <p className="text-muted custom-card-text mt-0">
+                  {entertainer.category_name}
+                </p> */}
+              </div>
+            </div>
           ))}
-        </div>
-      </div>
-      <p className="text-muted custom-card-text mt-0">
-        {entertainer.category_name} - {entertainer.state}, {entertainer.country}
-      </p>
-    </div>
-  </div>
-))}
-
         </div>
       ) : (
         <p>No items in wishlist.</p>

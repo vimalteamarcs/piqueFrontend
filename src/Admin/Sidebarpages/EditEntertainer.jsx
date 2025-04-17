@@ -644,6 +644,11 @@ export default function EditEntertainer() {
           userId: data.user.id || undefined,
           refId: undefined,
           type: mediaType, // Use the media type determined earlier
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
       );
 
@@ -953,19 +958,11 @@ export default function EditEntertainer() {
                                 />
                               </div>
                             </div>
-                            <div className="row ">
-                              <div className="col ">
-                                <Button
-                                  type="submit"
-                                  className="btn btn-dark btn-sm mb-3"
-                                  label={"Update"}
-                                />
-                              </div>
-                            </div>
+                            
                           </div>
                         </div>
                       </div>
-                    </form>
+                   
                     <div>
                       <div className="d-flex justify-content-center">
                         <div className="col-12 border-0 ">
@@ -1211,14 +1208,13 @@ export default function EditEntertainer() {
                                 )}
                               </div>
                             </div>
-                            <div className="row ">
+                            {/* <div className="row ">
                               <form onSubmit={uploadUrl}>
                                 <div className="col-md-12 col-sm-12">
                                   <div className="mt-3">
                                     <label className="form-label label-font fw-medium mb-0 mb-2">
                                       URL:
                                     </label>
-                                    {/* <div className="col-md-2 p-1">URL:</div> */}
                                     <div className="col-md-12">
                                       <input
                                         type="text"
@@ -1232,22 +1228,7 @@ export default function EditEntertainer() {
                                         title="Please enter a valid URL starting with http:// or https://"
                                       />
                                     </div>
-                                    {/* Media Type Dropdown */}
 
-                                    {/* <div className="col-md-3">
-                    <select
-                      className="form-control"
-                      id="mediaType"
-                      value={mediaType}
-                      onChange={(e) => setMediaType(e.target.value)}
-                      required
-                    >
-                      <option value="">Select Media Type</option>
-                      <option value="video">Video</option>
-                      <option value="image">Image</option>
-                      <option value="audio">Audio</option>
-                    </select>
-                  </div> */}
 
                                     <div className="mt-2">
                                       <button
@@ -1261,11 +1242,22 @@ export default function EditEntertainer() {
                                   </div>
                                 </div>
                               </form>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </div>
                     </div>
+                    <div className="row ">
+                              <div className="col mt-3">
+                                <Button
+                                  type="submit"
+                                  className="btn mybtn btn-sm mb-3"
+                                  label={"Update"}
+                                />
+                              </div>
+                            </div>
+                    </form>
+
                   </div>
                 </div>
               </div>

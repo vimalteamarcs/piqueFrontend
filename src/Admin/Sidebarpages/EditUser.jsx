@@ -200,11 +200,13 @@ export default function EditUser() {
                           }`}
                         name="role"
                         value={formData.role}
-                        onChange={handleChange}
+                        // onChange={handleChange}
+                        disabled
                       >
                         <option value="venue">Venue</option>
                         <option value="entertainer">Entertainer</option>
                       </select>
+                      <input type="hidden" name="role" value={formData.role} />
                       {errors.role && (
                         <div className="text-danger">{errors.role}</div>
                       )}

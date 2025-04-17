@@ -34,6 +34,8 @@ export default function ProfileCard() {
   const stateName = states.find(s => s.value === Number(venue.state))?.label || "";
   const countryName = countries.find(c => c.value === Number(venue.country))?.label || "";
 
+
+  
   const fullAddress = [
     venue.addressLine1,
     venue.addressLine2,
@@ -170,13 +172,11 @@ export default function ProfileCard() {
   
       console.log("Venue Response:", response.data);
   
-      // Find the venue where isParent is true
       const parentVenue = response.data.venues.find(venue => venue.isParent);
   
       if (parentVenue) {
         localStorage.setItem("venueId", parentVenue.id);
   
-        // Pre-fill form with parentVenue data
         setVenue({
           name: parentVenue.name || "",
           addressLine1: parentVenue.addressLine1 || "",
@@ -309,10 +309,7 @@ export default function ProfileCard() {
       fetchCities(value);
     }
 
-    // ✅ Only call addVenue() if all required fields are filled
-    if (name === "name" && value.trim() !== "" && venue.addressLine1 && venue.country && venue.state && venue.city) {
-      addVenue();
-    }
+
   };
 
 
@@ -345,50 +342,49 @@ export default function ProfileCard() {
     }
   };
 
-  // const addVenue = async (e) => {
-  //   e.preventDefault();
-  //   if (!validateForm()) return;
-  //   try {
-  //     const token = localStorage.getItem("token");
-  //     const venueData = {
-  //       phone: localStorage.getItem("phone") || venue.phone,
-  //       email: localStorage.getItem("email") || venue.email,
-  //       addressLine1: venue.addressLine1,
-  //       addressLine2: venue.addressLine2,
-  //       city: Number(venue.city),
-  //       state: Number(venue.state),
-  //       zipCode: venue.zipCode,
-  //       country: Number(venue.country),
-  //     };
 
-  //     const response = await axios.post(
-  //       `${import.meta.env.VITE_API_URL}venues/location/add`,
-  //       venueData,
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  //     if (response.status >= 200 && response.status < 300) {
-  //       toast.success("Venue Location added successfully!");
-  //       setTimeout(() => {
-  //         navigate("/venue/locations");
-  //       }, 1000);
-  //       console.log("Venue Added:", response.data);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding venue:", error);
-  //     toast.error(error);
-  //   }
-  // };
+  // setLoading(true);
+  let venueId = localStorage.getItem("venueId");
 
+  try {
+    if (!venueId) {
+      const token = localStorage.getItem("token");
+    const venueData = {
+      name: venue.name,
+      addressLine1: venue.addressLine1,
+      addressLine2: venue.addressLine2,
+      country: Number(venue.country),
+      state: Number(venue.state),
+      city: Number(venue.city),
+      zipCode: venue.zipCode,
+      phone: localStorage.getItem("phone"),
+      email: localStorage.getItem("email"),
+      isParent: true,
+    };
+    console.log("venue data",venueData)
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) return;
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}venues/add`,
+      venueData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (response.status === 201 || response.status === 200) {
+      localStorage.setItem("venueId", response.data.id);
+      console.log("✅ Venue created:", response.data);
+      toast.success("Venue created successfully!");
+      setVenue(venueData);
+      setIsEditing(true);
+    }
+  } else{
     const token = localStorage.getItem("token");
     const venueData = {
       name: venue.name,
@@ -405,31 +401,29 @@ export default function ProfileCard() {
       venueId: Number(localStorage.getItem("venueId")),
     };
 
-    console.log("Data:", venueData);
+    const response = await axios.put(
+      `${import.meta.env.VITE_API_URL}venues`,
+             
+             venueData,
+             {
+               headers: {
+                 "Content-Type": "application/json",
+                 Authorization: `Bearer ${token}`,
+               },
+             }
+           );
+           console.log(response.data);
+           if (response.status >= 200 && response.status < 300) {
+             toast.success(
+               `Venue ${isEditing ? "updated" : "created"} successfully!`
+             )}
 
+  }
+} catch (error) {
+    console.error("❌ Error creating venue:", error);
+  }
+}
 
-    try {
-      const response = await axios.put(
- `${import.meta.env.VITE_API_URL}venues`,
-        
-        venueData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log(response.data);
-      if (response.status >= 200 && response.status < 300) {
-        toast.success(
-          `Venue ${isEditing ? "updated" : "created"} successfully!`
-        );
-      }
-    } catch (error) {
-      console.error("Error submitting venue:", error);
-    }
-  };
 
 
   return (
