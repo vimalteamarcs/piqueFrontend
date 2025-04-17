@@ -1255,6 +1255,17 @@ table.dataTable thead th, table.dataTable tfoot th {font-weight: 600;} */
 .e-topNavbar .navbar {background: #fff ;}
 .custom-entertainer-sidebar {position: fixed;}
 .entertainer-profile-container {margin-left: 280px;}
+.transition-box {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.8s ease, opacity 0.8s ease;
+}
+
+.transition-box.open {
+  max-height: 200px;
+  opacity: 1;
+}
 
 /* ---------- CSS Media Queries---------- */
 /* ##Device = Desktops, ##Screen = 1281px to higher resolution desktops */
@@ -1285,3 +1296,9 @@ table.dataTable thead th, table.dataTable tfoot th {font-weight: 600;} */
   .e-pageLayout .container-fluid, .e-pageLayout .container {overflow: initial;flex-direction: initial;}
   .custom-entertainer-sidebar {top: 55px;padding-top: 15px;}
  }
+
+
+
+
+
+

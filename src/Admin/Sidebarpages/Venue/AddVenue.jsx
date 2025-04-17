@@ -59,7 +59,7 @@ export default function AddVenue() {
           `${import.meta.env.VITE_API_URL}location/countries`
         );
         setCountries(
-          response.data.countries.map((country) => ({
+          response?.data?.countries?.map((country) => ({
             label: country.name,
             value: country.id,
           }))
@@ -77,7 +77,7 @@ export default function AddVenue() {
         `${import.meta.env.VITE_API_URL}location/states?countryId=${countryId}`
       );
       setStates([
-        ...Stateresponse.data.states.map((state) => ({
+        ...Stateresponse?.data?.states?.map((state) => ({
           label: state.name,
           value: state.id,
         })),
@@ -93,7 +93,7 @@ export default function AddVenue() {
         `${import.meta.env.VITE_API_URL}location/cities?stateId=${stateId}`
       );
       setCities([
-        ...Cityresponse.data.cities.map((city) => ({
+        ...Cityresponse?.data?.cities?.map((city) => ({
           label: city.name,
           value: city.id,
         })),

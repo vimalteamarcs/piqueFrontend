@@ -78,6 +78,8 @@ import EntertainerGallery from "../pages/Entertainer/EntertainerGallery";
 import EntertainerEventDetails from "../pages/Entertainer/EntertainerEventDetails";
 import EntertainerInvoicePage from "../pages/Entertainer/EntertainerInvoicePage";
 import VenueMessage from "../pages/Venue/VenueMessage";
+import AddAdminVenue from "../Admin/Sidebarpages/Venue/AddAdminVenue";
+import VenueRequestApproval from "../Admin/Sidebarpages/Venue/VenueRequestApproval";
 const basename = import.meta.env.VITE_BASE || "/P/";
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -154,9 +156,11 @@ const router = createBrowserRouter(
           <Route index element={<Dashboard />} />
           <Route path="allVenues" element={<AllVenuesAdmin />} />
           <Route path="addvenue" element={<AddVenueAdmin />} />
+          <Route path="addadminvenue" element={<AddAdminVenue />} />
           <Route path="editvenue" element={<EditVenueAdmin />} />
           <Route path="edituser" element={<EditUser />} />
           <Route path="viewvenue" element={<ViewVenue />} />
+          <Route path="venuerequestapproval" element={<VenueRequestApproval />} />
           <Route path="viewdetails" element={<Venuedetails />} />
           <Route path="addvenuelocation" element={<AddLocation />} />
           <Route path="viewentertainer" element={<ViewEntertainer />} />

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import "bootstrap/dist/js/bootstrap.bundle.min.js";
+
 
 export default function AdminSideBar() {
   const imagePath = import.meta.env.VITE_LOGGEDIN_IMAGE_PATH;
@@ -9,6 +8,8 @@ export default function AdminSideBar() {
   const navigate = useNavigate();
   const [isEventsDropdownOpen, setIsEventsDropdownOpen] = useState(false);
   const [isAdminDropdownOpen, setIsAdminDropdownOpen] = useState(false);
+  const [isVenueDropdownOpen, setIsVenueDropdownOpen] = useState(false);
+  const [isEntertainerDropdownOpen, setIsEntertainerDropdownOpen] = useState(false);
   const [isSettingDropdownOpen, setIsSettingDropdownOpen] = useState(false);
 
   const isSettingActive =
@@ -39,7 +40,21 @@ export default function AdminSideBar() {
     location.pathname.startsWith("/admin/viewdetails") ||
     location.pathname.startsWith("/admin/addvenuelocation") ||
     location.pathname.startsWith("/admin/editvenue");
-  useEffect(() => {
+  
+  const isVenueDropActive = 
+    location.pathname.startsWith("/admin/addadminvenue") ||
+    location.pathname.startsWith("/admin/allVenues") ||
+    location.pathname.startsWith("/admin/allinvoices") || 
+    location.pathname.startsWith("/admin/venuerequestapproval");
+
+
+    useEffect(() => {
+      if (isVenueDropActive) {
+        setIsVenueDropdownOpen(isVenueDropActive);
+      }
+    }, [isVenueDropActive]);
+
+    useEffect(() => {
     if (isEventsActive) {
       setIsEventsDropdownOpen(isEventsActive);
     }
@@ -72,6 +87,22 @@ export default function AdminSideBar() {
       setIsAdminDropdownOpen(false);
     }
   };
+
+  const handleVenueClick =() => {
+    if (!isVenueDropdownOpen){
+      setIsVenueDropdownOpen(true);
+    } else {
+      setIsVenueDropdownOpen(false);
+    }
+  }
+
+  const handleEntertainerClick = () => {
+    if (!isEntertainerDropdownOpen){
+      setIsEntertainerDropdownOpen(true);
+    } else {
+      setIsEntertainerDropdownOpen(false);
+    }
+  }
 
   const handleSettingClick = () => {
     if (!isSettingDropdownOpen) {
@@ -205,7 +236,7 @@ export default function AdminSideBar() {
           </NavLink> */}
 
           {/* Admin Dropdown */}
-          <div className="dropdown">
+          {/* <div className="dropdown">
             <div
               className={`nav-link dash-sidebar-link2 d-flex justify-content-between align-items-center ${
                 isAdminDropdownOpen ? "dash-active-link fw-semibold" : ""
@@ -214,12 +245,7 @@ export default function AdminSideBar() {
               style={{ cursor: "pointer" }}
             >
               <div className="d-flex align-items-center dash-sidebar-link flex-grow-1">
-                {/* <img
-                  src={`${imagePath}${isAdminDropdownOpen ? "administrationDash.svg" : "administrationDash.svg"
-                    }`}
-                  alt="Events"
-                  className="menuIconA me-2"
-                /> */}
+
 
                 <p className="profile-font">
                   <i className="fa-regular fa-folder-closed menuIconA"></i>{" "}
@@ -262,7 +288,164 @@ export default function AdminSideBar() {
                 </NavLink>
               </li>
             </ul>
+          </div> */}
+
+          {/* venue dropdown */}
+          <div className="dropdown">
+            <div
+              className={`nav-link dash-sidebar-link2 d-flex justify-content-between align-items-center ${
+                isVenueDropdownOpen ? "dash-active-link fw-semibold" : ""
+              }`}
+              onClick={handleVenueClick}
+              style={{ cursor: "pointer" }}
+            >
+              <div className="d-flex align-items-center dash-sidebar-link flex-grow-1">
+                {/* <img
+                  src={`${imagePath}${isAdminDropdownOpen ? "administrationDash.svg" : "administrationDash.svg"
+                    }`}
+                  alt="Events"
+                  className="menuIconA me-2"
+                /> */}
+
+                <p className="profile-font">
+                  <i className="fa-regular fa-folder-closed menuIconA"></i>{" "}
+                  Venues
+                </p>
+              </div>
+              <div>
+                <img
+                  src={`${imagePath}dropdownIcon.svg`}
+                  alt="Dropdown"
+                  className="dropdown-arrow"
+                />
+              </div>
+            </div>
+            <ul
+              className={`dropdown-menu dash-drop-menu ${
+                isVenueDropdownOpen ? "show" : ""
+              }`}
+            >
+              <li>
+                <NavLink
+                  to="/admin/allVenues"
+                  className={({ isActive }) =>
+                    `dropdown-item dash-drop-item dropdown-item-text ${
+                      isActive ? "active-item fw-semibold" : "inactive-item"
+                    }`
+                  }
+                >
+                  <span className="bullet"></span> All Venues
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/admin/addadminvenue"
+                  className={({ isActive }) =>
+                    `dropdown-item dash-drop-item dropdown-item-text ${
+                      isActive ? "active-item fw-semibold" : "inactive-item"
+                    }`
+                  }
+                >
+                  <span className="bullet"></span> Add Venues
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/admin/venuerequestapproval"
+                  className={({ isActive }) =>
+                    `dropdown-item dash-drop-item dropdown-item-text ${
+                      isActive ? "active-item fw-semibold" : "inactive-item"
+                    }`
+                  }
+                >
+                  <span className="bullet"></span> Approve Requests
+                </NavLink>
+                <NavLink
+                  to="/admin/allinvoices"
+                  className={({ isActive }) =>
+                    `dropdown-item dash-drop-item dropdown-item-text ${
+                      isActive ? "active-item fw-semibold" : "inactive-item"
+                    }`
+                  }
+                >
+                  <span className="bullet"></span> Invoices
+                </NavLink>
+              </li>
+            </ul>
           </div>
+
+          {/* entertainers */}
+          <div className="dropdown">
+            <div
+              className={`nav-link dash-sidebar-link2 d-flex justify-content-between align-items-center ${
+                isEntertainerDropdownOpen ? "dash-active-link fw-semibold" : ""
+              }`}
+              onClick={handleEntertainerClick}
+              style={{ cursor: "pointer" }}
+            >
+              <div className="d-flex align-items-center dash-sidebar-link flex-grow-1">
+                {/* <img
+                  src={`${imagePath}${isAdminDropdownOpen ? "administrationDash.svg" : "administrationDash.svg"
+                    }`}
+                  alt="Events"
+                  className="menuIconA me-2"
+                /> */}
+
+                <p className="profile-font">
+                  <i className="fa-regular fa-folder-closed menuIconA"></i>{" "}
+                  Entertainers
+                </p>
+              </div>
+              <div>
+                <img
+                  src={`${imagePath}dropdownIcon.svg`}
+                  alt="Dropdown"
+                  className="dropdown-arrow"
+                />
+              </div>
+            </div>
+            <ul
+              className={`dropdown-menu dash-drop-menu ${
+                isEntertainerDropdownOpen ? "show" : ""
+              }`}
+            >
+              <li>
+                <NavLink
+                  to="/admin/allVenues"
+                  className={`dropdown-item dash-drop-item dropdown-item-text ${
+                    isEntertainerActive ? "active-item fw-semibold" : "inactive-item"
+                  }`}
+                >
+                  <span className="bullet"></span> All Entertainers
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/admin/allentertainer"
+                  className={`dropdown-item dash-drop-item dropdown-item-text ${
+                    isEntertainerActive
+                      ? "active-item fw-semibold"
+                      : "inactive-item"
+                  }`}
+                >
+                  <span className="bullet"></span> Add Entertainers
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/admin/allentertainer"
+                  className={`dropdown-item dash-drop-item dropdown-item-text ${
+                    isEntertainerActive
+                      ? "active-item fw-semibold"
+                      : "inactive-item"
+                  }`}
+                >
+                  <span className="bullet"></span> Approve Requests
+                </NavLink>
+              </li>
+            </ul>
+          </div>
+
 
           {/* Users */}
           <NavLink
@@ -312,7 +495,7 @@ export default function AdminSideBar() {
           </NavLink> */}
 
           {/* Invoices */}
-          <NavLink
+          {/* <NavLink
             to="/admin/allinvoices"
             className={({ isActive }) =>
               `nav-link dash-sidebar-link2 ${
@@ -326,7 +509,7 @@ export default function AdminSideBar() {
                 <i className="fa-solid fa-file-invoice menuIconA"></i> Invoices
               </p>
             </div>
-          </NavLink>
+          </NavLink> */}
 
           {/* Reports */}
           <NavLink
